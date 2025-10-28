@@ -1,0 +1,21 @@
+# --- Frontend ---
+/fontend/node_modules/
+/fontend/dist/
+/fontend/.vite/
+/fontend/build/
+/fontend/.env
+/fontend/.vscode/
+
+# --- Backend ---
+/backend/node_modules/
+/backend/log/
+/backend/tmp/
+/backend/.env
+/backend/.vscode/
+
+# --- Root ---
+/node_modules/
+/.vscode/
+/.env
+.DS_Store
+Thumbs.db
