@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    /* ===== OUTPUT ===== */
+    "target": "ESNext",                    // JS đầu ra (ESNext = code hiện đại)
+    "useDefineForClassFields": true,       // hỗ trợ field trong class
+    "module": "ESNext",                    // module format (Vite dùng ESNext)
+    "moduleResolution": "Node",            // kiểu resolve module giống Node
+    "isolatedModules": true,               // tách biệt từng file để build nhanh hơn
+    "jsx": "react-jsx",                    // hỗ trợ JSX mới (React 17+)
+
+    /* ===== STRICT TYPE CHECK ===== */
+    "strict": true,                        // bật tất cả kiểm tra type nghiêm ngặt
+    "noUnusedLocals": true,                // báo lỗi biến khai báo mà không dùng
+    "noUnusedParameters": true,            // báo lỗi tham số không dùng
+    "noImplicitReturns": true,             // bắt buộc tất cả nhánh hàm phải return
+    "noFallthroughCasesInSwitch": true,    // tránh lỗi logic trong switch/case
+
+    /* ===== PATH & ALIAS ===== */
+    "baseUrl": "./src",                    // đường dẫn gốc cho import
+    "paths": {                             // dùng alias: import từ "@/api/..." thay vì "../../../"
+      "@/*": ["*"],
+    },
+
+    /* ===== SOURCE MAP & DEBUG ===== */
+    "sourceMap": true,                     // giúp debug trong browser
+    "skipLibCheck": true,                  // bỏ qua kiểm tra file .d.ts để build nhanh
+    "esModuleInterop": true,               // cho phép import các package cũ (CommonJS)
+    "forceConsistentCasingInFileNames": true // ép dùng đúng kiểu chữ trong tên file
+  },
+
+  "include": ["src"],                      // chỉ định thư mục chứa code TypeScript
+  "exclude": ["node_modules", "dist"]      // bỏ qua những thư mục không cần kiểm tra
+}
