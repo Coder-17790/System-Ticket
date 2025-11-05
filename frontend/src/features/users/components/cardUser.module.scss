@@ -1,0 +1,42 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 80px;
+  width: 500px;
+  gap: 6px;
+  padding: 8px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.cardHeader {
+  display: flex;
+  gap: 20px;
+}
+
+.cardBody {
+  display: flex;
+  gap: 20px;
+}
+
+.cardColumn {
+  width: 300px;
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.info {
+  display: flex;
+  gap: 4px;
+}
+
+.infoLabel {
+  font-weight: 600;
+}
