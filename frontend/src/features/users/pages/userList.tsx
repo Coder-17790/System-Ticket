@@ -1,5 +1,7 @@
-import React from 'react';
+import { User } from '@/types';
+import CardUser from '../components/cardUser';
 import { useUsersQuery as useUsers } from '../hooks/useUsers';
+import './userList.scss';
 
 export default function UserList() {
   const { data: users, isLoading, isError, error } = useUsers();
@@ -7,27 +9,10 @@ export default function UserList() {
   if (isLoading) return <p>Đang tải dữ liệu...</p>;
   if (isError) return <p>Lỗi: {(error as Error).message}</p>;
 
-  return (
-    <div style={{ padding: 20 }}>
-      <h2>Danh sách người dùng</h2>
-      <table border={1} cellPadding={10} cellSpacing={0}>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Tên</th>
-            <th>Email</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users?.map((user) => (
-            <tr key={user.id}>
-              <td>{user.id}</td>
-              <td>{user.fullName}</td>
-              <td>{user.email}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
+  // rebder card user
+  const cardUser = (item: User) => {
+    return <CardUser info={item} />;
+  };
+
+  return <div className="st-body">{users?.map((item) => cardUser(item))}</div>;
 }

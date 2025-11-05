@@ -1,25 +1,41 @@
-import { User } from "@/types";
-import "./CardUser.scss";
+import { User } from '@/types';
+import styles from './CardUser.module.scss';
 
 type CardUserProps = {
-    info?: User;
-
+  info?: User;
 };
 
-const CardUser = ({
-    info,
-}: CardUserProps) => {
+const InfoItem = ({ label, value }: { label: string; value: string | number | boolean }) => {
+  return (
+    <div className={styles.info}>
+      <span className={styles.infoLabel}>{label}:</span>
+      <span>{value}</span>
+    </div>
+  );
+};
 
-  return <div className="st-card">
-    <div className="st-card__header">
-      <h3 className="st-card__title">{info?.fullName}</h3>
+const CardUser = ({ info }: CardUserProps) => {
+  return (
+    <div className={styles.card}>
+      <div className={styles.cardHeader}>
+        <h3 className={styles.cardTitle}>{info?.fullName}</h3>
+      </div>
+
+      <div className={styles.cardBody}>
+        <div className={styles.cardColumn}>
+          <InfoItem label="Email" value={info?.email || ''} />
+          <InfoItem label="Trạng thái" value={info?.isActive || ''} />
+        </div>
+
+        <div className={styles.cardColumn}>
+          <InfoItem
+            label="Ngày tạo"
+            value={info ? new Date(info.createdAt).toLocaleDateString() : ''}
+          />
+        </div>
+      </div>
     </div>
-    <div className="st-card__body">
-      <p><strong>Email:</strong> {info?.email}</p>
-      <p><strong>Trạng thái:</strong> {info?.isActive ? "Hoạt động" : "Không hoạt động"}</p>
-      <p><strong>Ngày tạo:</strong> {info ? new Date(info.createdAt).toLocaleDateString() : ""}</p>
-    </div>
-  </div>;
+  );
 };
 
 export default CardUser;
