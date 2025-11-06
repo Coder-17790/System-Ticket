@@ -3,21 +3,18 @@ import {
   DataTypes,
   InferAttributes,
   InferCreationAttributes,
-  Model
-} from "sequelize";
-import { sequelize } from "../database/sequelize";
+  Model,
+} from 'sequelize';
+import { sequelize } from '../database/sequelize';
 
 // Ghi chú BIGINT: với Postgres, BIGINT có thể được trả về dạng string.
 // Để an toàn, mình để kiểu union string | number cho id và orgId.
-export class User extends Model<
-  InferAttributes<User>,
-  InferCreationAttributes<User>
-> {
-  declare id: CreationOptional<string | number>;       // BIGSERIAL PK, auto-increment
+export class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
+  declare id: CreationOptional<string | number>; // BIGSERIAL PK, auto-increment
   declare orgId: CreationOptional<string | number | null>; // FK nullable (ON DELETE SET NULL)
-  declare email: string;                               // UNIQUE NOT NULL
-  declare fullName: string;                            // NOT NULL
-  declare isActive: CreationOptional<boolean>;         // NOT NULL DEFAULT true
+  declare email: string; // UNIQUE NOT NULL
+  declare fullName: string; // NOT NULL
+  declare isActive: CreationOptional<boolean>; // NOT NULL DEFAULT true
 
   // Timestamps (TIMESTAMPTZ DEFAULT now())
   declare createdAt: CreationOptional<Date>;
@@ -27,54 +24,54 @@ export class User extends Model<
 User.init(
   {
     id: {
-      type: DataTypes.BIGINT,       // BIGSERIAL -> BIGINT + autoIncrement
+      type: DataTypes.BIGINT, // BIGSERIAL -> BIGINT + autoIncrement
       autoIncrement: true,
-      primaryKey: true
+      primaryKey: true,
     },
     orgId: {
       type: DataTypes.BIGINT,
       allowNull: true,
-      field: "org_id",
-      references: { model: "organizations", key: "id" },
-      onDelete: "SET NULL"
+      field: 'org_id',
+      references: { model: 'organizations', key: 'id' },
+      onDelete: 'SET NULL',
     },
     email: {
-      type: DataTypes.STRING,       // VARCHAR
+      type: DataTypes.STRING, // VARCHAR
       allowNull: false,
       unique: true,
-      validate: { isEmail: true }
+      validate: { isEmail: true },
     },
     fullName: {
-      type: DataTypes.STRING(255),  // VARCHAR(255)
+      type: DataTypes.STRING(255), // VARCHAR(255)
       allowNull: false,
-      field: "full_name"
+      field: 'full_name',
     },
     isActive: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: true,
-      field: "is_active"
+      field: 'is_active',
     },
     // created_at / updated_at do Sequelize quản lý; thêm defaultValue để khớp DDL nếu cần
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false,
-      field: "created_at",
-      defaultValue: DataTypes.NOW
+      field: 'created_at',
+      defaultValue: DataTypes.NOW,
     },
     updatedAt: {
       type: DataTypes.DATE,
       allowNull: false,
-      field: "updated_at",
-      defaultValue: DataTypes.NOW
-    }
+      field: 'updated_at',
+      defaultValue: DataTypes.NOW,
+    },
   },
   {
     sequelize,
-    modelName: "User",
-    tableName: "users",
+    modelName: 'User',
+    tableName: 'users',
     timestamps: true,
-    underscored: true
+    underscored: true,
   }
 );
 

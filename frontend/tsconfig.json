@@ -19,7 +19,15 @@
     "baseUrl": "./src", // đường dẫn gốc cho import
     "paths": {
       // dùng alias: import từ "@/api/..." thay vì "../../../"
-      "@/*": ["*"]
+      "@/*": ["*"],
+      "@/components/*": ["components/*"],
+      "@/utils/*": ["utils/*"],
+      "@/hooks/*": ["hooks/*"],
+      "@/assets/*": ["assets/*"],
+      "@styles/*": ["styles/*"],
+      "@/types/*": ["types/*"],
+      "@/routes/*": ["routes/*"],
+      "@features/*": ["features/*"]
     },
 
     /* ===== SOURCE MAP & DEBUG ===== */

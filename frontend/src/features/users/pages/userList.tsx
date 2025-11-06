@@ -1,7 +1,7 @@
 import { User } from '@/types';
 import CardUser from '../components/cardUser';
 import { useUsersQuery as useUsers } from '../hooks/useUsers';
-import './userList.scss';
+import style from './userList.module.scss';
 
 export default function UserList() {
   const { data: users, isLoading, isError, error } = useUsers();
@@ -14,5 +14,10 @@ export default function UserList() {
     return <CardUser info={item} />;
   };
 
-  return <div className="st-body">{users?.map((item) => cardUser(item))}</div>;
+  return (
+    <div className={style.body}>
+      <div className={style.cardInfo}></div>
+      <div className={style.userList}>{users?.map((item) => cardUser(item))}</div>
+    </div>
+  );
 }

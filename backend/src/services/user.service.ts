@@ -21,7 +21,6 @@ export class UserService {
     return this.repo.findById(id);
   }
 
-  
 
   // Cập nhật thông tin user theo id
   update(id: number, data: { email?: string; name?: string | null }) {
