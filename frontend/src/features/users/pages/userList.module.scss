@@ -1,0 +1,19 @@
+.body {
+  display: flex;
+  // justify-content: center;
+  // padding: 20px;
+  // border: 1px solid #9f9a9a;
+}
+
+.cardInfo {
+  margin-right: 10px;
+  flex: 1; /* <-- phần này giúp khối phải chiếm toàn bộ phần còn lại */
+  border: 1px solid #9f9a9a;
+}
+
+.userList {
+  overflow-y: auto; /* cho phép cuộn dọc */
+  height: 100vh; /* Giới hạn chiều cao toàn màn hình */
+  border: 1px solid #9f9a9a;
+  padding: 10px;
+}
