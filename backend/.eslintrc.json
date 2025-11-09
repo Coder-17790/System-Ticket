@@ -1,0 +1,62 @@
+{
+  // 🌐 Xác định môi trường code của bạn
+  "env": {
+    "browser": true, // Cho phép các biến toàn cục như window, document...
+    "es2021": true   // Dùng cú pháp ES2021 (optional chaining, async/await...)
+  },
+
+  // 📦 Kế thừa các cấu hình sẵn có
+  "extends": [
+    "eslint:recommended",                // Rule cơ bản do ESLint khuyến nghị
+    "plugin:react/recommended",          // Rule dành cho React
+    "plugin:@typescript-eslint/recommended" // Rule dành cho TypeScript
+  ],
+
+  // 🧠 Dùng parser giúp ESLint hiểu TypeScript
+  "parser": "@typescript-eslint/parser",
+
+  // ⚙️ Cấu hình parser
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true // Cho phép đọc cú pháp JSX (React)
+    },
+    "ecmaVersion": "latest", // Cho phép cú pháp JavaScript mới nhất
+    "sourceType": "module"   // Cho phép dùng import/export
+  },
+
+  // 🔌 Các plugin mở rộng
+  "plugins": ["react", "@typescript-eslint"],
+
+  // ⚙️ Quy tắc tùy chỉnh
+  "rules": {
+    // --- 🧹 Quy tắc hữu ích ---
+    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }], // Cảnh báo nếu biến không dùng, trừ khi bắt đầu bằng "_"
+    "react/react-in-jsx-scope": "off",   // Tắt cảnh báo vì React 17+ không cần import React nữa
+    "react/prop-types": "off",           // Không cần prop-types vì TypeScript đã kiểm tra type
+    "no-console": "warn",                // Cảnh báo nếu còn console.log
+    "quotes": ["warn", "single"],        // Dùng dấu nháy đơn
+    "semi": ["warn", "never"],           // Không dùng dấu chấm phẩy
+    "indent": ["off"],                   // Không kiểm tra thụt dòng (Prettier sẽ lo)
+    "no-mixed-spaces-and-tabs": "off",   // Cho phép trộn space/tab (tránh lỗi format IDE)
+    "react/jsx-uses-react": "off",       // Tắt rule cũ yêu cầu import React
+    "react/jsx-uses-vars": "warn",       // Đảm bảo ESLint hiểu biến React component được dùng
+
+    // --- 🚫 Tắt các rule phiền ---
+    "@typescript-eslint/no-explicit-any": "off",       // Cho phép dùng kiểu any
+    "@typescript-eslint/ban-ts-comment": "off",        // Cho phép dùng // @ts-ignore
+    "@typescript-eslint/no-non-null-assertion": "off"  // Cho phép dùng toán tử "!"
+  },
+
+  // ⚙️ Cấu hình cho React & import alias
+  "settings": {
+    "react": {
+      "version": "detect" // Tự động phát hiện version React
+    },
+    // "import/resolver": {
+    //   "alias": {
+    //     "map": [["@", "./src"]], // Cho phép import @/ thay vì ../../
+    //     "extensions": [".ts", ".tsx", ".js", ".jsx"]
+    //   }
+    // }
+  }
+}

@@ -1,6 +1,5 @@
 .card {
   display: flex;
-  // flex-direction: row-reverse;
   justify-content: space-between;
   width: 650px;
   padding: 8px;
@@ -11,7 +10,7 @@
 }
 
 .cardHeader {
-  margin-bottom: 12px;
+  margin-bottom: 5px;
 }
 
 .cardBody {
@@ -34,8 +33,10 @@
 
 .cardTitle {
   margin: 0;
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 600;
+  cursor: pointer; // hiển thị tay chuột
+  border: 1px solid #9f9a9a;
 }
 
 .info {

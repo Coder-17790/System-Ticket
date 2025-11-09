@@ -1,8 +1,11 @@
 import { User } from '@/types';
 import styles from './CardUser.module.scss';
 import { fomatData_1 } from '@/utils';
-import STButton from '@/components/ui/button';
+import STButton from '@/components/ui/Button';
 import { useDeleteUserMutation } from '../hooks/useUsers';
+import { useColors } from '@/hooks/useStyle';
+import { icons } from '@/assets/icons';
+import STIcon from '@/components/ui/STIcon';
 
 type CardUserProps = {
   info?: User;
@@ -10,6 +13,7 @@ type CardUserProps = {
 
 const CardUser = ({ info }: CardUserProps) => {
   const deleteUserMutation = useDeleteUserMutation();
+  const theme = useColors();
 
   // Component hiển thị thông tin người dùng theo dòng
   const InfoItem = ({ label, value }: { label: string; value: string | number | boolean }) => {
@@ -32,7 +36,10 @@ const CardUser = ({ info }: CardUserProps) => {
     <div className={styles.card}>
       <div>
         <div className={styles.cardHeader}>
-          <h3 className={styles.cardTitle}>{info?.fullName}</h3>
+          <h3 style={{ color: theme.primary }} className={styles.cardTitle}>
+            {info?.fullName}
+          </h3>
+          <STIcon iconName={icons.delete} />
         </div>
         <div className={styles.cardBody}>
           <div className={styles.cardColumn}>
@@ -45,7 +52,7 @@ const CardUser = ({ info }: CardUserProps) => {
           </div>
         </div>
       </div>
-      <div className={styles.cardColumnButon}>
+      {/* <div className={styles.cardColumnButon}>
         <STButton label="Cập nhật" />
         <STButton
           label={deleteUserMutation.isPending ? 'Đang xoá...' : 'Xoá'}
@@ -53,7 +60,7 @@ const CardUser = ({ info }: CardUserProps) => {
           onClick={handleDelete}
           disabled={!info?.id || deleteUserMutation.isPending}
         />
-      </div>
+      </div> */}
     </div>
   );
 };

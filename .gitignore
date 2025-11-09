@@ -1,10 +1,10 @@
 # --- Frontend ---
-/fontend/node_modules/
-/fontend/dist/
-/fontend/.vite/
-/fontend/build/
-/fontend/.env
-/fontend/.vscode/
+/frontend/node_modules/
+/frontend/dist/
+/frontend/.vite/
+/frontend/build/
+/frontend/.env
+/frontend/.vscode/
 
 # --- Backend ---
 /backend/node_modules/
