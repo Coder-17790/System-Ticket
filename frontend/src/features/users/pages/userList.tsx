@@ -5,10 +5,13 @@ import style from './userList.module.scss';
 import STSwitchButton from '@/components/ui/STSwitchButton';
 import { toggleTheme } from '@/store/slices/themeSlice';
 import { useDispatch } from 'react-redux';
+import { useState } from 'react';
+import CardInfo from '../components/CardInfo';
 
 export default function UserList() {
   const { data: users, isLoading, isError, error } = useUsers();
   const dispatch = useDispatch();
+  const [info, setInfo] = useState<User>();
 
   if (isLoading) return <p>Đang tải dữ liệu...</p>;
   if (isError) return <p>Lỗi: {(error as Error).message}</p>;
@@ -18,9 +21,14 @@ export default function UserList() {
     dispatch(toggleTheme(newStatus ? 'dark' : 'light'));
   };
 
+  // callback info user
+  const handleInfoUser = (user: User) => {
+    setInfo(user);
+  };
+
   // render card user
-  const cardUser = (item: User) => {
-    return <CardUser info={item} />;
+  const cardUser = (item: User, getInfo: () => void) => {
+    return <CardUser info={item} getInfoUser={getInfo} />;
   };
 
   return (
@@ -30,8 +38,10 @@ export default function UserList() {
         <STSwitchButton onchange={handleToggleTheme} />
       </div>
       <div style={{ display: 'flex' }}>
-        <div className={style.cardInfo}></div>
-        <div className={style.userList}>{users?.map((item) => cardUser(item))}</div>
+        <CardInfo className={style.cardInfo} info={info}></CardInfo>
+        <div className={style.userList}>
+          {users?.map((item) => cardUser(item, () => handleInfoUser(item)))}
+        </div>
       </div>
     </div>
   );

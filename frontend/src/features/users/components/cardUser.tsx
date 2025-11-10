@@ -3,22 +3,26 @@ import styles from './CardUser.module.scss';
 import { fomatData_1 } from '@/utils';
 import STButton from '@/components/ui/Button';
 import { useDeleteUserMutation } from '../hooks/useUsers';
-import { useColors } from '@/hooks/useStyle';
+import { useStyles } from '@/hooks/useStyle';
 import { icons } from '@/assets/icons';
 import STIcon from '@/components/ui/STIcon';
+import STText from '@/components/ui/STText';
 
 type CardUserProps = {
   info?: User;
+  getInfoUser?: (user: User) => void;
+  className?: string;
+  sytle?: React.CSSProperties;
 };
 
-const CardUser = ({ info }: CardUserProps) => {
+const CardUser = ({ info, getInfoUser, className }: CardUserProps) => {
   const deleteUserMutation = useDeleteUserMutation();
-  const theme = useColors();
+  const theme = useStyles();
 
   // Component hiển thị thông tin người dùng theo dòng
   const InfoItem = ({ label, value }: { label: string; value: string | number | boolean }) => {
     return (
-      <div className={styles.info}>
+      <div className={`${styles.info} ${className} `}>
         <span className={styles.infoLabel}>{label}:</span>
         <span>{value}</span>
       </div>
@@ -28,18 +32,22 @@ const CardUser = ({ info }: CardUserProps) => {
   // Xoá 1 user
   const handleDelete = () => {
     if (!info?.id) return; // tránh gọi mutate khi chưa có id
-    deleteUserMutation.mutate(info.id);
+    deleteUserMutation.mutate(String(info.id));
     deleteUserMutation.isSuccess;
   };
 
   return (
     <div className={styles.card}>
-      <div>
+      <div className={styles.cardContent}>
         <div className={styles.cardHeader}>
-          <h3 style={{ color: theme.primary }} className={styles.cardTitle}>
+          <STText
+            className={styles.cardTitle}
+            style={{ color: theme.secondary }}
+            onClick={() => getInfoUser && getInfoUser?.(info!)}
+          >
             {info?.fullName}
-          </h3>
-          <STIcon iconName={icons.delete} />
+          </STText>
+          <STIcon iconName={icons.delete} size={20} onClick={handleDelete} />
         </div>
         <div className={styles.cardBody}>
           <div className={styles.cardColumn}>

@@ -1,9 +1,20 @@
-export interface User {
-  id: string;
-  orgId: string;
+export type User = {
+  id: string | number;
+  orgId: string | number | null;
   email: string;
   fullName: string;
   isActive: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
+  phone: string | null;
+  position: string | null;
+  dateOfBirth: Date | null;
+  lastLogin: Date | null;
+  address: string | null;
+  gender: string | null;
+  role: string;
+  avatarUrl: string | null;
+  bio: string | null;
+  isVerified: boolean;
+  deletedAt: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
+};

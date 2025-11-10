@@ -14,11 +14,9 @@ export function useUsersQuery() {
 // Hook để xoá người dùng
 export function useDeleteUserMutation() {
   const queryClient = useQueryClient();
-  console.log('Cb xoá');
   return useMutation({
     mutationFn: (id: string) => deleteUser(id),
     onSuccess: () => {
-      console.log('xoá thành công');
       // Sau khi xoá thành công, làm mới danh sách người dùng
       queryClient.invalidateQueries({ queryKey: ['users'] });
     },

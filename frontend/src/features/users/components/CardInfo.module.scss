@@ -1,3 +1,19 @@
 .body {
-  border: 1px solid #9f9a9a;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  display: flex;
+  gap: 20px;
+}
+
+.label {
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.buttonWrapper {
+  display: flex;
+  justify-content: flex-end; /* canh phải */
 }

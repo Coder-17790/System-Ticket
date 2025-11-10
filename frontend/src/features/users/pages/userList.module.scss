@@ -6,9 +6,14 @@
 }
 
 .cardInfo {
+  flex: 0 0 auto; /* Không co, không giãn, chỉ vừa nội dung */
+  width: fit-content;
+  height: fit-content;
   margin-right: 10px;
   flex: 1; /* <-- phần này giúp khối phải chiếm toàn bộ phần còn lại */
   border: 1px solid #9f9a9a;
+  padding: 15px;
+  // height: 400px;
 }
 
 .userList {

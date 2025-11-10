@@ -1,0 +1,50 @@
+.body {
+  display: inline-flex;
+}
+
+.input {
+  border: none; //xóa viền ngoài của input.
+  outline: none; //loại bỏ viền xanh/viền sáng khi click vào (focus).
+  border-radius: 10%;
+  border: 1px solid #9f9a9a;
+  border-radius: 5px;
+  height: 25px;
+  padding: 0px 5px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+
+  /* Màu khi focus */
+  &:focus {
+    &:focus {
+      border: 1px solid var(--focus-border);
+      box-shadow: 0 0 3px var(--focus-border);
+    }
+  }
+}
+
+.textarea {
+  border: none; //xóa viền ngoài của input.
+  outline: none; //loại bỏ viền xanh/viền sáng khi click vào (focus).
+  border-radius: 10%;
+  border: 1px solid #9f9a9a;
+  border-radius: 5px;
+  height: 100px;
+  width: 500px;
+  padding: 0px 5px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+
+  /* Màu khi focus */
+  &:focus {
+    &:focus {
+      border: 1px solid var(--focus-border);
+      box-shadow: 0 0 3px var(--focus-border);
+    }
+  }
+}
+
+.enable {
+  border: 1px solid #bcb1b1;
+}

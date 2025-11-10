@@ -10,7 +10,6 @@ type STSwitchButtonProps = {
 
 const STSwitchButton = ({ status = false, enabled = true, onchange }: STSwitchButtonProps) => {
   const [isOn, setIsOn] = useState<boolean>(status);
-  console.log('first', isOn);
 
   const toggleSwitch = () => {
     if (!enabled) return;
