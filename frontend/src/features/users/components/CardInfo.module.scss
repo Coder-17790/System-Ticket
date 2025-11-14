@@ -6,14 +6,16 @@
 .content {
   display: flex;
   gap: 20px;
+  justify-content: space-between; /* hoặc space-around / space-evenly */
 }
 
 .label {
   font-weight: 600;
-  margin-top: 10px;
+  margin-bottom: 5px;
 }
 
 .buttonWrapper {
   display: flex;
+  margin-top: 10px;
   justify-content: flex-end; /* canh phải */
 }

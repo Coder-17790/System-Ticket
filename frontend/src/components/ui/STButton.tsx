@@ -1,11 +1,14 @@
 import React from 'react';
-import styles from './Button.module.scss';
+import styles from './STButton.module.scss';
 
 type STButtonProps = {
   label?: string;
   onClick?: () => void;
-  variant?: 'primary' | 'secondary' | 'danger';
+  variant?: 'primary' | 'danger';
   disabled?: boolean;
+  style?: React.CSSProperties;
+  className?: string;
+  color?: string;
 };
 
 const STButton: React.FC<STButtonProps> = ({
@@ -13,10 +16,13 @@ const STButton: React.FC<STButtonProps> = ({
   onClick,
   variant = 'primary',
   disabled = false,
+  className = '',
+  style,
 }) => {
   return (
     <button
-      className={`${styles.button} ${styles[variant]} ${disabled ? styles.disabled : ''}`}
+      style={style}
+      className={`${styles.button} ${styles[variant]} ${className} ${disabled ? styles.disabled : ''}`}
       onClick={!disabled ? onClick : undefined}
       disabled={disabled}
     >

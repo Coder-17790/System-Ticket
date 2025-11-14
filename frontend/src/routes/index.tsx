@@ -1,7 +1,7 @@
-import { Route, Routes } from 'react-router-dom'
-import Home from '../features/users/pages/Home'
-import Login from '../features/auth/pages/Login'
-import ProtectedRoute from './ProtectedRoute'
+import { Route, Routes } from 'react-router-dom';
+import Home from '../features/users/pages/Home';
+import Login from '../features/auth/pages/Login';
+import ProtectedRoute from './ProtectedRoute';
 
 export const AppRoutes = () => {
   return (
@@ -16,5 +16,5 @@ export const AppRoutes = () => {
         }
       />
     </Routes>
-  )
-}
+  );
+};

@@ -1,8 +1,14 @@
 .body {
-  // display: flex;
-  // justify-content: center;
-  // padding: 20px;
+  background-color: var(--color-background);
+  padding: 10px;
   // border: 1px solid #9f9a9a;
+}
+
+.bodyHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 .cardInfo {
@@ -13,12 +19,16 @@
   flex: 1; /* <-- phần này giúp khối phải chiếm toàn bộ phần còn lại */
   border: 1px solid #9f9a9a;
   padding: 15px;
-  // height: 400px;
 }
 
 .userList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; // thêm khoảng cách giữa các card
   overflow-y: auto; /* cho phép cuộn dọc */
   height: 100vh; /* Giới hạn chiều cao toàn màn hình */
   border: 1px solid #9f9a9a;
   padding: 10px;
+  scrollbar-width: thin; /* (Firefox) thanh cuộn nhỏ gọn */
+  scrollbar-color: #999 transparent;
 }

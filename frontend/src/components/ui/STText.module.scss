@@ -1,8 +1,60 @@
-.body {
-  display: flex;
-  align-items: center;
+.text {
+  font-family: var(--font-family, 'Inter', sans-serif);
+  color: var(--color-text);
+  transition: color 0.25s ease;
+  cursor: default;
 }
 
-.text {
-  font-size: 14;
+/* === Variant (kiểu chữ) === */
+.body {
+  font-size: 15px;
+  font-weight: 400;
+}
+.bold {
+  font-size: 15px;
+  font-weight: 600;
+}
+.title {
+  font-size: 20px;
+  font-weight: 600;
+}
+.caption {
+  font-size: 13px;
+  font-weight: 300;
+}
+.highlight {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+.link {
+  color: var(--color-primary);
+  cursor: pointer;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+/* === Color (theo theme token) === */
+.default {
+  color: var(--color-text);
+}
+.primary {
+  color: var(--color-primary);
+}
+.secondary {
+  color: var(--color-secondary);
+}
+.danger {
+  color: var(--color-danger);
+}
+
+// Muốn text sẽ xuống hàng để có thể dùng magrin
+.block {
+  display: block;
 }

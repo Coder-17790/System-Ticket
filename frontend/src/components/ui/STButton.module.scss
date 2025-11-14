@@ -1,38 +1,28 @@
 .button {
   padding: 8px 6px;
   border: none;
-  border-radius: 10px;
+  border-radius: var(--size-rdsMd);
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: var(--color-background) 0.3s ease;
 }
 
 .primary {
-  background: #007bff;
-  color: white;
-  &:hover {
-    background: #0069d9;
-  }
-  &:active {
-    background: #ccccd0;
-  }
-}
+  background: var(--color-primary, #000);
+  color: var(--color-white);
 
-.secondary {
-  background: #6c757d;
-  color: white;
   &:hover {
-    background: #5a6268;
+    background: var(--color-accent, #000);
   }
   &:active {
-    background: #ccccd0;
+    background: var(--color-secondary);
   }
 }
 
 .danger {
   background: #dc3545;
-  color: white;
+  color: var(--color-white);
   &:hover {
     background: #c82333;
   }

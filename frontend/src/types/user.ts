@@ -1,9 +1,13 @@
+import { OptionCBB } from '@/components/ui/STComboBox';
+
 export type User = {
   id: string | number;
   orgId: string | number | null;
   email: string;
+  title: string;
   fullName: string;
   isActive: boolean;
+  language: string;
   phone: string | null;
   position: string | null;
   dateOfBirth: Date | null;
@@ -18,3 +22,16 @@ export type User = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export const roleOption: OptionCBB[] = [
+  { label: 'Admin', value: 'admin' },
+  { label: 'User', value: 'user' },
+  { label: 'Moderator', value: 'moderator' },
+];
+
+export const positionOption: OptionCBB[] = [
+  { label: 'Manager', value: 'Manager' },
+  { label: 'Developer', value: 'Developer' },
+  { label: 'Designer', value: 'Designer' },
+  { label: 'Intern', value: 'Intern' },
+];

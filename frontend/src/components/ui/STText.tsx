@@ -1,25 +1,35 @@
+import React from 'react';
 import styles from './STText.module.scss';
-import { useStyles } from '@/hooks/useStyle';
 
 type STTextProps = {
   children?: React.ReactNode;
-  style?: React.CSSProperties;
-  className?: string;
+  variant?: 'body' | 'title' | 'caption' | 'link' | 'highlight' | 'bold';
+  color?: 'default' | 'primary' | 'secondary' | 'danger';
+  block?: boolean;
   onClick?: () => void;
+  className?: string;
+  style?: React.CSSProperties; // chỉ dùng cho chỉnh nhẹ như margin
 };
 
-const STText = ({ children, style, className, onClick }: STTextProps) => {
-  const theme = useStyles();
+const STText: React.FC<STTextProps> = ({
+  children,
+  variant = 'body',
+  color = 'default',
+  onClick,
+  block = false,
+  className = '',
+  style,
+}) => {
   return (
-    <div className={styles.body}>
-      <span
-        onClick={onClick}
-        style={{ color: theme.text, cursor: onClick ? 'pointer' : 'default', ...style }}
-        className={`${styles.text} ${className || ''}`}
-      >
-        {children}
-      </span>
-    </div>
+    <span
+      onClick={onClick}
+      style={style}
+      className={`${styles.text} ${block ? styles.block : ''} ${styles[variant]} ${styles[color]} ${className} ${
+        onClick ? styles.clickable : ''
+      }`}
+    >
+      {children}
+    </span>
   );
 };
 

@@ -1,61 +1,49 @@
-import { useEffect, useState } from 'react';
+import React from 'react';
 import styles from './STInput.module.scss';
-import { useStyles } from '@/hooks/useStyle';
 
 type STInputProps = {
-  placeholder?: string;
   value?: string;
-  className?: string;
-  enable?: boolean;
-  textarea?: boolean;
-  style?: React.CSSProperties;
+  placeholder?: string;
   onChange?: (value: string) => void;
+  textarea?: boolean;
+  enable?: boolean;
+  variant?: 'default' | 'outlined' | 'filled';
+  color?: 'default' | 'primary' | 'secondary' | 'danger';
+  className?: string;
+  style?: React.CSSProperties;
 };
 
-const STInput = ({
-  placeholder,
-  value,
-  className,
+const STInput: React.FC<STInputProps> = ({
+  value = '',
+  placeholder = '',
+  onChange,
   textarea = false,
   enable = true,
-  onChange,
-}: STInputProps) => {
-  const theme = useStyles();
-
-    console.log('data', value);
-
-
-  // Gán màu
-  useEffect(() => {
-    document.documentElement.style.setProperty('--focus-border', theme.primary);
-  }, [theme]);
-
-  // Hàm bắt sư kiện nhậm
+  variant = 'default',
+  color = 'default',
+  className = '',
+  style,
+}) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     onChange?.(e.target.value);
   };
 
+  const commonProps = {
+    className: `${styles.input} ${styles[variant]} ${styles[color]} ${className} ${
+      !enable ? styles.disabled : ''
+    }`,
+    placeholder,
+    value,
+    disabled: !enable,
+    onChange: handleChange,
+    style,
+  };
+
   return (
     <div className={styles.body}>
-      {textarea ? (
-        <textarea
-          className={`${styles.textarea} ${className} ${!enable && styles.enable}`}
-          placeholder={placeholder && ''}
-          value={value ?? ''}
-          disabled={!enable}
-          onChange={handleChange}
-        />
-      ) : (
-        <input
-          className={`${styles.input} ${className} ${!enable && styles.enable}`}
-          placeholder={placeholder && ''}
-          value={value ?? ''}
-          disabled={!enable}
-          onChange={handleChange}
-        />
-      )}
+      {textarea ? <textarea {...commonProps} /> : <input {...commonProps} />}
     </div>
   );
 };
 
-export default STInput;
+export default React.memo(STInput);

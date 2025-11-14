@@ -7,11 +7,13 @@ import { toggleTheme } from '@/store/slices/themeSlice';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import CardInfo from '../components/CardInfo';
+import STText from '@/components/ui/STText';
 
 export default function UserList() {
   const { data: users, isLoading, isError, error } = useUsers();
   const dispatch = useDispatch();
   const [info, setInfo] = useState<User>();
+  const [focusedUserId, setFocusedUserId] = useState<string | null>(null);
 
   if (isLoading) return <p>Đang tải dữ liệu...</p>;
   if (isError) return <p>Lỗi: {(error as Error).message}</p>;
@@ -23,24 +25,27 @@ export default function UserList() {
 
   // callback info user
   const handleInfoUser = (user: User) => {
+    setFocusedUserId(String(user.id));
     setInfo(user);
   };
 
   // render card user
-  const cardUser = (item: User, getInfo: () => void) => {
-    return <CardUser info={item} getInfoUser={getInfo} />;
+  const cardUser = (item: User, getInfo: () => void, focus: boolean) => {
+    return <CardUser info={item} getInfoUser={getInfo} select={focus} />;
   };
 
   return (
     <div className={style.body}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h2>Danh sách người dùng</h2>
+      <div className={style.bodyHeader}>
+        <STText variant="title">Danh sách người dùng</STText>
         <STSwitchButton onchange={handleToggleTheme} />
       </div>
       <div style={{ display: 'flex' }}>
         <CardInfo className={style.cardInfo} info={info}></CardInfo>
         <div className={style.userList}>
-          {users?.map((item) => cardUser(item, () => handleInfoUser(item)))}
+          {users?.map((item) =>
+            cardUser(item, () => handleInfoUser(item), focusedUserId === String(item.id))
+          )}
         </div>
       </div>
     </div>

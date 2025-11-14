@@ -1,4 +1,5 @@
-import { User, UserCreation, UserUpdate } from "../models/User";
+import { UserCreation, UserUpdate } from '../models/user.types';
+import User from '../models/user.init';
 
 export class UserRepository {
   async create(data: UserCreation) {

@@ -1,5 +1,5 @@
-import { UserCreation } from "../models/User";
-import { UserRepository } from "../repositories/user.repository";
+import { UserCreation } from '../models/user.types';
+import { UserRepository } from '../repositories/user.repository';
 
 export class UserService {
   constructor(private repo = new UserRepository()) {}
@@ -7,7 +7,7 @@ export class UserService {
   // Đăng ký user mới
   async register(user: UserCreation) {
     const exists = await this.repo.findByEmail(user.email);
-    if (exists) throw new Error("Email already exists");
+    if (exists) throw new Error('Email already exists');
     return this.repo.create(user);
   }
 
@@ -20,7 +20,6 @@ export class UserService {
   get(id: number) {
     return this.repo.findById(id);
   }
-
 
   // Cập nhật thông tin user theo id
   update(id: number, data: { email?: string; name?: string | null }) {

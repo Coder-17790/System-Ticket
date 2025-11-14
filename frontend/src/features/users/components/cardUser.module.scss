@@ -3,10 +3,9 @@
   justify-content: space-between;
   width: 650px;
   padding: 8px;
-  margin-bottom: 10px;
   border: 1px solid #9f9a9a;
-  border-radius: 8px;
-  background-color: #fff;
+  border-radius: var(--size-rdsSm);
+  background-color: var(--color-backgroud);
 }
 
 .cardContent {
@@ -26,6 +25,11 @@
   gap: 10px;
 }
 
+.focus {
+  border: 2px solid var(--color-primary, #000);
+  box-shadow: 0 0 20px var(--focus-primary);
+}
+
 .cardColumn {
   width: 250px;
 }
@@ -39,19 +43,7 @@
   height: auto;
 }
 
-.cardTitle {
-  margin: 0;
-  font-size: 24px;
-  font-weight: 600;
-  // cursor: pointer;
-  // border: 1px solid #9f9a9a;
-}
-
 .info {
   display: flex;
   gap: 4px;
-}
-
-.infoLabel {
-  font-weight: 600;
 }

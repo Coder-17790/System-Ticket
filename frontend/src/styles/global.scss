@@ -1,1 +1,9 @@
 // Nhớ dùng BEM
+
+/* Reset CSS mặc định */
+//Thẻ <body>, <div>, <h1>, <p>, <span>, v.v… đều bị reset margin và padding về 0.
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
