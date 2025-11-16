@@ -1,9 +1,9 @@
-import UserList from './UserList';
+import UserPage from './UserPage';
 
 export default function Home() {
   return (
     <div>
-      <UserList />
+      <UserPage />
     </div>
   );
 }

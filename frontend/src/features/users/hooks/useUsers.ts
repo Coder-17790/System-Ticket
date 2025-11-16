@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getUsers, deleteUser, updateUser } from '../api/users';
-import { User } from '@/types';
+import { getUsers, deleteUser, updateUser, findUser } from '../api/users';
+import { FilterUser, User } from '@/types';
 
 // Hook để lấy danh sách người dùng
 export function useUsersQuery() {
@@ -20,6 +20,16 @@ export function useDeleteUserMutation() {
       // Sau khi xoá thành công, làm mới danh sách người dùng
       queryClient.invalidateQueries({ queryKey: ['users'] });
     },
+  });
+}
+
+// Hook để tìm người dùng theo tên hoặc gmail
+export function useFindUserQuery(filter: FilterUser) {
+  return useQuery<User[]>({
+    queryKey: ['users', filter], // cache tách biệt theo keyword
+    queryFn: () => findUser(filter),
+    // enabled: !!keyword, // chỉ chạy khi có keyword
+    staleTime: 1000 * 60 * 5, // cache 5 phút
   });
 }
 

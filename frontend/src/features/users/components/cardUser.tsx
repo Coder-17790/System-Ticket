@@ -47,7 +47,7 @@ const CardUser = ({ info, getInfoUser, className, select }: CardUserProps) => {
           >
             {info?.fullName}
           </STText>
-          <STIcon iconName={icons.delete} size={20} onClick={handleDelete} />
+          <STIcon icon={icons.delete} size="lg" onClick={handleDelete} />
         </div>
         <div className={styles.cardBody}>
           <div className={styles.cardColumn}>

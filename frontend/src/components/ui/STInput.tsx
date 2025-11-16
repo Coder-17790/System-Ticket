@@ -7,7 +7,6 @@ type STInputProps = {
   onChange?: (value: string) => void;
   textarea?: boolean;
   enable?: boolean;
-  variant?: 'default' | 'outlined' | 'filled';
   color?: 'default' | 'primary' | 'secondary' | 'danger';
   className?: string;
   style?: React.CSSProperties;
@@ -19,19 +18,18 @@ const STInput: React.FC<STInputProps> = ({
   onChange,
   textarea = false,
   enable = true,
-  variant = 'default',
   color = 'default',
   className = '',
   style,
 }) => {
+
+  // Sự kiện nhấn
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     onChange?.(e.target.value);
   };
 
   const commonProps = {
-    className: `${styles.input} ${styles[variant]} ${styles[color]} ${className} ${
-      !enable ? styles.disabled : ''
-    }`,
+    className: `${textarea ? styles.textarea : styles.input} ${styles[color]} ${className} ${!enable ? styles.disabled : ''}`,
     placeholder,
     value,
     disabled: !enable,

@@ -1,0 +1,41 @@
+.body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* full màn hình */
+  background-color: var(--color-background);
+  padding: 10px;
+  width: 100%;
+  overflow: hidden; /* Không cho cuộn */
+  box-sizing: border-box; /* Đảm bảo padding không làm tăng kích thước tổng thể */
+}
+
+.bodyHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+.cardInfo {
+  flex: 2;
+  width: fit-content;
+  height: fit-content;
+  margin-right: 10px;
+  border: 1px solid #9f9a9a;
+  padding: 15px;
+}
+
+.userList {
+  flex: 1;
+  border: 1px solid var(--color-border);
+  padding: 10px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}

@@ -1,4 +1,5 @@
-import { UserCreation } from '../models/user.types';
+import { log } from 'console';
+import { FilterUser, UserCreation } from '../models/user.types';
 import { UserRepository } from '../repositories/user.repository';
 
 export class UserService {
@@ -9,6 +10,11 @@ export class UserService {
     const exists = await this.repo.findByEmail(user.email);
     if (exists) throw new Error('Email already exists');
     return this.repo.create(user);
+  }
+
+  //Tìm user theo tên va email
+  findUser(filter: FilterUser) {
+    return this.repo.findByEmailAName(filter);
   }
 
   // Lấy danh sách tất cả user

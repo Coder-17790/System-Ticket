@@ -5,6 +5,7 @@
 
 .content {
   display: flex;
+  flex-wrap: wrap; /* Cho phép xuống hàng */
   gap: 20px;
   justify-content: space-between; /* hoặc space-around / space-evenly */
 }

@@ -23,6 +23,12 @@ export type User = {
   updatedAt: Date;
 };
 
+export type FilterUser = {
+  search: string; // từ khóa tìm kiếm
+  pageNumber: number; // số trang hiện tại
+  countNumber: number; // số lượng hiển thị trên mỗi trang
+};
+
 export const roleOption: OptionCBB[] = [
   { label: 'Admin', value: 'admin' },
   { label: 'User', value: 'user' },

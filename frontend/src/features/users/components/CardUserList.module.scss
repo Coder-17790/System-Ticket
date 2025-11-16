@@ -1,0 +1,29 @@
+.headerCardList {
+  display: flex;
+  gap: 10px;
+}
+
+.cardList {
+  border: 1px solid var(--color-border);
+  padding: 10px;
+}
+
+.userList {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+  border-radius: var(--size-rdsSm);
+  scrollbar-width: thin;
+  scrollbar-color: #999 transparent;
+}
+
+.footer {
+  display: flex;
+  padding-top: var(--size-pdSm);
+  // border: 1px solid #9f9a9a;
+  align-items: center; /* canh giữa theo chiều dọc */
+  justify-content: center; /* canh giữa theo chiều ngang */
+}

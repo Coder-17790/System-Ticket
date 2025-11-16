@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './STComboBox.module.scss';
 import STText from './STText';
 
@@ -13,7 +13,6 @@ type STComboBoxProps = {
   onChange?: (value: string | number) => void;
   placeholder?: string;
   disabled?: boolean;
-  variant?: 'primary' | 'danger';
   className?: string;
   style?: React.CSSProperties;
 };
@@ -24,17 +23,29 @@ const STComboBox: React.FC<STComboBoxProps> = ({
   onChange,
   placeholder = 'None',
   disabled = false,
-  variant = 'primary',
   className = '',
   style,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-
-  console.log('isOpen', isOpen);
+  const comboRef = useRef<HTMLDivElement>(null); // ref cho combobox
 
   const handleSelect = (val: string | number) => {
     onChange?.(val);
+    setIsOpen(false); // tự đóng khi chọn xong
   };
+
+  // xử lý click ra ngoài
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (comboRef.current && !comboRef.current.contains(e.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   let selectedLabel: string | number = placeholder;
 
@@ -45,7 +56,8 @@ const STComboBox: React.FC<STComboBoxProps> = ({
 
   return (
     <div
-      className={`${styles.combobox} ${styles[variant]} ${className} 
+      ref={comboRef}
+      className={`${styles.combobox} ${className} 
               ${disabled ? styles.disabled : ''} 
               ${isOpen ? styles.focused : ''}`}
       style={style}
@@ -58,6 +70,7 @@ const STComboBox: React.FC<STComboBoxProps> = ({
         <div className={styles.options}>
           {options.map((opt) => (
             <STText
+              key={opt.value}
               style={{ display: 'block' }}
               className={`${styles.option} ${opt.value === value ? styles.active : ''}`}
               onClick={() => handleSelect(opt.value)}

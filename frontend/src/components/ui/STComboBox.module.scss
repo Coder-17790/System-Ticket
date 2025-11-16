@@ -3,9 +3,9 @@
   display: flex;
   align-items: center; /* canh giữa theo chiều dọc */
   justify-content: space-between; /* đẩy chữ sang trái, icon sang phải */
-  width: 200px;
-  height: 25px;
-  padding: 0 8px; /* thêm chút khoảng cách cho đẹp */
+  width: 150px;
+  height: 20px;
+  padding: 4px 8px;
   font-size: 14px;
   border: 1px solid var(--color-border);
   border-radius: var(--size-rdsSm);
@@ -15,8 +15,8 @@
 }
 
 .focused {
-  border-color: var(--color-primary); /* màu khi focus */
-  box-shadow: 0 0 3px rgba(0, 123, 255, 0.5); /* hiệu ứng glow nhẹ */
+  border-color: var(--color-primary);
+  box-shadow: 0 0 5px var(--color-primary);
 }
 
 .selected {
@@ -38,6 +38,7 @@
   overflow-y: auto;
   z-index: 5;
   border-color: var(--color-primary); /* màu khi focus */
+  box-shadow: 0 0 5px var(--color-primary);
 }
 
 .option {
@@ -58,14 +59,6 @@
   //   right: 8px;
   //   top: 50%;
   //   transform: translateY(-50%);
-}
-
-.primary {
-  //   --color-border: #61b788;
-}
-
-.danger {
-  --color-border: #e74c3c;
 }
 
 .disabled {

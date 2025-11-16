@@ -1,13 +1,13 @@
-import STInput from '@/components/ui/STInput';
-import styles from './CardInfo.module.scss';
-import { positionOption, roleOption, User } from '@/types';
-import STText from '@/components/ui/STText';
 import STButton from '@/components/ui/STButton';
+import STComboBox, { OptionCBB } from '@/components/ui/STComboBox';
+import STDatePicker from '@/components/ui/STDatePicker';
+import STInput from '@/components/ui/STInput';
+import STText from '@/components/ui/STText';
+import { positionOption, roleOption, User } from '@/types';
 import React, { useCallback, useEffect, useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
-import STDatePicker from '@/components/ui/STDatePicker';
 import { useUpdateUserMutation } from '../hooks/useUsers';
-import STComboBox, { OptionCBB } from '@/components/ui/STComboBox';
+import styles from './CardInfo.module.scss';
 
 type CardInfoProps = {
   info?: User;
