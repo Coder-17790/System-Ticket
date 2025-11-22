@@ -7,28 +7,23 @@
 
 /* === Variant (kiểu chữ) === */
 .body {
-  font-size: 15px;
-  font-weight: 400;
+  font-weight: 500;
 }
 .bold {
-  font-size: 15px;
   font-weight: 600;
 }
 .title {
-  font-size: 20px;
+  font-size: 30px;
   font-weight: 600;
 }
-.caption {
-  font-size: 13px;
-  font-weight: 300;
+.label {
+  font-size: 18px;
+  font-weight: 600;
 }
 .highlight {
-  font-size: 17px;
-  font-weight: 600;
-  color: var(--color-primary);
+  font-size: 20px;
 }
 .link {
-  color: var(--color-primary);
   cursor: pointer;
   text-decoration: none;
   &:hover {

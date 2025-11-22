@@ -23,7 +23,13 @@
 .footer {
   display: flex;
   padding-top: var(--size-pdSm);
-  // border: 1px solid #9f9a9a;
+  // border: 1px solid var(--color-border);
   align-items: center; /* canh giữa theo chiều dọc */
   justify-content: center; /* canh giữa theo chiều ngang */
+}
+
+.icTurnPage {
+  // border: 1px solid var(--color-border);
+  border-radius: 100px;
+  padding: var(--size-pdXs);
 }

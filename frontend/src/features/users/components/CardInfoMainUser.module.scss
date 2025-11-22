@@ -1,0 +1,40 @@
+.body {
+  display: flex;
+  gap: 20px;
+  padding: var(--size-pdLg) var(--size-pdLg);
+}
+
+.divAvatar {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+}
+
+.infoLine {
+  display: flex;
+  flex-direction: column;
+  width: 160px;
+  border-radius: var(--size-rdsMd);
+}
+
+.divInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--size-pdSm);
+}
+
+.divInfoLine {
+  display: flex;
+  flex-direction: row;
+  gap: var(--size-gapLg);
+  border-top: 1px solid #9f9a9a;
+  padding-top: var(--size-pdLg);
+}
+
+.fullName {
+}

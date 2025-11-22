@@ -1,5 +1,5 @@
 import { log } from 'console';
-import { FilterUser, UserCreation } from '../models/user.types';
+import { FilterUser, UserCreation } from '../models/user/user.types';
 import { UserRepository } from '../repositories/user.repository';
 
 export class UserService {

@@ -9,26 +9,47 @@
   box-sizing: border-box; /* Đảm bảo padding không làm tăng kích thước tổng thể */
 }
 
+.navbar {
+  border: 1px solid var(--color-border);
+  height: var(--size-heSm);
+}
+
+.divMenuColumn {
+  width: 40px;
+  border: 1px solid var(--color-border);
+}
+
+.divLeft {
+  display: flex;
+  flex: 2;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.divTop {
+  flex: 1;
+  border: 1px solid var(--color-border);
+}
+
 .bodyHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin: 10px 0px;
 }
 
 .content {
   flex: 1;
   display: flex;
+  gap: 10px;
   overflow: hidden;
+  // border: 1px solid var(--color-border);
 }
 
 .cardInfo {
-  flex: 2;
-  width: fit-content;
-  height: fit-content;
-  margin-right: 10px;
-  border: 1px solid #9f9a9a;
-  padding: 15px;
+  flex: 1;
+  border: 1px solid var(--color-border);
+  padding: var(--size-pdSm);
 }
 
 .userList {

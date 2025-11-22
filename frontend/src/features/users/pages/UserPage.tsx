@@ -7,7 +7,7 @@ import { toggleTheme } from '@/store/slices/themeSlice';
 import { useDispatch } from 'react-redux';
 import { User } from '@/types';
 import CardUserList from '../components/CardUserList';
-import STIcon from '@/components/ui/STIcon';
+import CardInfoMainUser from '../components/CardInfoMainUser';
 
 export default function UserList() {
   const dispatch = useDispatch();
@@ -18,12 +18,19 @@ export default function UserList() {
 
   return (
     <div className={styles.body}>
+      <div className={styles.navbar}></div>
       <div className={styles.bodyHeader}>
-        <STText variant="title">Danh sách người dùng</STText>
+        <STText variant="title" color="primary">
+          Danh sách người dùng
+        </STText>
         <STSwitchButton onchange={handleToggleTheme} />
       </div>
       <div className={styles.content}>
-        <CardInfo className={styles.cardInfo} info={info}></CardInfo>
+        <div className={styles.divMenuColumn}></div>
+        <div className={styles.divLeft}>
+          <CardInfoMainUser className={styles.divTop} info={info}></CardInfoMainUser>
+          <CardInfo className={styles.cardInfo} info={info}></CardInfo>
+        </div>
         <CardUserList className={styles.userList} select={(user) => setInfo(user)}></CardUserList>
       </div>
     </div>

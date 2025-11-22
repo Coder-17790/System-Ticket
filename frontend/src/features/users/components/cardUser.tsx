@@ -37,14 +37,13 @@ const CardUser = ({ info, getInfoUser, className, select }: CardUserProps) => {
   };
 
   return (
-    <div className={`${styles.card}  ${select ? styles.focus : ''}`}>
+    <div
+      className={`${styles.card}  ${select ? styles.focus : ''}`}
+      onClick={() => getInfoUser && getInfoUser?.(info!)}
+    >
       <div className={styles.cardContent}>
         <div className={styles.cardHeader}>
-          <STText
-            color="primary"
-            variant="highlight"
-            onClick={() => getInfoUser && getInfoUser?.(info!)}
-          >
+          <STText color="primary" variant="highlight">
             {info?.fullName}
           </STText>
           <STIcon icon={icons.delete} size="lg" onClick={handleDelete} />

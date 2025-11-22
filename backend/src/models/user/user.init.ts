@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import { sequelize } from '../database/sequelize';
+import { sequelize } from '../../database/sequelize';
 import { User } from './user.model';
 
 User.init(
@@ -21,6 +21,7 @@ User.init(
     language: { type: DataTypes.STRING(255), allowNull: false, field: 'language' },
     fullName: { type: DataTypes.STRING(255), allowNull: false, field: 'full_name' },
     title: { type: DataTypes.STRING(255), allowNull: false, field: 'title' },
+    avatar: { type: DataTypes.TEXT, allowNull: true },
     isActive: { type: DataTypes.BOOLEAN, defaultValue: true, field: 'is_active' },
     phone: { type: DataTypes.STRING(20), allowNull: true },
     position: { type: DataTypes.TEXT, allowNull: true },

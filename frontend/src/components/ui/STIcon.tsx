@@ -12,7 +12,7 @@ type STIconProps = {
   style?: React.CSSProperties;
 };
 
-const STIcon: React.FC<STIconProps> = ({
+const STIcon = ({
   icon,
   size = 'md',
   rotate,
@@ -20,7 +20,7 @@ const STIcon: React.FC<STIconProps> = ({
   onClick,
   className = '',
   style,
-}) => {
+}: STIconProps) => {
   const rotateStyle = rotate ? { transform: `rotate(${rotate}deg)` } : {};
 
   // Kiểm tra xem icon có phải file ảnh không (.png, .jpg, .jpeg, .svg, .gif)

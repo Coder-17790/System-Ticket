@@ -5,6 +5,7 @@ export class User extends Model<InferAttributes<User>, InferCreationAttributes<U
   declare orgId: CreationOptional<string | number | null>;
   declare email: string;
   declare title: string;
+  declare avatar: string;
   declare fullName: string;
   declare isActive: CreationOptional<boolean>;
   declare phone: CreationOptional<string | null>;

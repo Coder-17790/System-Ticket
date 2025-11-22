@@ -3,7 +3,7 @@ import STComboBox, { OptionCBB } from '@/components/ui/STComboBox';
 import STDatePicker from '@/components/ui/STDatePicker';
 import STInput from '@/components/ui/STInput';
 import STText from '@/components/ui/STText';
-import { positionOption, roleOption, User } from '@/types';
+import { languageOption, positionOption, roleOption, User } from '@/types';
 import React, { useCallback, useEffect, useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useUpdateUserMutation } from '../hooks/useUsers';
@@ -141,11 +141,18 @@ const CardInfo = ({ info, className }: CardInfoProps) => {
             value={data?.title || ''}
             onChange={(str) => updateUserField('title', str)}
           />
-          <InfoLine
+          {/* <InfoLine
             style={{ marginTop: 10 }}
             label="Ngôn ngữ"
             value={data?.language || ''}
             onChange={(str) => updateUserField('language', str)}
+          /> */}
+          <InfoComboBoxLine
+            option={languageOption}
+            label="Ngôn ngữ"
+            style={{ marginTop: 10 }}
+            value={data?.language || ''}
+            onChange={(str) => updateUserField('language', String(str) ?? '')}
           />
         </div>
         <div>
@@ -228,7 +235,7 @@ const CardInfo = ({ info, className }: CardInfoProps) => {
       />
 
       <div className={styles.buttonWrapper}>
-        <STButton label="Cập nhật" className={styles.button} onClick={() => handleUpdate(data)} />
+        <STButton label="Cập nhật" onClick={() => handleUpdate(data)} />
       </div>
     </div>
   );

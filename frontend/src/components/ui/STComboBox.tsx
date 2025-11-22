@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './STComboBox.module.scss';
 import STText from './STText';
+import STIcon from './STIcon';
 
 export type OptionCBB = {
   label: string;
@@ -64,7 +65,8 @@ const STComboBox: React.FC<STComboBoxProps> = ({
       onClick={() => !disabled && setIsOpen((prev) => !prev)}
     >
       <STText className={styles.selected}>{selectedLabel}</STText>
-      <STText className={styles.arrow}>{isOpen ? '▲' : '▼'}</STText>
+      <STIcon icon={isOpen ? 'fa-solid fa-caret-up' : 'fa-solid fa-caret-down'}></STIcon>
+      {/* <STText className={styles.arrow}>{isOpen ? '▲' : '▼'}</STText> */}
 
       {isOpen && (
         <div className={styles.options}>

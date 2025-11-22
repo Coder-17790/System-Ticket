@@ -3,7 +3,7 @@ import styles from './STText.module.scss';
 
 type STTextProps = {
   children?: React.ReactNode;
-  variant?: 'body' | 'title' | 'caption' | 'link' | 'highlight' | 'bold';
+  variant?: 'normal' | 'title' | 'label' | 'link' | 'highlight' | 'bold';
   color?: 'default' | 'primary' | 'secondary' | 'danger';
   block?: boolean;
   onClick?: () => void;
@@ -13,7 +13,7 @@ type STTextProps = {
 
 const STText: React.FC<STTextProps> = ({
   children,
-  variant = 'body',
+  variant = 'normal',
   color = 'default',
   onClick,
   block = false,

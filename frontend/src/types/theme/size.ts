@@ -55,6 +55,20 @@ export type Size = {
   icMd: string;
   icLg: string;
   icXl: string;
+
+  // height
+  heSX: string;
+  heSm: string;
+  heMd: string;
+  heLg: string;
+  heXl: string;
+
+  // width
+  wiSX: string;
+  wiSm: string;
+  wiMd: string;
+  wiLg: string;
+  wiXl: string;
 };
 
 export const defaultSize: Size = {
@@ -66,18 +80,18 @@ export const defaultSize: Size = {
   xl: '32px',
 
   // padding
-  pdXs: '4px',
-  pdSm: '8px',
-  pdMd: '12px',
-  pdLg: '16px',
-  pdXl: '24px',
+  pdXs: '5px',
+  pdSm: '10px',
+  pdMd: '15px',
+  pdLg: '20px',
+  pdXl: '25px',
 
   // margin
-  mrXs: '4px',
-  mrSm: '8px',
-  mrMd: '12px',
-  mrLg: '16px',
-  mrXl: '24px',
+  mrXs: '5px',
+  mrSm: '10px',
+  mrMd: '15px',
+  mrLg: '20px',
+  mrXl: '25px',
 
   // radius
   rdsXs: '2px',
@@ -88,10 +102,10 @@ export const defaultSize: Size = {
 
   // font
   fontXs: '10px',
-  fontSm: '12px',
-  fontMd: '14px',
-  fontLg: '18px',
-  fontXl: '24px',
+  fontSm: '14px',
+  fontMd: '20px',
+  fontLg: '28px',
+  fontXl: '36px',
 
   // layout
   maxW: '1200px',
@@ -102,11 +116,11 @@ export const defaultSize: Size = {
   contPadXl: '32px',
 
   // gap
-  gapXs: '4px',
-  gapSm: '8px',
-  gapMd: '12px',
-  gapLg: '16px',
-  gapXl: '24px',
+  gapXs: '5px',
+  gapSm: '10px',
+  gapMd: '20px',
+  gapLg: '25px',
+  gapXl: '40px',
 
   // icon
   icXs: '8px',
@@ -114,4 +128,18 @@ export const defaultSize: Size = {
   icMd: '16px',
   icLg: '24px',
   icXl: '32px',
+
+  // height
+  heSX: '10px',
+  heSm: '50px',
+  heMd: '100px',
+  heLg: '250px',
+  heXl: '500px',
+
+  // width
+  wiSX: '10px',
+  wiSm: '50px',
+  wiMd: '100px',
+  wiLg: '250px',
+  wiXl: '500px',
 };

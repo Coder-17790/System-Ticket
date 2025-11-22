@@ -2,7 +2,7 @@ import STSearch from '@/components/ui/STSearch';
 import styles from './CardUserList.module.scss';
 import STComboBox from '@/components/ui/STComboBox';
 import { useEffect, useState } from 'react';
-import { FilterUser, User } from '@/types';
+import { FilterUser, User, UserGetList } from '@/types';
 import { useFindUserQuery } from '../hooks/useUsers';
 import CardUser from './CardUser';
 import STIcon from '@/components/ui/STIcon';
@@ -21,7 +21,7 @@ const CardUserList = ({ select, className }: CardUserListProps) => {
   // Hilight khi nhấn chọn
   const [focusedUserId, setFocusedUserId] = useState<string | null>(null);
   // Số user mà 1 trang muốn load
-  const [numberOfPage, setNumberOfPage] = useState<number>(5);
+  const [numberOfPage, setNumberOfPage] = useState<number>(10);
   // Trang mà bạn muốn load
   const [page, setPage] = useState<number>(1);
 
@@ -81,7 +81,7 @@ const CardUserList = ({ select, className }: CardUserListProps) => {
       {isLoading && <p>Đang tải dữ liệu...</p>}
       {isError && <p>Lỗi khi tải dữ liệu</p>}
       <div className={styles.userList}>
-        {data?.map((item) => (
+        {data?.users.map((item) => (
           <CardUser
             key={item.id}
             info={item}
@@ -91,9 +91,24 @@ const CardUserList = ({ select, className }: CardUserListProps) => {
         ))}
       </div>
       <div className={styles.footer}>
-        <STIcon size="lg" icon="fa-solid fa-angle-left" onClick={() => setPage(page - 1)}></STIcon>
+        <STIcon
+          size="lg"
+          className={styles.icTurnPage}
+          style={{ backgroundColor: page == 1 ? 'var(--color-border)' : 'var(--color-primary)' }}
+          icon="fa-solid fa-angle-left"
+          onClick={() => setPage(page > 1 ? page - 1 : page)}
+        ></STIcon>
         <STText style={{ padding: '0 20px' }}>{page}</STText>
-        <STIcon size="lg" icon="fa-solid fa-angle-right" onClick={() => setPage(page + 1)}></STIcon>
+        <STIcon
+          size="lg"
+          className={styles.icTurnPage}
+          icon="fa-solid fa-angle-right"
+          style={{
+            backgroundColor:
+              page == data?.totalPages ? 'var(--color-border)' : 'var(--color-primary)',
+          }}
+          onClick={() => setPage(page < (data?.totalPages ?? page) ? page + 1 : page)}
+        ></STIcon>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { FilterUser, User } from '@/types';
+import { FilterUser, User, UserGetList } from '@/types';
 
 // Lấy danh sách người dùng
 export async function getUsers() {
@@ -39,6 +39,7 @@ export async function findUser(filter: FilterUser) {
     body: JSON.stringify(filter),
   });
 
-  if (!res.ok) throw new Error('Failed to find usedatar');
+  if (!res.ok) throw new Error('Failed to find user');
+
   return await res.json();
 }

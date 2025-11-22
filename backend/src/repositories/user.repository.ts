@@ -1,5 +1,5 @@
-import { FilterUser, UserCreation, UserUpdate } from '../models/user.types';
-import User from '../models/user.init';
+import { FilterUser, UserCreation, UserUpdate } from '../models/user/user.types';
+import User from '../models/user/user.init';
 import { Op } from 'sequelize';
 import { log } from 'console';
 
@@ -24,32 +24,62 @@ export class UserRepository {
   }
 
   // Tìm tất cả user theo email hoặc tên, có filter
+  // async findByEmailAName(filter?: FilterUser) {
+  //   if (!filter) throw new Error('Missing filter');
+
+  //   const { search, pageNumber, countNumber } = filter;
+  //   const page = pageNumber || 1;
+  //   const count = countNumber || 10;
+
+  //   if (!search?.trim()) {
+  //     return User.findAll({
+  //       limit: count,
+  //       offset: (page - 1) * count,
+  //       order: [['createdAt', 'DESC']],
+  //     });
+  //   }
+
+  //   return User.findAll({
+  //     where: {
+  //       [Op.or]: [
+  //         { email: { [Op.iLike]: `%${search}%` } },
+  //         { fullName: { [Op.iLike]: `%${search}%` } },
+  //       ],
+  //     },
+  //     limit: count,
+  //     offset: (page - 1) * count,
+  //     order: [['createdAt', 'DESC']],
+  //   });
+  // }
+
   async findByEmailAName(filter?: FilterUser) {
     if (!filter) throw new Error('Missing filter');
 
     const { search, pageNumber, countNumber } = filter;
     const page = pageNumber || 1;
     const count = countNumber || 10;
+    const where = search?.trim()
+      ? {
+          [Op.or]: [
+            { email: { [Op.iLike]: `%${search}%` } },
+            { fullName: { [Op.iLike]: `%${search}%` } },
+          ],
+        }
+      : {};
 
-    if (!search?.trim()) {
-      return User.findAll({
-        limit: count,
-        offset: (page - 1) * count,
-        order: [['createdAt', 'DESC']],
-      });
-    }
-
-    return User.findAll({
-      where: {
-        [Op.or]: [
-          { email: { [Op.iLike]: `%${search}%` } },
-          { fullName: { [Op.iLike]: `%${search}%` } },
-        ],
-      },
+    const result = await User.findAndCountAll({
+      where,
       limit: count,
       offset: (page - 1) * count,
-      order: [['createdAt', 'DESC']],
+      order: [['id', 'DESC']],
     });
+
+    return {
+      total: result.count,
+      users: result.rows,
+      currentPage: page,
+      totalPages: Math.ceil(result.count / count),
+    };
   }
 
   // Cập nhật user theo id
