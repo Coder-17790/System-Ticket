@@ -1,0 +1,26 @@
+.body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* full màn hình */
+  background-color: var(--color-background);
+  width: 100%;
+  overflow: hidden; /* Không cho cuộn */
+  box-sizing: border-box; /* Đảm bảo padding không làm tăng kích thước tổng thể */
+}
+
+.navbar {
+  background-color: var(--color-primary);
+  height: 100px;
+  height: var(--size-heSm);
+}
+
+.divMenuColumn {
+  width: 50px;
+  background-color: var(--color-primary);
+}
+
+.all {
+  display: flex;
+  flex: 1;
+  overflow: hidden; /* Không cho cuộn */
+}

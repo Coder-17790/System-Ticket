@@ -20,7 +20,7 @@ type STDatePickerProps = {
 
 const STDatePicker: React.FC<STDatePickerProps> = ({
   label,
-  value,
+  value = new Date(),
   onChange,
   placeholder = '',
   minDate,
@@ -53,6 +53,7 @@ const STDatePicker: React.FC<STDatePickerProps> = ({
         disabled={!enable}
         popperPlacement="top-start"
         portalId="root" // ✅ render ra ngoài layout
+        // withPortal // 👈 bắt buộc thêm dòng này
       />
     </div>
   );

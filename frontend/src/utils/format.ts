@@ -1,5 +1,5 @@
 export const fomatData_1 = (
-  data: Date | string,
+  data: Date | string ,
   format: 'dd/mm/yyyy' | 'yyyy-mm-dd' = 'dd/mm/yyyy'
 ) => {
   const date = new Date(data);
@@ -10,4 +10,4 @@ export const fomatData_1 = (
   return format === 'dd/mm/yyyy' ? `${day}/${month}/${year}` : `${year}-${month}-${day}`;
 };
 
-// export { fomatData_1 };
+export default { fomatData_1 };

@@ -6,17 +6,16 @@
 .content {
   display: flex;
   flex-wrap: wrap; /* Cho phép xuống hàng */
-  gap: 20px;
-  justify-content: space-between; /* hoặc space-around / space-evenly */
-}
-
-.label {
-  font-weight: 600;
-  margin-bottom: 5px;
+  gap: var(--size-gapXl);
+  justify-content: left; /* hoặc space-around / space-evenly */
 }
 
 .buttonWrapper {
   display: flex;
   margin-top: 10px;
   justify-content: flex-end; /* canh phải */
+}
+
+.title {
+  margin-bottom: var(--size-mrMd);
 }

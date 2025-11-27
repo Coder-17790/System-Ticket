@@ -1,0 +1,33 @@
+.body {
+  border: 1px solid var(--color-border);
+  display: 1;
+  flex: 1;
+}
+
+.infoLine {
+  width: 270px;
+  display: flex;
+  flex-direction: column;
+  padding-left: var(--size-pdXs);
+  border-left: 1px solid var(--color-border);
+}
+
+.wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--size-gapMd);
+  row-gap: var(--size-gapXl);
+  margin-bottom: var(--size-pdXl);
+}
+
+.divBio {
+  display: flex;
+  flex-direction: column;
+}
+
+.borBio {
+  border: 1px solid var(--color-border);
+  height: 100px;
+  border-radius: var(--size-rdsMd);
+  padding: var(--size-pdSm);
+}

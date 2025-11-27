@@ -1,6 +1,6 @@
 import { User } from '@/types';
 import styles from './CardUser.module.scss';
-import { fomatData_1 } from '@/utils';
+import utilt from '@/utils';
 import { useDeleteUserMutation } from '../hooks/useUsers';
 import { icons } from '@/assets/icons';
 import STIcon from '@/components/ui/STIcon';
@@ -54,8 +54,8 @@ const CardUser = ({ info, getInfoUser, className, select }: CardUserProps) => {
             {infoItem('Vai trò', info?.role || '')}
           </div>
           <div className={styles.cardColumn}>
-            {infoItem('Ngày tạo', info ? fomatData_1(info.createdAt) : '')}
-            {infoItem('Ngày cập nhật', info ? fomatData_1(info.updatedAt) : '')}
+            {infoItem('Ngày tạo', info ? utilt.format.fomatData_1(info.createdAt) : '')}
+            {infoItem('Ngày cập nhật', info ? utilt.format.fomatData_1(info.updatedAt) : '')}
           </div>
         </div>
       </div>

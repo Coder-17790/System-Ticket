@@ -1,33 +1,18 @@
-.body {
+.lefNavbar {
   display: flex;
   flex-direction: column;
-  height: 100vh; /* full màn hình */
-  background-color: var(--color-background);
-  padding: 10px;
-  width: 100%;
   overflow: hidden; /* Không cho cuộn */
-  box-sizing: border-box; /* Đảm bảo padding không làm tăng kích thước tổng thể */
-}
-
-.navbar {
-  border: 1px solid var(--color-border);
-  height: var(--size-heSm);
-}
-
-.divMenuColumn {
-  width: 40px;
-  border: 1px solid var(--color-border);
 }
 
 .divLeft {
   display: flex;
-  flex: 2;
+  flex: 1;
   flex-direction: column;
   gap: 10px;
 }
 
 .divTop {
-  flex: 1;
+  // flex: 1;
   border: 1px solid var(--color-border);
 }
 
@@ -35,7 +20,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 10px 0px;
+  padding: 10px;
 }
 
 .content {
@@ -43,17 +28,21 @@
   display: flex;
   gap: 10px;
   overflow: hidden;
-  // border: 1px solid var(--color-border);
 }
 
 .cardInfo {
   flex: 1;
   border: 1px solid var(--color-border);
-  padding: var(--size-pdSm);
+  padding: var(--size-pdMd);
+}
+
+.cardInfo1 {
+  padding: var(--size-pdMd);
+  width: 400px;
 }
 
 .userList {
-  flex: 1;
+  // flex: 2;
   border: 1px solid var(--color-border);
   padding: 10px;
   overflow-y: auto;
