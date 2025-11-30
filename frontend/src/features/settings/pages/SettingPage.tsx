@@ -1,16 +1,16 @@
 import STText from '@/components/ui/STText';
-import styles from './HomePage.module.scss';
+import styles from './SettingPage.module.scss';
 
-type HomeProps = {
+type SettingPageProps = {
   className?: string;
   styleCSS?: React.CSSProperties;
 };
-const HomePage = ({ className, styleCSS }: HomeProps) => {
+const SettingPage = ({ className, styleCSS }: SettingPageProps) => {
   return (
     <div style={styleCSS} className={className ? className : styles.body}>
-      <STText>HomePage</STText>
+      <STText>Setting</STText>
     </div>
   );
 };
 
-export default HomePage;
+export default SettingPage;

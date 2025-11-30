@@ -1,4 +1,4 @@
-import { InfoComboBoxLine, InfoDateLine, InfoLine } from '@/components/shared/forms/InputLine';
+import { InfoComboBoxLine, InfoDateLine, InfoLine } from '@/components/forms/InputLine';
 import STButton from '@/components/ui/STButton';
 import STText from '@/components/ui/STText';
 import { languageOption, positionOption, roleOption, User } from '@/types';

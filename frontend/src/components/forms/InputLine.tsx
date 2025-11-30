@@ -8,6 +8,7 @@ import STComboBox, { OptionCBB } from '@/components/ui/STComboBox';
 export const InfoLine = ({
   label,
   value,
+  required = false,
   enable = true,
   type = 'text',
   styleInput,
@@ -16,6 +17,7 @@ export const InfoLine = ({
 }: {
   label: string;
   value?: string | number | boolean;
+  required?: boolean;
   enable?: boolean;
   type?: 'text' | 'textarea' | 'date';
   style?: React.CSSProperties;
@@ -24,9 +26,16 @@ export const InfoLine = ({
 }) => {
   return (
     <div style={style}>
-      <STText block className={styles.label}>
-        {label}:
-      </STText>
+      <div style={{ display: 'flex' }}>
+        <STText block className={styles.label}>
+          {`${label}: `}
+        </STText>
+        {required && (
+          <STText variant="bold" color="danger">
+            *
+          </STText>
+        )}
+      </div>
       <STInput
         value={String(value)}
         enable={enable}
@@ -42,12 +51,14 @@ export const InfoLine = ({
 export const InfoDateLine = ({
   label,
   value,
+  required = false,
   enable = true,
   onChange,
   style,
 }: {
   label: string;
   value?: Date | null;
+  required?: boolean;
   enable?: boolean;
   style?: React.CSSProperties;
   styleInput?: React.CSSProperties;
@@ -55,9 +66,16 @@ export const InfoDateLine = ({
 }) => {
   return (
     <div style={style}>
-      <STText block className={styles.label}>
-        {label}:
-      </STText>
+      <div style={{ display: 'flex' }}>
+        <STText block className={styles.label}>
+          {`${label}: `}
+        </STText>
+        {required && (
+          <STText variant="bold" color="danger">
+            *
+          </STText>
+        )}
+      </div>
       <STDatePicker value={value} onChange={onChange} dateFormat="dd/MM/yyyy" enable={enable} />
     </div>
   );

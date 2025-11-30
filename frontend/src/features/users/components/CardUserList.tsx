@@ -7,6 +7,7 @@ import { useFindUserQuery } from '../hooks/useUsers';
 import CardUser from './CardUser';
 import STIcon from '@/components/ui/STIcon';
 import STText from '@/components/ui/STText';
+import EmptyList from '@/components/forms/EmtyList';
 
 type CardUserListProps = {
   select?: (str: User) => void;
@@ -31,6 +32,8 @@ const CardUserList = ({ select, className }: CardUserListProps) => {
     pageNumber: page,
     countNumber: numberOfPage,
   });
+
+  const datatest: UserGetList[] = [];
 
   // Cập nhật filter khi input, số lượng hoặc trang thay đổi
   useEffect(() => {
@@ -81,14 +84,19 @@ const CardUserList = ({ select, className }: CardUserListProps) => {
       {isLoading && <p>Đang tải dữ liệu...</p>}
       {isError && <p>Lỗi khi tải dữ liệu</p>}
       <div className={styles.userList}>
-        {data?.users.map((item) => (
-          <CardUser
-            key={item.id}
-            info={item}
-            getInfoUser={() => handleInfoUser(item)}
-            select={focusedUserId === String(item.id)}
-          />
-        ))}
+        {(data?.users?.length ?? 0) > 0 ? (
+          // datatest?.map((item) => (
+          data?.users.map((item) => (
+            <CardUser
+              key={item.id}
+              info={item}
+              getInfoUser={() => handleInfoUser(item)}
+              select={focusedUserId === String(item.id)}
+            />
+          ))
+        ) : (
+          <EmptyList /> // component bạn muốn render khi list rỗng
+        )}
       </div>
       <div className={styles.footer}>
         <STIcon

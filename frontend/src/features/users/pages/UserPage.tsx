@@ -9,7 +9,7 @@ import { User } from '@/types';
 import CardUserList from '../components/CardUserList';
 import CardInfoMainUser from '../components/CardInfoMainUser';
 import STButton from '@/components/ui/STButton';
-import STPopup, { STPopupRef } from '@/components/layout/STPopup';
+import STPopup, { STPopupRef } from '@/components/popups/STPopup';
 import CardInfoUser from '../components/CardInfoUser';
 import CardAddUser from '../components/CardAddUser';
 

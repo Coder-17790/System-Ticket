@@ -1,3 +1,11 @@
+.body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  // margin: 10px;
+}
+
 .lefNavbar {
   display: flex;
   flex-direction: column;
@@ -6,7 +14,7 @@
 
 .divLeft {
   display: flex;
-  flex: 1;
+  flex: 4;
   flex-direction: column;
   gap: 10px;
 }
@@ -42,10 +50,10 @@
 }
 
 .userList {
-  // flex: 2;
   border: 1px solid var(--color-border);
   padding: 10px;
   overflow-y: auto;
   display: flex;
+  flex: 2;
   flex-direction: column;
 }

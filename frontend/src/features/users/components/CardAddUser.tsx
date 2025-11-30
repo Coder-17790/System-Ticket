@@ -1,4 +1,4 @@
-import { InfoComboBoxLine, InfoDateLine, InfoLine } from '@/components/shared/forms/InputLine';
+import { InfoComboBoxLine, InfoDateLine, InfoLine } from '@/components/forms/InputLine';
 import STButton from '@/components/ui/STButton';
 import STText from '@/components/ui/STText';
 import { languageOption, positionOption, roleOption, User } from '@/types';
@@ -27,8 +27,12 @@ const CardAddUser = ({ info, className, click }: CardAddUserProps) => {
     setData((prev) => (prev ? { ...prev, [field]: value } : prev));
   }, []);
 
-  // Cập nhật user
-  const handleUpdate = (info: User) => {
+  // Thêm user
+  const handleAdd = (info: User) => {
+    if (!info.email) {
+      alert('Thiếu email');
+      return;
+    }
     click?.();
     useCreate.mutate(info);
     useCreate.isSuccess;
@@ -48,6 +52,7 @@ const CardAddUser = ({ info, className, click }: CardAddUserProps) => {
         <InfoLine
           label="Email"
           value={data?.email || ''}
+          required
           onChange={(str) => updateUserField('email', str)}
         />
 
@@ -131,7 +136,7 @@ const CardAddUser = ({ info, className, click }: CardAddUserProps) => {
       />
 
       <div className={styles.buttonWrapper}>
-        <STButton label="Thêm" onClick={() => handleUpdate(data)} />
+        <STButton label="Thêm" onClick={() => handleAdd(data)} />
       </div>
     </div>
   );

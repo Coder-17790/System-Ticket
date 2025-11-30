@@ -1,25 +1,51 @@
-import { Route, Routes } from 'react-router-dom';
-import Home from '../features/users/pages/Home';
-import Login from '../features/auth/pages/Login';
-import ProtectedRoute from './ProtectedRoute';
-import MainLayout from './layouts/MainLayout';
-import UserPage from '@/features/users/pages/UserPage';
+import { createBrowserRouter } from 'react-router-dom';
 
-export const AppRoutes = () => {
-  return (
-    <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route
-        path="/"
-        element={
-          <ProtectedRoute>
-            <MainLayout />
-          </ProtectedRoute>
-        }
-      >
-        <Route index element={<Home />} />
-        <Route path="users" element={<UserPage />} />
-      </Route>
-    </Routes>
-  );
-};
+import Login from '@/features/auth/pages/Login';
+import UserPage from '@/features/users/pages/UserPage';
+import SettingPage from '@/features/settings/pages/SettingPage';
+import MainLayout from '@/components/layouts/MainLayout';
+
+import { authLoader } from './loaders';
+// import { logoutAction } from "./actions";
+import HomePage from '@/features/users/pages/Home';
+import ErrorPage from '@/components/layouts/errorPage';
+
+export const router = createBrowserRouter([
+  {
+    path: '/login',
+    element: <Login />,
+    // errorElement: <ErrorPage />,
+  },
+
+  // PROTECTED LAYOUT
+  {
+    path: '/',
+    loader: authLoader, // nếu chưa login → redirect
+    element: <MainLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      { index: true, element: <HomePage /> },
+      { path: 'user', element: <UserPage /> },
+      { path: 'setting', element: <SettingPage /> },
+    ],
+  },
+
+  // LOGOUT
+  // {
+  //   path: "/logout",
+  //   action: logoutAction,
+  // },
+
+  // INFO - page độc lập
+  // {
+  //   path: '/info',
+  //   element: <SettingPage />,
+  //   errorElement: <ErrorPage />,
+  // },
+
+  // 404 fallback
+  {
+    path: '*',
+    element: <h1>404 - Không tìm thấy trang</h1>,
+  },
+]);

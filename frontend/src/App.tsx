@@ -1,8 +1,9 @@
-import { BrowserRouter } from 'react-router-dom';
+import { RouterProvider } from 'react-router-dom';
 import { QueryProvider } from './providers/QueryProvider';
-import { AppRoutes } from './routes';
+import { router } from './routes';
 import { useStyles } from '@/hooks/useStyle'; // hook trả về theme.primary chẳng hạn
 import { useEffect } from 'react';
+import UserPage from './features/users/pages/UserPage';
 
 function App() {
   const theme = useStyles();
@@ -20,9 +21,8 @@ function App() {
 
   return (
     <QueryProvider>
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
+      <RouterProvider router={router} />
+      {/* <UserPage /> */}
     </QueryProvider>
   );
 }

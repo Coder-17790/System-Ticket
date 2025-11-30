@@ -1,7 +1,7 @@
 .body {
   display: flex;
+  height: 100vh;
   flex-direction: column;
-  height: 100vh; /* full màn hình */
   background-color: var(--color-background);
   width: 100%;
   overflow: hidden; /* Không cho cuộn */
@@ -12,6 +12,10 @@
   background-color: var(--color-primary);
   height: 100px;
   height: var(--size-heSm);
+  display: flex;
+  text-align: center;
+  justify-content: flex-end;
+  padding-right: var(--size-pdMd);
 }
 
 .divMenuColumn {
@@ -20,7 +24,11 @@
 }
 
 .all {
-  display: flex;
-  flex: 1;
   overflow: hidden; /* Không cho cuộn */
+  display: flex;
+  height: 100%;
+}
+
+.outlet {
+  border: 1px solid var(--color-primary);
 }
