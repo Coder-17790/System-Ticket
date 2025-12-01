@@ -67,19 +67,19 @@
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
   display: flex;
-  justify-content: right;
-  //   justify-content: center;
-  //   align-items: center;
+  justify-content: flex-end;
   z-index: 999;
 }
 
 /* Popup chính */
 .popup {
   background: var(--color-background);
-  border-top-left-radius: var(--size-pdSm);
-  border-bottom-left-radius: var(--size-pdSm);
+  // border-top-left-radius: var(--size-pdSm);
+  // border-bottom-left-radius: var(--size-pdSm);
   border-left: 1px solid var(--color-border);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  scrollbar-width: thin;
+  overflow-y: auto; /* khi nội dung dài -> xuất hiện scroll dọc */
 }
 
 /* Nội dung bên trong */

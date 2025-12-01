@@ -1,0 +1,31 @@
+{
+  "profile": {
+    "email": "Email",
+    "phone": "Phone",
+    "gender": "Gender",
+    "language": "Language",
+    "fullName": "Full Name",
+    "nickname": "Nickname",
+    "birthday": "Birthday",
+    "address": "Address",
+    "role": "Role",
+    "position": "Position",
+    "createdAt": "Created At",
+    "updatedAt": "Updated At",
+    "description": "Description"
+  },
+  "userPage": {
+    "userListTitle": "User List",
+    "previous": "Previous",
+    "next": "Next",
+    "itemsPerPage": "Items per page",
+    "searchPlaceholder": "Search",
+    "addUser": "Add new user",
+    "updateUser": "Update user"
+  },
+  "button": {
+    "save": "Save",
+    "add": "Add",
+    "close": "Close"
+  }
+}

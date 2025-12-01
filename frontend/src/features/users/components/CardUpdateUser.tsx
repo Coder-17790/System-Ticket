@@ -6,6 +6,8 @@ import { useCallback, useEffect, useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useUpdateUserMutation } from '../hooks/useUsers';
 import styles from './CardUpdateUser.module.scss';
+import { useTranslation } from 'react-i18next';
+import AvartarInput from '@/components/forms/AvartarInput';
 
 type CardInfoProps = {
   info?: User;
@@ -15,6 +17,7 @@ type CardInfoProps = {
 const CardInfo = ({ info, className }: CardInfoProps) => {
   const [data, setData] = useState<User>(info || ({} as User));
   const useUpdate = useUpdateUserMutation();
+  const { t } = useTranslation();
 
   // Chạy lần đầu
   useEffect(() => {
@@ -35,39 +38,43 @@ const CardInfo = ({ info, className }: CardInfoProps) => {
   return (
     <div className={`${styles.body} ${className || ''}`}>
       <STText variant="title" className={styles.title}>
-        Cập nhật User mới
+        {t('userPage.updateUser')}
       </STText>
+      <div className={styles.divAvatar}>
+        <AvartarInput source={data?.avatar || ''} />
+      </div>
       <div className={styles.content}>
         <InfoLine
-          label="Họ và tên"
+          label={t('profile.fullName')}
           value={data?.fullName || ''}
           onChange={(str) => updateUserField('fullName', str)}
         />
         <InfoLine
-          label="Email"
+          label={t('profile.email')}
           value={data?.email || ''}
+          required
           onChange={(str) => updateUserField('email', str)}
         />
 
         <InfoLine
-          label="Biệt danh"
+          label={t('profile.nickname')}
           value={data?.title || ''}
           onChange={(str) => updateUserField('title', str)}
         />
         <InfoComboBoxLine
           option={languageOption}
-          label="Ngôn ngữ"
+          label={t('profile.language')}
           value={data?.language || ''}
           onChange={(str) => updateUserField('language', String(str) ?? '')}
         />
 
         <InfoLine
-          label="SĐT"
+          label={t('profile.phone')}
           value={data?.phone ?? ''}
           onChange={(str) => setData((prev) => ({ ...prev, phone: str }))}
         />
         <InfoDateLine
-          label="Ngày sinh"
+          label={t('profile.birthday')}
           value={data?.dateOfBirth || null}
           onChange={(str) => {
             const newDate = str ? new Date(str) : undefined;
@@ -76,32 +83,32 @@ const CardInfo = ({ info, className }: CardInfoProps) => {
         />
 
         <InfoLine
-          label="Giới tính"
+          label={t('profile.gender')}
           value={data?.gender || ''}
           onChange={(str) => updateUserField('gender', str)}
         />
         <InfoLine
-          label="Địa chỉ"
+          label={t('profile.address')}
           value={data?.address || ''}
           onChange={(str) => updateUserField('address', str)}
         />
 
         <InfoComboBoxLine
           option={positionOption}
-          label="Vị trí"
+          label={t('profile.position')}
           value={data?.position || ''}
           onChange={(str) => updateUserField('position', String(str) ?? '')}
         />
         <InfoComboBoxLine
           option={roleOption}
-          label="Vai trò"
+          label={t('profile.role')}
           value={data?.role || ''}
           onChange={(str) => updateUserField('role', String(str) ?? '')}
         />
 
         <InfoDateLine
           enable={false}
-          label="Ngày tạo"
+          label={t('profile.createdAt')}
           value={data?.createdAt || null}
           onChange={(str) => {
             const newDate = str ? new Date(str) : undefined;
@@ -110,7 +117,7 @@ const CardInfo = ({ info, className }: CardInfoProps) => {
         />
         <InfoDateLine
           enable={false}
-          label="Ngày cập nhật"
+          label={t('profile.updatedAt')}
           value={data?.updatedAt || null}
           onChange={(str) => {
             const newDate = str ? new Date(str) : undefined;
@@ -121,7 +128,7 @@ const CardInfo = ({ info, className }: CardInfoProps) => {
 
       <InfoLine
         style={{ marginTop: 30 }}
-        label="Giới thiệu bản thân"
+        label={t('profile.description')}
         value={data?.bio || ''}
         styleInput={{ height: 100 }}
         type="textarea"
@@ -129,7 +136,7 @@ const CardInfo = ({ info, className }: CardInfoProps) => {
       />
 
       <div className={styles.buttonWrapper}>
-        <STButton label="Lưu" onClick={() => handleUpdate(data)} />
+        <STButton label={t('button.save')} onClick={() => handleUpdate(data)} />
       </div>
     </div>
   );

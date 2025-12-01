@@ -8,7 +8,6 @@ type STButtonProps = {
   disabled?: boolean;
   style?: React.CSSProperties;
   className?: string;
-  color?: string;
 };
 
 const STButton: React.FC<STButtonProps> = ({

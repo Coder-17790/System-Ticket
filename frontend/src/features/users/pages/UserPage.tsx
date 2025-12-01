@@ -1,24 +1,20 @@
-import { useRef, useState } from 'react';
-import CardInfo from '../components/CardUpdateUser';
-import STSwitchButton from '@/components/ui/STSwitchButton';
-import STText from '@/components/ui/STText';
-import styles from './UserPage.module.scss';
-import { toggleTheme } from '@/store/slices/themeSlice';
-import { useDispatch } from 'react-redux';
-import { User } from '@/types';
-import CardUserList from '../components/CardUserList';
-import CardInfoMainUser from '../components/CardInfoMainUser';
-import STButton from '@/components/ui/STButton';
 import STPopup, { STPopupRef } from '@/components/popups/STPopup';
-import CardInfoUser from '../components/CardInfoUser';
+import STButton from '@/components/ui/STButton';
+import STText from '@/components/ui/STText';
+import { User } from '@/types';
+import { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import CardAddUser from '../components/CardAddUser';
+import CardInfoMainUser from '../components/CardInfoMainUser';
+import CardInfoUser from '../components/CardInfoUser';
+import CardInfo from '../components/CardUpdateUser';
+import CardUserList from '../components/CardUserList';
+import styles from './UserPage.module.scss';
 
 export default function UserPage() {
-  const dispatch = useDispatch();
   const [info, setInfo] = useState<User>();
-  const handleToggleTheme = (newStatus: boolean) => {
-    dispatch(toggleTheme(newStatus ? 'dark' : 'light'));
-  };
+
+  const { t } = useTranslation();
 
   const popupAddUser = useRef<STPopupRef>(null);
   const popupUpdateUser = useRef<STPopupRef>(null);
@@ -39,16 +35,15 @@ export default function UserPage() {
       <div className={styles.lefNavbar}>
         <div className={styles.bodyHeader}>
           <STText variant="title" color="primary">
-            Danh sách người dùng
+            {t('userPage.userListTitle')}
           </STText>
           <div style={{ display: 'flex', gap: '10px' }}>
             <STButton
-              label="Thêm"
+              label={t('userPage.userListTitle')}
               onClick={() => {
                 popupAddUser.current?.open();
               }}
             />
-            <STSwitchButton onchange={handleToggleTheme} />
           </div>
         </div>
         <div className={styles.content}>

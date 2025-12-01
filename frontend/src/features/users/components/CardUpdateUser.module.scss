@@ -1,6 +1,9 @@
 .body {
   display: flex;
   flex-direction: column;
+
+  scrollbar-width: thin;
+  scrollbar-color: #999 transparent;
 }
 
 .content {
@@ -12,10 +15,16 @@
 
 .buttonWrapper {
   display: flex;
+  gap: var(--size-gapMd);
   margin-top: 10px;
   justify-content: flex-end; /* canh phải */
 }
 
 .title {
   margin-bottom: var(--size-mrMd);
+}
+
+.divAvatar {
+  display: flex;
+  padding-bottom: var(--size-pdMd);
 }

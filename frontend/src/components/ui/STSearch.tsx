@@ -15,7 +15,7 @@ type STSearchProps = {
 
 const STSearch: React.FC<STSearchProps> = ({
   value = '',
-  placeholder = 'Search...',
+  placeholder = 'Search',
   onChange,
   onSearch,
   enable = true,

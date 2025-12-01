@@ -4,6 +4,7 @@ import styles from './CardInfoMainUser.module.scss';
 import STText from '@/components/ui/STText';
 import STIcon from '@/components/ui/STIcon';
 import { icons } from '@/assets/icons';
+import { useTranslation } from 'react-i18next';
 
 type CardInfoMainUserProps = {
   info?: User;
@@ -25,6 +26,7 @@ const InfoLine = ({ label, value }: { label?: string; value?: string | null }) =
 };
 
 const CardInfoMainUser = ({ info, className, styleCSS, onClick }: CardInfoMainUserProps) => {
+  const { t } = useTranslation();
   return (
     <div style={styleCSS} className={`${styles.body} ${className ? className : ''}`}>
       <div className={styles.divAvatar}>
@@ -46,9 +48,9 @@ const CardInfoMainUser = ({ info, className, styleCSS, onClick }: CardInfoMainUs
           <STIcon size="lg" icon={icons.update} onClick={() => onClick?.(info as User)} />
         </div>
         <div className={styles.divInfoLine}>
-          <InfoLine label="Email" value={info?.email} />
-          <InfoLine label="SDT" value={info?.phone} />
-          <InfoLine label="Giới tính" value={info?.gender} />
+          <InfoLine label={t('profile.email')} value={info?.email} />
+          <InfoLine label={t('profile.phone')} value={info?.phone} />
+          <InfoLine label={t('profile.gender')} value={info?.gender} />
         </div>
       </div>
     </div>

@@ -8,6 +8,7 @@ import CardUser from './CardUser';
 import STIcon from '@/components/ui/STIcon';
 import STText from '@/components/ui/STText';
 import EmptyList from '@/components/forms/EmtyList';
+import { useTranslation } from 'react-i18next';
 
 type CardUserListProps = {
   select?: (str: User) => void;
@@ -15,6 +16,7 @@ type CardUserListProps = {
 };
 
 const CardUserList = ({ select, className }: CardUserListProps) => {
+  const { t } = useTranslation();
   // state tạm cho input
   const [input, setInput] = useState('');
   // state sẽ gửi đi api
@@ -33,7 +35,8 @@ const CardUserList = ({ select, className }: CardUserListProps) => {
     countNumber: numberOfPage,
   });
 
-  const datatest: UserGetList[] = [];
+  // hook chỉ chạy khi search có giá trị
+  const { data, isLoading, isError } = useFindUserQuery(filter);
 
   // Cập nhật filter khi input, số lượng hoặc trang thay đổi
   useEffect(() => {
@@ -44,9 +47,14 @@ const CardUserList = ({ select, className }: CardUserListProps) => {
     });
   }, [search, numberOfPage, page]);
 
-  // hook chỉ chạy khi search có giá trị
-  const { data, isLoading, isError } = useFindUserQuery(filter);
+  // Khi có dữ liệu mới và chưa có user được chọn thì tự chọn user đầu tiên
+  useEffect(() => {
+    const first = data?.users?.[0];
+    if (!first) return;
 
+    handleInfoUser(first);
+  }, [data]);
+  
   // Nhận chọn user
   const handleInfoUser = (user: User) => {
     setFocusedUserId(String(user.id));
@@ -63,6 +71,7 @@ const CardUserList = ({ select, className }: CardUserListProps) => {
       <div className={styles.headerCardList}>
         <STSearch
           value={input}
+          placeholder={t('userPage.searchPlaceholder')}
           onChange={(val) => setInput(val)}
           onSearch={handleSearch}
           style={{ flex: 1, height: 30 }}

@@ -1,0 +1,33 @@
+{
+  "profile": {
+    "email": "Email",
+    "phone": "SDT",
+    "gender": "Giới tính",
+    "language": "Ngôn ngữ",
+    "fullName": "Họ và tên",
+    "nickname": "Biệt danh",
+    "birthday": "Ngày sinh",
+    "address": "Địa chỉ",
+    "role": "Vai trò",
+    "position": "Vị trí",
+    "createdAt": "Ngày tạo",
+    "updatedAt": "Ngày cập nhật",
+    "description": "Miêu tả"
+  },
+
+  "userPage": {
+    "userListTitle": "Danh sách người dùng",
+    "previous": "Trước",
+    "next": "Sau",
+    "itemsPerPage": "Số lượng",
+    "searchPlaceholder": "Tìm kiếm",
+    "addUser": "Thêm user mới",
+    "updateUser": "Cập nhật user"
+  },
+
+  "button": {
+    "save": "Lưu",
+    "add": "Thêm",
+    "close": "Đóng"
+  }
+}

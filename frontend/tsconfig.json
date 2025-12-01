@@ -34,7 +34,9 @@
     "sourceMap": true, // giúp debug trong browser
     "skipLibCheck": true, // bỏ qua kiểm tra file .d.ts để build nhanh
     "esModuleInterop": true, // cho phép import các package cũ (CommonJS)
-    "forceConsistentCasingInFileNames": true // ép dùng đúng kiểu chữ trong tên file
+    "forceConsistentCasingInFileNames": true, // ép dùng đúng kiểu chữ trong tên file
+
+    "resolveJsonModule": true, //Cho phép import file .json
   },
 
   "include": ["src", "global.d.ts", "vite-env.d.ts"], // chỉ định thư mục chứa code TypeScript

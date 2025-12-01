@@ -10,6 +10,9 @@ export type Color = {
   white: string;
   black: string;
   error: string;
+  info: string;
+  warning: string;
+  success: string;
 };
 
 export const lightTheme: Color = {
@@ -22,7 +25,10 @@ export const lightTheme: Color = {
   border: '#9f9a9a',
   white: '#f6faf8',
   black: '#0f1713',
-  error: '#e60000',
+  error: '#ef5350',
+  info: '#2196f3',
+  warning: '#ff9800',
+  success: '#4caf50',
 };
 
 export const darkTheme: Color = {
@@ -35,7 +41,10 @@ export const darkTheme: Color = {
   border: '#9f9a9a',
   white: '#f6faf8',
   black: '#0f1713',
-  error: '#e60000',
+  error: '#ef5350',
+  info: '#2196f3',
+  warning: '#ff9800',
+  success: '#4caf50',
 };
 
 export type ThemeMode = 'light' | 'dark';

@@ -1,9 +1,9 @@
+import { useStyles } from '@/hooks/useStyle'; // hook trả về theme.primary chẳng hạn
+import { useEffect } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import { QueryProvider } from './providers/QueryProvider';
 import { router } from './routes';
-import { useStyles } from '@/hooks/useStyle'; // hook trả về theme.primary chẳng hạn
-import { useEffect } from 'react';
-import UserPage from './features/users/pages/UserPage';
+import { NotificationProvider } from './providers/NotificationProvider';
 
 function App() {
   const theme = useStyles();
@@ -20,10 +20,11 @@ function App() {
   }, [theme]);
 
   return (
-    <QueryProvider>
-      <RouterProvider router={router} />
-      {/* <UserPage /> */}
-    </QueryProvider>
+    <NotificationProvider>
+      <QueryProvider>
+        <RouterProvider router={router} />
+      </QueryProvider>
+    </NotificationProvider>
   );
 }
 

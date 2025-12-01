@@ -4,7 +4,7 @@
   flex-direction: column;
   background-color: var(--color-background);
   width: 100%;
-  overflow: hidden; /* Không cho cuộn */
+  // overflow: hidden; /* Không cho cuộn */
   box-sizing: border-box; /* Đảm bảo padding không làm tăng kích thước tổng thể */
 }
 
@@ -13,9 +13,19 @@
   height: 100px;
   height: var(--size-heSm);
   display: flex;
-  text-align: center;
+  align-items: center;
   justify-content: flex-end;
   padding-right: var(--size-pdMd);
+  // gap: var(--size-gapSm);
+}
+
+.button {
+  font-weight: bold;
+  font-size: var(--size-fontSm);
+}
+
+.cbbLanguage {
+  width: 80px;
 }
 
 .divMenuColumn {

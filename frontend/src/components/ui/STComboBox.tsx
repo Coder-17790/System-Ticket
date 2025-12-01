@@ -30,6 +30,7 @@ const STComboBox: React.FC<STComboBoxProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const comboRef = useRef<HTMLDivElement>(null); // ref cho combobox
 
+  // Nhấn chọn value
   const handleSelect = (val: string | number) => {
     onChange?.(val);
     setIsOpen(false); // tự đóng khi chọn xong

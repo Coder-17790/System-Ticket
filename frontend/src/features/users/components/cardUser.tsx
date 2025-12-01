@@ -1,10 +1,11 @@
 import { User } from '@/types';
 import styles from './CardUser.module.scss';
-import utilt from '@/utils';
 import { useDeleteUserMutation } from '../hooks/useUsers';
 import { icons } from '@/assets/icons';
 import STIcon from '@/components/ui/STIcon';
 import STText from '@/components/ui/STText';
+import { useTranslation } from 'react-i18next';
+import utilt from '@/utils';
 
 type CardUserProps = {
   info?: User;
@@ -16,6 +17,7 @@ type CardUserProps = {
 
 const CardUser = ({ info, getInfoUser, className, select }: CardUserProps) => {
   const deleteUserMutation = useDeleteUserMutation();
+  const { t } = useTranslation();
 
   // Component hiển thị thông tin người dùng theo dòng
   const infoItem = (label: string, value: string | number | boolean) => {
@@ -50,12 +52,12 @@ const CardUser = ({ info, getInfoUser, className, select }: CardUserProps) => {
         </div>
         <div className={styles.cardBody}>
           <div className={styles.cardColumn}>
-            {infoItem('Email', info?.email || '')}
-            {infoItem('Vai trò', info?.role || '')}
+            {infoItem(t('profile.email'), info?.email || '')}
+            {infoItem(t('profile.role'), info?.role || '')}
           </div>
           <div className={styles.cardColumn}>
-            {infoItem('Ngày tạo', info ? utilt.format.fomatData_1(info.createdAt) : '')}
-            {infoItem('Ngày cập nhật', info ? utilt.format.fomatData_1(info.updatedAt) : '')}
+            {infoItem(t('profile.createdAt'), info ? utilt.format.fomatData_1(info.createdAt) : '')}
+            {infoItem(t('profile.updatedAt'), info ? utilt.format.fomatData_1(info.updatedAt) : '')}
           </div>
         </div>
       </div>
