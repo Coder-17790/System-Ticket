@@ -1,5 +1,12 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getUsers, deleteUser, updateUser, findUser, createUsers } from '../api/users';
+import {
+  getUsers,
+  deleteUser,
+  updateUser,
+  findUser,
+  createUsers,
+  updateAvatar,
+} from '../api/users';
 import { FilterUser, ResponseAPI, User, UserGetList } from '@/types';
 
 // Query key thống nhất để tránh lỗi đánh sai key string
@@ -50,7 +57,18 @@ export const useUpdateUserMutation = () => {
   });
 };
 
-/** Hook: Tìm người dùng theo tên hoặc email */
+/** Hook: Cập nhật avatar */
+export const useUpdateAvatar = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: updateAvatar,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: USERS_KEY });
+    },
+  });
+};
+
 /** Hook: Tìm người dùng theo tên hoặc email */
 export const useFindUserQuery = (filter: FilterUser) =>
   useQuery<ResponseAPI<UserGetList>, Error, UserGetList | null>({

@@ -4,7 +4,7 @@ import styles from './STIcon.module.scss';
 type STIconProps = {
   /** Tên icon hoặc đường dẫn hình ảnh (vd: 'fa-solid fa-user' hoặc '/icons/edit.png') */
   icon?: string;
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  size?: number;
   rotate?: number;
   spin?: boolean;
   onClick?: () => void;
@@ -14,7 +14,7 @@ type STIconProps = {
 
 const STIcon = ({
   icon,
-  size = 'md',
+  size = 20,
   rotate,
   spin = false,
   onClick,
@@ -31,9 +31,9 @@ const STIcon = ({
     return (
       <img
         src={icon}
-        alt=""
-        className={`${styles.icon} ${styles[size]} ${className} ${onClick ? styles.clickable : ''}`}
-        style={{ ...style, ...rotateStyle }}
+        // alt=""
+        className={`${styles.icon} ${className} ${onClick ? styles.clickable : ''}`}
+        style={{ ...style, width: size, height: size, ...rotateStyle }}
         onClick={onClick}
       />
     );
@@ -42,10 +42,10 @@ const STIcon = ({
   // Nếu là class FontAwesome hoặc tương tự
   return (
     <i
-      className={`${icon} ${styles.icon} ${styles[size]} ${className} ${
+      className={`${icon} ${styles.icon} ${className} ${
         spin ? styles.spin : ''
       } ${onClick ? styles.clickable : ''}`}
-      style={{ ...style, ...rotateStyle }}
+      style={{ ...style, fontSize: size, ...rotateStyle }}
       onClick={onClick}
     />
   );

@@ -67,7 +67,6 @@ const STComboBox: React.FC<STComboBoxProps> = ({
     >
       <STText className={styles.selected}>{selectedLabel}</STText>
       <STIcon icon={isOpen ? 'fa-solid fa-caret-up' : 'fa-solid fa-caret-down'}></STIcon>
-      {/* <STText className={styles.arrow}>{isOpen ? '▲' : '▼'}</STText> */}
 
       {isOpen && (
         <div className={styles.options}>
@@ -77,6 +76,7 @@ const STComboBox: React.FC<STComboBoxProps> = ({
               style={{ display: 'block' }}
               className={`${styles.option} ${opt.value === value ? styles.active : ''}`}
               onClick={() => handleSelect(opt.value)}
+              // onClick={() => console.log('opt.value---', opt.value)}
             >
               {opt.label}
             </STText>

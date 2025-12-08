@@ -9,7 +9,7 @@
 }
 
 /* ----------------------------
-   1️⃣ FONT ICON (chỉ tăng font-size)
+    FONT ICON (chỉ tăng font-size)
 -----------------------------*/
 .icon.xs {
   font-size: var(--size-fontXs);
@@ -28,31 +28,7 @@
 }
 
 /* ----------------------------
-   2️⃣ IMAGE ICON (chỉ tăng width & height)
------------------------------*/
-img.icon.xs {
-  width: var(--size-icXs);
-  height: var(--size-icXs);
-}
-img.icon.sm {
-  width: var(--size-icSm);
-  height: var(--size-icSm);
-}
-img.icon.md {
-  width: var(--size-icMd);
-  height: var(--size-icMd);
-}
-img.icon.lg {
-  width: var(--size-icLg);
-  height: var(--size-icLg);
-}
-img.icon.xl {
-  width: var(--size-icXl);
-  height: var(--size-icXl);
-}
-
-/* ----------------------------
-   3️⃣ HIỆU ỨNG CHUNG
+    HIỆU ỨNG CHUNG
 -----------------------------*/
 .spin {
   animation: spin 1s linear infinite;

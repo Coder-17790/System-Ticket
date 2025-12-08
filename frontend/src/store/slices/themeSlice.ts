@@ -1,17 +1,17 @@
-import { Color, darkTheme, lightTheme, ThemeMode } from '@/types/theme/color';
-import { defaultSize, Size } from '@/types/theme/size';
+import { Color, darkTheme, lightTheme, ThemeMode } from '@/theme/color';
+import { defaultSize, Size } from '@/theme/size';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface ThemeState {
   mode: 'light' | 'dark';
   color: Color;
-  size: Size
+  size: Size;
 }
 
 const initialState: ThemeState = {
   mode: 'light',
   color: lightTheme,
-  size: defaultSize
+  size: defaultSize,
 };
 
 const themeSlice = createSlice({

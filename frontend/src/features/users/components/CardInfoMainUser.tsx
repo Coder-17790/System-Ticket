@@ -40,12 +40,12 @@ const CardInfoMainUser = ({ info, className, styleCSS, onClick }: CardInfoMainUs
                 {info?.fullName || 'Name'}
               </STText>
             </div>
-            <STText
+            {/* <STText
               variant="highlight"
               color="secondary"
-            >{`${info?.role} | ${info?.position}`}</STText>
+            >{`${info?.role} | ${info?.position}`}</STText> */}
           </div>
-          <STIcon size="lg" icon={icons.update} onClick={() => onClick?.(info as User)} />
+          <STIcon icon={icons.update} onClick={() => onClick?.(info as User)} />
         </div>
         <div className={styles.divInfoLine}>
           <InfoLine label={t('profile.email')} value={info?.email} />

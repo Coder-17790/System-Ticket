@@ -1,27 +1,30 @@
 import { OptionCBB } from '@/components/ui/STComboBox';
+import { Role } from './role';
+import { Nation } from './nation';
 
 export type User = {
-  id: string | number;
-  orgId: string | number | null;
+  id: string; // UUID thay cho BIGINT
+  orgId: number | null; // BIGINT, có thể null
   email: string;
-  title: string;
+  username: string; // Thêm trường username
+  password: string; // Thêm trường password
   fullName: string;
   isActive: boolean;
-  language: string;
   phone: string | null;
-  position: string | null;
   dateOfBirth: Date | null;
   lastLogin: Date | null;
-  address: string | null;
-  gender: string | null;
-  role: string;
-  avatarUrl: string | null;
+  gender: gender | null; // Giới tính chỉ có thể là 'male' hoặc 'female'
+  roleId: number | null; // BIGINT cho role_id
   bio: string | null;
   isVerified: boolean;
-  deletedAt: Date | null;
-  createdAt: Date;
+  twoFaEnabled: boolean; // Trường 2fa_enabled
+  title: string; // Tiêu đề
+  nationId: number | null; // Thêm trường nation_id
+  avatar: string; // Avatar
   updatedAt: Date;
-  avatar: string;
+  createdAt: Date;
+  role: Role;
+  nation: Nation;
 };
 
 export type FilterUser = {
@@ -37,28 +40,9 @@ export type UserGetList = {
   totalPages: number;
 };
 
-export const roleOption: OptionCBB[] = [
-  { label: 'Admin', value: 'admin' },
-  { label: 'User', value: 'user' },
-  { label: 'Moderator', value: 'moderator' },
-];
+export type gender = 'male' | 'female';
 
-export const positionOption: OptionCBB[] = [
-  { label: 'Manager', value: 'Manager' },
-  { label: 'Developer', value: 'Developer' },
-  { label: 'Designer', value: 'Designer' },
-  { label: 'Intern', value: 'Intern' },
-];
-
-export const languageOption: OptionCBB[] = [
-  { label: 'Việt Nam', value: 'Việt Nam' },
-  { label: 'Hoa Kỳ', value: 'Hoa Kỳ' },
-  { label: 'Pháp', value: 'Pháp' },
-  { label: 'Nhật Bản', value: 'Nhật Bản' },
-  { label: 'Hàn Quốc', value: 'Hàn Quốc' },
-  { label: 'Đức', value: 'Đức' },
-  { label: 'Anh', value: 'Anh' },
-  { label: 'Úc', value: 'Úc' },
-  { label: 'Canada', value: 'Canada' },
-  { label: 'Singapore', value: 'Singapore' },
+export const genderOption: OptionCBB[] = [
+  { label: 'Male', value: 'male' },
+  { label: 'Female', value: 'female' },
 ];

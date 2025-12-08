@@ -1,13 +1,16 @@
 import { Router } from 'express';
 import { UserController } from '../controller/user.controller';
+import { uploadAvatar } from '@/middlewares/storage';
+import { processAvatar } from '@/middlewares/imageProcessor';
 
-const router = Router();
+const userRouter = Router();
 
-router.get('/', UserController.list);
-router.post('/find', UserController.findUser); // POST /api/users/find → tìm user theo keyword
-router.post('/', UserController.create);
-router.get('/:id', UserController.get);
-router.put('/:id', UserController.update);
-router.delete('/:id', UserController.remove);
+userRouter.get('/', UserController.list);
+userRouter.post('/find', UserController.findUser); // POST /api/users/find → tìm user theo keyword
+userRouter.post('/', UserController.create);
+userRouter.get('/:id', UserController.get);
+userRouter.put('/:id', UserController.update);
+userRouter.put('/:id/avatar', uploadAvatar, processAvatar, UserController.updateAvatar);
+userRouter.delete('/:id', UserController.remove);
 
-export default router;
+export default userRouter;

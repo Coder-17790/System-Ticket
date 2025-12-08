@@ -1,13 +1,16 @@
+import AvartarInput from '@/components/forms/AvartarInput';
 import { InfoComboBoxLine, InfoDateLine, InfoLine } from '@/components/forms/InputLine';
 import STButton from '@/components/ui/STButton';
 import STText from '@/components/ui/STText';
-import { languageOption, positionOption, roleOption, User } from '@/types';
+import { gender, genderOption, User } from '@/types';
+import utilt from '@/utils';
 import { useCallback, useEffect, useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
-import { useUpdateUserMutation } from '../hooks/useUsers';
-import styles from './CardUpdateUser.module.scss';
 import { useTranslation } from 'react-i18next';
-import AvartarInput from '@/components/forms/AvartarInput';
+import { useGetListRoles } from '../hooks/useRole';
+import { useUpdateAvatar, useUpdateUserMutation } from '../hooks/useUsers';
+import styles from './CardUpdateUser.module.scss';
+import { useGetListNation } from '../hooks/useNation';
 
 type CardInfoProps = {
   info?: User;
@@ -17,7 +20,20 @@ type CardInfoProps = {
 const CardInfo = ({ info, className }: CardInfoProps) => {
   const [data, setData] = useState<User>(info || ({} as User));
   const useUpdate = useUpdateUserMutation();
+  const useUpdateAvt = useUpdateAvatar();
   const { t } = useTranslation();
+  const {
+    data: listRoles,
+    isLoading: listRoles_Loading,
+    isError: listRoles_Error,
+  } = useGetListRoles();
+  const {
+    data: listNation,
+    isLoading: listNation_Loading,
+    isError: listNation_Error,
+  } = useGetListNation();
+  console.log('listNation--', listNation);
+  console.log('listRoles--', listRoles);
 
   // Chạy lần đầu
   useEffect(() => {
@@ -25,13 +41,37 @@ const CardInfo = ({ info, className }: CardInfoProps) => {
   }, [info]);
 
   // Cập nhật data từng hàng
-  const updateUserField = useCallback(<K extends keyof User>(field: K, value: User[K]) => {
-    setData((prev) => (prev ? { ...prev, [field]: value } : prev));
-  }, []);
+  const updateUserField = useCallback(
+    <K extends keyof User>(field: K, value: Partial<User[K]> | User[K]) => {
+      setData((prev) => {
+        if (!prev) return prev;
+
+        const prevField = prev[field];
+
+        const isObject = prevField !== null && typeof prevField === 'object';
+
+        const nextField = isObject
+          ? { ...(prevField as any), ...(value as any) } // 👉 merge object
+          : (value as any); // 👉 primitive → gán thẳng
+
+        return {
+          ...prev,
+          [field]: nextField,
+        };
+      });
+    },
+    []
+  );
 
   // Cập nhật user
   const handleUpdate = (info: User) => {
     useUpdate.mutate(info);
+    useUpdate.isSuccess;
+  };
+
+  // Cập avatar
+  const handleUpdateAvatar = (id: string, file: File) => {
+    useUpdateAvt.mutate({ id, file });
     useUpdate.isSuccess;
   };
 
@@ -41,7 +81,10 @@ const CardInfo = ({ info, className }: CardInfoProps) => {
         {t('userPage.updateUser')}
       </STText>
       <div className={styles.divAvatar}>
-        <AvartarInput source={data?.avatar || ''} />
+        <AvartarInput
+          source={data?.avatar || ''}
+          onAddAvatar={(file) => handleUpdateAvatar(data.id.toString(), file)}
+        />
       </div>
       <div className={styles.content}>
         <InfoLine
@@ -55,19 +98,11 @@ const CardInfo = ({ info, className }: CardInfoProps) => {
           required
           onChange={(str) => updateUserField('email', str)}
         />
-
         <InfoLine
           label={t('profile.nickname')}
           value={data?.title || ''}
           onChange={(str) => updateUserField('title', str)}
         />
-        <InfoComboBoxLine
-          option={languageOption}
-          label={t('profile.language')}
-          value={data?.language || ''}
-          onChange={(str) => updateUserField('language', String(str) ?? '')}
-        />
-
         <InfoLine
           label={t('profile.phone')}
           value={data?.phone ?? ''}
@@ -81,31 +116,24 @@ const CardInfo = ({ info, className }: CardInfoProps) => {
             updateUserField('dateOfBirth', newDate as Date);
           }}
         />
-
-        <InfoLine
+        <InfoComboBoxLine
+          option={genderOption}
           label={t('profile.gender')}
           value={data?.gender || ''}
-          onChange={(str) => updateUserField('gender', str)}
-        />
-        <InfoLine
-          label={t('profile.address')}
-          value={data?.address || ''}
-          onChange={(str) => updateUserField('address', str)}
-        />
-
-        <InfoComboBoxLine
-          option={positionOption}
-          label={t('profile.position')}
-          value={data?.position || ''}
-          onChange={(str) => updateUserField('position', String(str) ?? '')}
+          onChange={(str) => updateUserField('gender', str as gender)}
         />
         <InfoComboBoxLine
-          option={roleOption}
+          option={utilt.format.mapToOptionsCbb(listRoles?.data ?? undefined, 'id', 'name')}
           label={t('profile.role')}
-          value={data?.role || ''}
-          onChange={(str) => updateUserField('role', String(str) ?? '')}
+          value={data?.role.id || ''}
+          onChange={(str) => updateUserField('role', { id: str?.toString() })}
         />
-
+        <InfoComboBoxLine
+          option={utilt.format.mapToOptionsCbb(listNation?.data ?? undefined, 'id', 'name')}
+          label={t('profile.nation')}
+          value={data?.nation.id || ''}
+          onChange={(str) => updateUserField('nation', { id: str?.toString() })}
+        />
         <InfoDateLine
           enable={false}
           label={t('profile.createdAt')}
@@ -125,7 +153,6 @@ const CardInfo = ({ info, className }: CardInfoProps) => {
           }}
         />
       </div>
-
       <InfoLine
         style={{ marginTop: 30 }}
         label={t('profile.description')}
@@ -134,7 +161,6 @@ const CardInfo = ({ info, className }: CardInfoProps) => {
         type="textarea"
         onChange={(str) => updateUserField('bio', str)}
       />
-
       <div className={styles.buttonWrapper}>
         <STButton label={t('button.save')} onClick={() => handleUpdate(data)} />
       </div>

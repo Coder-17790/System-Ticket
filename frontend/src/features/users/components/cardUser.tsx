@@ -48,12 +48,12 @@ const CardUser = ({ info, getInfoUser, className, select }: CardUserProps) => {
           <STText color="primary" variant="highlight">
             {info?.fullName}
           </STText>
-          <STIcon icon={icons.delete} size="lg" onClick={handleDelete} />
+          <STIcon icon={icons.delete} onClick={handleDelete} />
         </div>
         <div className={styles.cardBody}>
           <div className={styles.cardColumn}>
             {infoItem(t('profile.email'), info?.email || '')}
-            {infoItem(t('profile.role'), info?.role || '')}
+            {/* {infoItem(t('profile.role'), info?.role || '')} */}
           </div>
           <div className={styles.cardColumn}>
             {infoItem(t('profile.createdAt'), info ? utilt.format.fomatData_1(info.createdAt) : '')}

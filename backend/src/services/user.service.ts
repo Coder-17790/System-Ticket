@@ -36,4 +36,14 @@ export class UserService {
   remove(id: number) {
     return this.repo.delete(id);
   }
+
+  // Cập nhật avatar
+  async updateAvatar(id: string, avatarUrl: string) {
+    return this.repo.updateAvatar(id, avatarUrl);
+  }
+
+  // Lấy tên role dựa vào roleID
+   async findRoleNameByRoleId(id: number) {
+    return this.repo.findRoleNameByRoleId(id);
+  }
 }

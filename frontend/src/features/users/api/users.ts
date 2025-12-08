@@ -1,5 +1,5 @@
 import { FilterUser, ResponseAPI, User, UserGetList } from '@/types';
-import { fetchAPI } from '@/utils/fetchAPI';
+import { fetchAPI } from '@/api/fetchAPI';
 
 // Lấy danh sách người dùng
 export async function getUsers() {
@@ -32,22 +32,26 @@ export async function updateUser(info: User) {
   return text ? JSON.parse(text) : {};
 }
 
-//  Tìm người dùng theo tên hoặc email
-// export async function findUser(filter: FilterUser) {
-//   const res = await fetch('/api/users/find', {
-//     method: 'POST',
-//     headers: { 'Content-Type': 'application/json' },
-//     body: JSON.stringify(filter),
-//   });
-//   if (!res.ok) throw new Error('Failed to find user');
-//   return await res.json();
-// }
+// Cập nhật avatar
+export async function updateAvatar(data: { id: string; file: File }) {
+  const formData = new FormData();
+  formData.append('avatar', data.file);
 
+  return fetchAPI(`/api/users/${data.id}/avatar`, {
+    method: 'PUT',
+    body: formData,
+    headers: {},
+  });
+}
+
+//  Tìm người dùng theo tên hoặc email
 export async function findUser(filter: FilterUser) {
-  return fetchAPI<ResponseAPI<UserGetList>>('/api/users/find', {
+  const res = await fetchAPI<ResponseAPI<UserGetList>>('/api/users/find', {
     method: 'POST',
     body: JSON.stringify(filter),
   });
+  if (!res) throw new Error('Failed to fetch users');
+  return res;
 }
 
 // Thêm mới người dùng

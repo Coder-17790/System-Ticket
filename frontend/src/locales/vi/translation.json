@@ -2,17 +2,20 @@
   "profile": {
     "email": "Email",
     "phone": "SDT",
+    "userName": "Tài khoản",
+    "passWord": "Mật khẩu",
     "gender": "Giới tính",
-    "language": "Ngôn ngữ",
+    "nation": "Quốc gia",
     "fullName": "Họ và tên",
     "nickname": "Biệt danh",
+    "role": "Quyền",
     "birthday": "Ngày sinh",
-    "address": "Địa chỉ",
-    "role": "Vai trò",
+    "twoFaEnabled": "Bảo mật 2 lớp",
     "position": "Vị trí",
     "createdAt": "Ngày tạo",
     "updatedAt": "Ngày cập nhật",
-    "description": "Miêu tả"
+    "description": "Miêu tả",
+    "2FA": "2FA"
   },
 
   "userPage": {
@@ -28,6 +31,8 @@
   "button": {
     "save": "Lưu",
     "add": "Thêm",
-    "close": "Đóng"
+    "close": "Đóng",
+    "on": "Bật",
+    "off": "Tắt"
   }
 }

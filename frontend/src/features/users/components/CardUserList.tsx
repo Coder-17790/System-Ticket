@@ -35,8 +35,12 @@ const CardUserList = ({ select, className }: CardUserListProps) => {
     countNumber: numberOfPage,
   });
 
-  // hook chỉ chạy khi search có giá trị
-  const { data, isLoading, isError } = useFindUserQuery(filter);
+  // Dùng hook gọi api
+  const {
+    data: listUser,
+    isLoading: listUser_loaing,
+    isError: listUser_Error,
+  } = useFindUserQuery(filter);
 
   // Cập nhật filter khi input, số lượng hoặc trang thay đổi
   useEffect(() => {
@@ -49,12 +53,12 @@ const CardUserList = ({ select, className }: CardUserListProps) => {
 
   // Khi có dữ liệu mới và chưa có user được chọn thì tự chọn user đầu tiên
   useEffect(() => {
-    const first = data?.users?.[0];
+    const first = listUser?.users?.[0];
     if (!first) return;
 
     handleInfoUser(first);
-  }, [data]);
-  
+  }, [listUser]);
+
   // Nhận chọn user
   const handleInfoUser = (user: User) => {
     setFocusedUserId(String(user.id));
@@ -90,12 +94,12 @@ const CardUserList = ({ select, className }: CardUserListProps) => {
           style={{ height: 30 }}
         ></STComboBox>
       </div>
-      {isLoading && <p>Đang tải dữ liệu...</p>}
-      {isError && <p>Lỗi khi tải dữ liệu</p>}
+      {listUser_loaing && <p>Đang tải dữ liệu...</p>}
+      {listUser_Error && <p>Lỗi khi tải dữ liệu</p>}
       <div className={styles.userList}>
-        {(data?.users?.length ?? 0) > 0 ? (
-          // datatest?.map((item) => (
-          data?.users.map((item) => (
+        {(listUser?.users?.length ?? 0) > 0 ? (
+          // listUsertest?.map((item) => (
+          listUser?.users.map((item) => (
             <CardUser
               key={item.id}
               info={item}
@@ -109,7 +113,6 @@ const CardUserList = ({ select, className }: CardUserListProps) => {
       </div>
       <div className={styles.footer}>
         <STIcon
-          size="lg"
           className={styles.icTurnPage}
           style={{ backgroundColor: page == 1 ? 'var(--color-border)' : 'var(--color-primary)' }}
           icon="fa-solid fa-angle-left"
@@ -117,14 +120,13 @@ const CardUserList = ({ select, className }: CardUserListProps) => {
         ></STIcon>
         <STText style={{ padding: '0 20px' }}>{page}</STText>
         <STIcon
-          size="lg"
           className={styles.icTurnPage}
           icon="fa-solid fa-angle-right"
           style={{
             backgroundColor:
-              page == data?.totalPages ? 'var(--color-border)' : 'var(--color-primary)',
+              page == listUser?.totalPages ? 'var(--color-border)' : 'var(--color-primary)',
           }}
-          onClick={() => setPage(page < (data?.totalPages ?? page) ? page + 1 : page)}
+          onClick={() => setPage(page < (listUser?.totalPages ?? page) ? page + 1 : page)}
         ></STIcon>
       </div>
     </div>

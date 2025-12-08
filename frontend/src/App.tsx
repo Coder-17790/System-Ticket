@@ -4,6 +4,7 @@ import { RouterProvider } from 'react-router-dom';
 import { QueryProvider } from './providers/QueryProvider';
 import { router } from './routes';
 import { NotificationProvider } from './providers/NotificationProvider';
+import { getRole } from './features/users/api/role';
 
 function App() {
   const theme = useStyles();
@@ -18,6 +19,8 @@ function App() {
       root.style.setProperty(`--size-${key}`, value as string);
     });
   }, [theme]);
+
+  getRole();
 
   return (
     <NotificationProvider>

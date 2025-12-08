@@ -1,10 +1,11 @@
 import { FilterUser, UserCreation, UserUpdate } from '../models/user/user.types';
-import User from '../models/user/user.init';
+import User from '../models/user/user.model';
 import { Op } from 'sequelize';
 import { log } from 'console';
+import Role from '@/models/role/role.model';
+import { Nation } from '@/models';
 
 export class UserRepository {
-
   // Thêm mới 1 user
   async create(data: UserCreation) {
     return User.create(data);
@@ -44,6 +45,18 @@ export class UserRepository {
     const result = await User.findAndCountAll({
       where,
       limit: count,
+      include: [
+        {
+          model: Role,
+          as: 'role', // Alias cho quan hệ
+          // attributes: ['name'], // Lấy tên của role
+          // attributes: { exclude: ['role_id'] }, // Loại bỏ trường 'role_id' từ kết quả trả về
+        },
+        {
+          model: Nation,
+          as: 'nation',
+        },
+      ],
       offset: (page - 1) * count,
       order: [['id', 'DESC']],
     });
@@ -63,8 +76,34 @@ export class UserRepository {
     return user.update(data);
   }
 
+  // Cập nhật user theo id
+  async updateAvatar(id: string, avatarUrl: string) {
+    const user = await User.findByPk(id);
+    if (!user) return null;
+    return user.update({ avatar: avatarUrl });
+  }
+
   // Xoá user theo id
   async delete(id: number) {
     return User.destroy({ where: { id } });
+  }
+
+  // Lấy thông tin tên role của user
+  async findRoleNameByRoleId(role_id: number) {
+    const user = await User.findOne({
+      where: { roleId: role_id }, // Tìm người dùng có role_id là tham số truyền vào
+      include: [
+        {
+          model: Role,
+          as: 'role', // Sử dụng alias 'roles' vì bạn đã khai báo alias như vậy
+          attributes: ['name'], // Lấy tên của role
+        },
+      ],
+    });
+
+    console.log('object----------', user?.role?.name);
+
+    if (!user || !user.role) return null; // Nếu không tìm thấy user hoặc role của user
+    return user.role.name; // Trả về tên role của user
   }
 }

@@ -1,13 +1,14 @@
 import { InfoComboBoxLine, InfoDateLine, InfoLine } from '@/components/forms/InputLine';
 import STButton from '@/components/ui/STButton';
 import STText from '@/components/ui/STText';
-import { languageOption, positionOption, roleOption, User } from '@/types';
+import { gender, genderOption, languageOption, positionOption, roleOption, User } from '@/types';
 import { useCallback, useEffect, useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useCreateUserMutation } from '../hooks/useUsers';
 import styles from './CardUpdateUser.module.scss';
 import { useNotify } from '@/providers/NotificationProvider';
 import { useTranslation } from 'react-i18next';
+// import { number } from 'framer-motion';
 
 type CardAddUserProps = {
   info?: User;
@@ -45,14 +46,9 @@ const CardAddUser = ({ info, className, click }: CardAddUserProps) => {
   return (
     <div className={`${styles.body} ${className || ''}`}>
       <STText variant="title" className={styles.title}>
-        {t('userPage.')}
+        {t('userPage.addUser')}
       </STText>
       <div className={styles.content}>
-        <InfoLine
-          label={t('profile.fullName')}
-          value={data?.fullName || ''}
-          onChange={(str) => updateUserField('fullName', str)}
-        />
         <InfoLine
           label={t('profile.email')}
           value={data?.email || ''}
@@ -65,13 +61,21 @@ const CardAddUser = ({ info, className, click }: CardAddUserProps) => {
           value={data?.title || ''}
           onChange={(str) => updateUserField('title', str)}
         />
-        <InfoComboBoxLine
-          option={languageOption}
-          label={t('profile.language')}
-          value={data?.language || ''}
-          onChange={(str) => updateUserField('language', String(str) ?? '')}
+        <InfoLine
+          label={t('profile.userName')}
+          value={data?.username || ''}
+          onChange={(str) => updateUserField('username', str)}
         />
-
+        <InfoLine
+          label={t('profile.passWord')}
+          value={data?.password || ''}
+          onChange={(str) => updateUserField('password', str)}
+        />
+        <InfoLine
+          label={t('profile.fullName')}
+          value={data?.fullName || ''}
+          onChange={(str) => updateUserField('fullName', str)}
+        />
         <InfoLine
           label={t('profile.phone')}
           value={data?.phone ?? ''}
@@ -85,13 +89,33 @@ const CardAddUser = ({ info, className, click }: CardAddUserProps) => {
             updateUserField('dateOfBirth', newDate as Date);
           }}
         />
+        {/* <InfoComboBoxLine
+          option={languageOption}
+          label={t('profile.nation')}
+          value={data?.nationId?.toString() || ''}
+          onChange={(str) => updateUserField('nationId', number.parse(String(str ?? '')))}
+        /> */}
 
-        <InfoLine
+        <InfoComboBoxLine
+          option={genderOption}
           label={t('profile.gender')}
           value={data?.gender || ''}
-          onChange={(str) => updateUserField('gender', str)}
+          onChange={(str) => updateUserField('gender', str as gender | null)}
         />
-        <InfoLine
+        <InfoComboBoxLine
+          option={genderOption}
+          label={t('profile.nation')}
+          value={data?.gender || ''}
+          onChange={(str) => updateUserField('gender', str as gender | null)}
+        />
+        <InfoComboBoxLine
+          option={genderOption}
+          label={t('profile.role')}
+          value={data?.gender || ''}
+          onChange={(str) => updateUserField('gender', str as gender | null)}
+        />
+
+        {/* <InfoLine
           label={t('profile.address')}
           value={data?.address || ''}
           onChange={(str) => updateUserField('address', str)}
@@ -102,13 +126,14 @@ const CardAddUser = ({ info, className, click }: CardAddUserProps) => {
           label={t('profile.position')}
           value={data?.position || ''}
           onChange={(str) => updateUserField('position', String(str) ?? '')}
-        />
+        /> */}
+        {/* 
         <InfoComboBoxLine
           option={roleOption}
           label={t('profile.role')}
           value={data?.role || ''}
           onChange={(str) => updateUserField('role', String(str) ?? '')}
-        />
+        /> */}
 
         {/* <InfoDateLine
           enable={false}

@@ -11,6 +11,7 @@ type STImageProps = {
   onClick?: () => void;
   className?: string;
   style?: React.CSSProperties;
+  domain?: boolean;
 };
 
 const STImage = ({
@@ -21,11 +22,12 @@ const STImage = ({
   onClick,
   className = '',
   style,
+  domain = true,
 }: STImageProps) => {
   return (
     <div>
       <img
-        src={source ? `${import.meta.env.VITE_BACKEND_URL}/public${source}` : displaySrc}
+        src={source ? `${domain ? import.meta.env.VITE_BACKEND_URL : ''}${source}` : displaySrc}
         alt={alt}
         style={{
           width: `${size}px`,

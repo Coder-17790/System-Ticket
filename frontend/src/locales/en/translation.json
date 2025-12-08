@@ -2,30 +2,37 @@
   "profile": {
     "email": "Email",
     "phone": "Phone",
+    "userName": "Username",
+    "passWord": "Password",
     "gender": "Gender",
-    "language": "Language",
+    "nation": "Country",
     "fullName": "Full Name",
     "nickname": "Nickname",
-    "birthday": "Birthday",
-    "address": "Address",
     "role": "Role",
+    "birthday": "Birthday",
+    "twoFaEnabled": "Bảo mật 2 lớp",
     "position": "Position",
     "createdAt": "Created At",
     "updatedAt": "Updated At",
-    "description": "Description"
+    "description": "Description",
+    "2FA": "2FA"
   },
+
   "userPage": {
     "userListTitle": "User List",
     "previous": "Previous",
     "next": "Next",
-    "itemsPerPage": "Items per page",
+    "itemsPerPage": "Items per Page",
     "searchPlaceholder": "Search",
-    "addUser": "Add new user",
-    "updateUser": "Update user"
+    "addUser": "Add New User",
+    "updateUser": "Update User"
   },
+
   "button": {
     "save": "Save",
     "add": "Add",
-    "close": "Close"
+    "close": "Close",
+    "on": "On",
+    "off": "Off"
   }
 }

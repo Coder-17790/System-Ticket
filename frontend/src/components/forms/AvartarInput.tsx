@@ -2,22 +2,59 @@ import { icons } from '@/assets/icons';
 import STIcon from '../ui/STIcon';
 import STImage from '../ui/STImage';
 import styles from './AvartarInput.module.scss';
+import { useRef, useState } from 'react';
 
 type AvartarInputProps = {
   className?: string;
   styleCSS?: React.CSSProperties;
   source: string;
+  onAddAvatar?: (file: File) => void; // callback khi bấm nút +
 };
 
-// Thêm avatar
-const addAvatar = () => {};
+const AvartarInput = ({ className, styleCSS, source, onAddAvatar }: AvartarInputProps) => {
+  const fileRef = useRef<HTMLInputElement | null>(null);
+  const [preview, setPreview] = useState<string>('');
 
-const AvartarInput = ({ className, styleCSS, source }: AvartarInputProps) => {
-  console.log('source', source);
+  // // Nhấn thêm ảnh
+  // const handleAddAvatar = () => {
+  //   onAddAvatar?.(); // nếu truyền props thì gọi, không thì bỏ qua
+  // };
+
+  const openFilePicker = () => {
+    fileRef.current?.click();
+  };
+
+  const handleSelectImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    onAddAvatar?.(file);
+    const url = URL.createObjectURL(file);
+    setPreview(url);
+
+    // Nếu muốn upload server:
+    // const formData = new FormData();
+    // formData.append("avatar", file);
+    // await api.post("/upload", formData);
+  };
+
   return (
-    <div style={styleCSS} className={className ? className : styles.body}>
-      <STImage source={source} className={styles.image} size={100} alt="Avatar" />
-      <STIcon className={styles.addAvatar} size="lg" icon={icons.add} onClick={addAvatar}></STIcon>
+    <div style={styleCSS} className={`${styles.wrapper} ${className ?? ''}`}>
+      <STImage
+        source={preview || source}
+        domain={!preview}
+        className={styles.image}
+        size={100}
+        alt="Avatar"
+      />
+
+      <STIcon className={styles.addAvatar} icon={icons.add} size={30} onClick={openFilePicker} />
+      <input
+        type="file"
+        accept="image/*"
+        style={{ display: 'none' }}
+        ref={fileRef}
+        onChange={handleSelectImage}
+      ></input>
     </div>
   );
 };

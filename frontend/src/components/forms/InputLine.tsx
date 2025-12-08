@@ -102,7 +102,7 @@ export const InfoComboBoxLine = ({
       <STText block className={styles.label}>
         {label}:
       </STText>
-      <STComboBox options={option} disabled={!enable} onChange={onChange} value={value} />
+      <STComboBox options={option} disabled={!enable} onChange={(str) => onChange?.(str)} value={value} />
     </div>
   );
 };

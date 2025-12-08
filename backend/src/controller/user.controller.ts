@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { UserService } from '../services/user.service';
 import { ResponseAPI } from '@/type'; // đường dẫn tới file type ResponseAPI
+import path from 'path';
+import fs from 'fs';
 
 const service = new UserService();
 
@@ -45,7 +47,6 @@ export const UserController = {
     try {
       const filter = req.body;
       const users = await service.findUser(filter);
-
       const response: ResponseAPI<typeof users> = {
         success: true,
         status: 200,
@@ -104,6 +105,42 @@ export const UserController = {
       };
       res.json(response);
     } catch (e) {
+      next(e);
+    }
+  },
+
+  // Cập nhật avatar của user
+  async updateAvatar(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+
+      if (!req.file) {
+        const response: ResponseAPI<null> = {
+          success: false,
+          status: 400,
+          message: 'Không tìm thấy file tải lên',
+          data: null,
+        };
+        return res.status(400).json(response);
+      }
+
+      const fileUrl = `${id}.jpeg`;
+
+      const user = await service.updateAvatar(id, fileUrl);
+
+      // Sau khi cập nhật thành công vào DB, lưu ảnh vào ổ đĩa
+      const outputPath = path.join('public/images/avatar/', fileUrl);
+      fs.writeFileSync(outputPath, req.file.buffer);
+
+      const response: ResponseAPI<typeof user> = {
+        success: true,
+        status: 200,
+        message: 'Cập nhật avatar thành công',
+        data: user,
+      };
+
+      return res.status(200).json(response);
+    } catch (e: any) {
       next(e);
     }
   },
