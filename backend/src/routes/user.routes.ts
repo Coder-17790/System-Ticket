@@ -9,7 +9,7 @@ userRouter.get('/', UserController.list);
 userRouter.post('/find', UserController.findUser); // POST /api/users/find → tìm user theo keyword
 userRouter.post('/', UserController.create);
 userRouter.get('/:id', UserController.get);
-userRouter.put('/:id', UserController.update);
+userRouter.patch('/:id', UserController.update);
 userRouter.put('/:id/avatar', uploadAvatar, processAvatar, UserController.updateAvatar);
 userRouter.delete('/:id', UserController.remove);
 

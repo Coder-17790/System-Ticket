@@ -92,7 +92,7 @@ export const InfoComboBoxLine = ({
 }: {
   label: string;
   option: OptionCBB[];
-  value?: string | null;
+  value?: string | number| null;
   enable?: boolean;
   style?: React.CSSProperties;
   onChange?: (value: string | number | null) => void;
@@ -102,7 +102,12 @@ export const InfoComboBoxLine = ({
       <STText block className={styles.label}>
         {label}:
       </STText>
-      <STComboBox options={option} disabled={!enable} onChange={(str) => onChange?.(str)} value={value} />
+      <STComboBox
+        options={option}
+        disabled={!enable}
+        onChange={(str) => onChange?.(str)}
+        value={value}
+      />
     </div>
   );
 };

@@ -4,11 +4,11 @@ import STComboBox from '@/components/ui/STComboBox';
 import { useEffect, useState } from 'react';
 import { FilterUser, User, UserGetList } from '@/types';
 import { useFindUserQuery } from '../hooks/useUsers';
-import CardUser from './CardUser';
 import STIcon from '@/components/ui/STIcon';
 import STText from '@/components/ui/STText';
 import EmptyList from '@/components/forms/EmtyList';
 import { useTranslation } from 'react-i18next';
+import CardUser from './cardUser';
 
 type CardUserListProps = {
   select?: (str: User) => void;

@@ -1,4 +1,4 @@
-export type ResponseAPI<T> = {
+export type ResponseAPI<T = any> = {
   success: boolean; // true = OK, false = error
   status: number; // HTTP status code (200, 400, 500, ...)
   message: string; // mô tả ngắn gọn
@@ -16,7 +16,7 @@ export const HttpStatus = {
   // ✅ 2xx – Thành công
   OK: 200, // Thành công chung
   CREATED: 201, // Tạo mới thành công
-  NO_CONTENT: 204, // Thành công nhưng không trả dữ liệu
+  // NO_CONTENT: 204, // Thành công nhưng không trả dữ liệu
 
   // ⚠️ 4xx – Lỗi phía client
   BAD_REQUEST: 400, // Request sai dữ liệu

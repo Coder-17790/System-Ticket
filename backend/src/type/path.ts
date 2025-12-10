@@ -1,1 +1,1 @@
-export const AvatarPath = '/public/images/avatar/';
+export const AvatarPath = 'public/images/avatar/';

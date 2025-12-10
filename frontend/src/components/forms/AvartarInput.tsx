@@ -15,26 +15,18 @@ const AvartarInput = ({ className, styleCSS, source, onAddAvatar }: AvartarInput
   const fileRef = useRef<HTMLInputElement | null>(null);
   const [preview, setPreview] = useState<string>('');
 
-  // // Nhấn thêm ảnh
-  // const handleAddAvatar = () => {
-  //   onAddAvatar?.(); // nếu truyền props thì gọi, không thì bỏ qua
-  // };
-
+  // Mở khung chọn hình
   const openFilePicker = () => {
     fileRef.current?.click();
   };
 
+  // Nhấn thêm ảnh
   const handleSelectImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
     onAddAvatar?.(file);
     const url = URL.createObjectURL(file);
     setPreview(url);
-
-    // Nếu muốn upload server:
-    // const formData = new FormData();
-    // formData.append("avatar", file);
-    // await api.post("/upload", formData);
   };
 
   return (
@@ -46,7 +38,6 @@ const AvartarInput = ({ className, styleCSS, source, onAddAvatar }: AvartarInput
         size={100}
         alt="Avatar"
       />
-
       <STIcon className={styles.addAvatar} icon={icons.add} size={30} onClick={openFilePicker} />
       <input
         type="file"

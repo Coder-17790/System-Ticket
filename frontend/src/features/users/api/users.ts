@@ -1,4 +1,4 @@
-import { FilterUser, ResponseAPI, User, UserGetList } from '@/types';
+import { FilterUser, ResponseAPI, User, UserCreate, UserGetList } from '@/types';
 import { fetchAPI } from '@/api/fetchAPI';
 
 // Lấy danh sách người dùng
@@ -19,11 +19,11 @@ export async function deleteUser(userId: string) {
 }
 
 //Cập nhật người dùng
-export async function updateUser(info: User) {
-  const res = await fetch(`/api/users/${info.id}`, {
-    method: 'PUT',
+export async function updateUser(data: { id: string; info: Partial<User> }) {
+  const res = await fetch(`/api/users/${data.id}`, {
+    method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(info),
+    body: JSON.stringify(data.info),
   });
   if (!res.ok) throw new Error('Failed to update user');
 
@@ -55,7 +55,7 @@ export async function findUser(filter: FilterUser) {
 }
 
 // Thêm mới người dùng
-export async function createUsers(user: User) {
+export async function createUsers(user: UserCreate) {
   const res = await fetch('/api/users', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

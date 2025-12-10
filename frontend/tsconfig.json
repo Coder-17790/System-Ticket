@@ -18,16 +18,20 @@
     /* ===== PATH & ALIAS ===== */
     "baseUrl": "./src", // đường dẫn gốc cho import
     "paths": {
-      // dùng alias: import từ "@/api/..." thay vì "../../../"
       "@/*": ["*"],
+      "@/api/*": ["api/*"],
+      "@/assets/*": ["assets/*"],
       "@/components/*": ["components/*"],
       "@/utils/*": ["utils/*"],
       "@/hooks/*": ["hooks/*"],
-      "@/assets/*": ["assets/*"],
-      "@styles/*": ["styles/*"],
-      "@/types/*": ["types/*"],
+      "@/locales/*": ["locales/*"],
+      "@/providers/*": ["providers/*"],
       "@/routes/*": ["routes/*"],
-      "@features/*": ["features/*"]
+      "@/store/*": ["store/*"],
+      "@/styles/*": ["styles/*"],
+      "@/types/*": ["types/*"],
+      "@/features/*": ["features/*"],
+      "@/theme/*": ["theme/*"]
     },
 
     /* ===== SOURCE MAP & DEBUG ===== */
@@ -36,7 +40,7 @@
     "esModuleInterop": true, // cho phép import các package cũ (CommonJS)
     "forceConsistentCasingInFileNames": true, // ép dùng đúng kiểu chữ trong tên file
 
-    "resolveJsonModule": true, //Cho phép import file .json
+    "resolveJsonModule": true //Cho phép import file .json
   },
 
   "include": ["src", "global.d.ts", "vite-env.d.ts"], // chỉ định thư mục chứa code TypeScript

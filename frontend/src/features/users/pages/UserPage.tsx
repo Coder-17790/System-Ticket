@@ -7,12 +7,12 @@ import { useTranslation } from 'react-i18next';
 import CardAddUser from '../components/CardAddUser';
 import CardInfoMainUser from '../components/CardInfoMainUser';
 import CardInfoUser from '../components/CardInfoUser';
-import CardInfo from '../components/CardUpdateUser';
+import CardUpdateUser from '../components/CardUpdateUser';
 import CardUserList from '../components/CardUserList';
 import styles from './UserPage.module.scss';
 
 export default function UserPage() {
-  const [info, setInfo] = useState<User>();
+  const [info, setInfo] = useState<User>({} as User);
 
   const { t } = useTranslation();
 
@@ -30,7 +30,13 @@ export default function UserPage() {
         ></CardAddUser>
       </STPopup>
       <STPopup ref={popupUpdateUser}>
-        <CardInfo info={info} className={styles.cardInfo1}></CardInfo>
+        <CardUpdateUser
+          info={info}
+          className={styles.cardInfo1}
+          click={() => {
+            popupUpdateUser.current?.close();
+          }}
+        ></CardUpdateUser>
       </STPopup>
       <div className={styles.lefNavbar}>
         <div className={styles.bodyHeader}>

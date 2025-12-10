@@ -3,9 +3,9 @@ import { ResponseAPI, TypeError, HttpStatus, ErrorMap } from '../type';
 
 // 🧱 Middleware xử lý lỗi
 export function errorHandler(err: any, req: Request, res: Response, next: NextFunction) {
-  console.error('🔥 Error caught:', err);
+  console.error('🔥🔥🔥🔥🔥🔥🔥 Error caught:', err);
 
-  let status = HttpStatus.BAD_REQUEST;
+  let status = HttpStatus.INTERNAL_SERVER_ERROR;
   let code = 'UNKNOWN_ERROR';
   let message = 'Đã xảy ra lỗi không xác định';
   let hint = '';

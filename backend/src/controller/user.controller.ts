@@ -1,8 +1,10 @@
+import { HttpStatus, ResponseAPI } from '@/type'; // đường dẫn tới file type ResponseAPI
+import { AvatarPath } from '@/type/path';
+import utilt from '@/utils';
 import { NextFunction, Request, Response } from 'express';
-import { UserService } from '../services/user.service';
-import { ResponseAPI } from '@/type'; // đường dẫn tới file type ResponseAPI
-import path from 'path';
 import fs from 'fs';
+import path from 'path';
+import { UserService } from '../services/user.service';
 
 const service = new UserService();
 
@@ -15,12 +17,12 @@ export const UserController = {
 
       const response: ResponseAPI<typeof user> = {
         success: true,
-        status: 201,
+        status: HttpStatus.CREATED,
         message: 'Tạo người dùng thành công',
         data: user,
       };
 
-      res.status(201).json(response);
+      res.status(HttpStatus.CREATED).json(response);
     } catch (e: any) {
       next(e);
     }
@@ -32,7 +34,7 @@ export const UserController = {
       const users = await service.list();
       const response: ResponseAPI<typeof users> = {
         success: true,
-        status: 200,
+        status: HttpStatus.OK,
         message: 'Lấy danh sách người dùng thành công',
         data: users,
       };
@@ -49,7 +51,7 @@ export const UserController = {
       const users = await service.findUser(filter);
       const response: ResponseAPI<typeof users> = {
         success: true,
-        status: 200,
+        status: HttpStatus.OK,
         message: 'Tìm kiếm người dùng thành công',
         data: users,
       };
@@ -64,17 +66,16 @@ export const UserController = {
     try {
       const user = await service.get(Number(req.params.id));
       if (!user) {
-        return res.status(404).json({
+        return res.status(HttpStatus.NOT_FOUND).json({
           success: false,
-          status: 404,
+          status: HttpStatus.NOT_FOUND,
           message: 'Không tìm thấy người dùng',
-          data: null,
-        } as ResponseAPI<null>);
+        } as ResponseAPI);
       }
 
       const response: ResponseAPI<typeof user> = {
         success: true,
-        status: 200,
+        status: HttpStatus.OK,
         message: 'Lấy thông tin người dùng thành công',
         data: user,
       };
@@ -87,19 +88,19 @@ export const UserController = {
   // 🧩 Cập nhật người dùng
   async update(req: Request, res: Response, next: NextFunction) {
     try {
-      const updated = await service.update(Number(req.params.id), req.body);
+      const test = req.params.id;
+      const updated = await service.update(req.params.id, req.body);
       if (!updated) {
-        return res.status(404).json({
+        return res.status(HttpStatus.NOT_FOUND).json({
           success: false,
-          status: 404,
+          status: HttpStatus.NOT_FOUND,
           message: 'Không tìm thấy người dùng để cập nhật',
-          data: null,
-        } as ResponseAPI<null>);
+        } as ResponseAPI);
       }
 
       const response: ResponseAPI<typeof updated> = {
         success: true,
-        status: 200,
+        status: HttpStatus.OK,
         message: 'Cập nhật người dùng thành công',
         data: updated,
       };
@@ -113,30 +114,32 @@ export const UserController = {
   async updateAvatar(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
-
       if (!req.file) {
-        const response: ResponseAPI<null> = {
+        return res.status(HttpStatus.BAD_REQUEST).json({
           success: false,
-          status: 400,
+          status: HttpStatus.BAD_REQUEST,
           message: 'Không tìm thấy file tải lên',
-          data: null,
-        };
-        return res.status(400).json(response);
+        } as ResponseAPI);
       }
-
-      const fileUrl = `${id}.jpeg`;
-
+      const fileUrl = `${utilt.format.genIdTime(new Date())}_${id}.jpeg`;
       const user = await service.updateAvatar(id, fileUrl);
 
       // Sau khi cập nhật thành công vào DB, lưu ảnh vào ổ đĩa
-      const outputPath = path.join('public/images/avatar/', fileUrl);
-      fs.writeFileSync(outputPath, req.file.buffer);
+      const folderPath = `${AvatarPath}_${id}/`;
 
-      const response: ResponseAPI<typeof user> = {
+      // Kiểm tra forder id dc tạo chưa
+      if (!fs.existsSync(folderPath)) {
+        fs.mkdirSync(folderPath, { recursive: true });
+      }
+      const outputPath = path.join(folderPath, fileUrl);
+
+      // Gắn vô vs tên dc chọn
+      fs.writeFileSync(outputPath, req.file.buffer);
+      const response: ResponseAPI<any> = {
         success: true,
-        status: 200,
+        status: HttpStatus.OK,
         message: 'Cập nhật avatar thành công',
-        data: user,
+        data: { nameFile: fileUrl },
       };
 
       return res.status(200).json(response);
@@ -148,11 +151,11 @@ export const UserController = {
   // 🧩 Xoá người dùng
   async remove(req: Request, res: Response, next: NextFunction) {
     try {
-      await service.remove(Number(req.params.id));
+      await service.remove(String(req.params.id));
 
       const response: ResponseAPI<null> = {
         success: true,
-        status: 204,
+        status: HttpStatus.OK,
         message: 'Xoá người dùng thành công',
         data: null,
       };

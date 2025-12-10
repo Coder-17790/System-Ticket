@@ -29,7 +29,6 @@ export class UserRepository {
   // Tìm tất cả user theo email hoặc tên, có filter
   async findByEmailAName(filter?: FilterUser) {
     if (!filter) throw new Error('Missing filter');
-
     const { search, pageNumber, countNumber } = filter;
     const page = pageNumber || 1;
     const count = countNumber || 10;
@@ -70,7 +69,7 @@ export class UserRepository {
   }
 
   // Cập nhật user theo id
-  async update(id: number, data: UserUpdate) {
+  async update(id: string, data: UserUpdate) {
     const user = await User.findByPk(id);
     if (!user) return null;
     return user.update(data);
@@ -84,7 +83,7 @@ export class UserRepository {
   }
 
   // Xoá user theo id
-  async delete(id: number) {
+  async delete(id: string) {
     return User.destroy({ where: { id } });
   }
 
@@ -100,8 +99,6 @@ export class UserRepository {
         },
       ],
     });
-
-    console.log('object----------', user?.role?.name);
 
     if (!user || !user.role) return null; // Nếu không tìm thấy user hoặc role của user
     return user.role.name; // Trả về tên role của user

@@ -28,16 +28,21 @@ export class User extends Model<InferAttributes<User>, InferCreationAttributes<U
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
   declare twoFaEnabled: CreationOptional<boolean>; // Thêm trường 2fa_enabled
-  declare title: string; // Tiêu đề
-  declare avatar: string; // Avatar
+  declare title: CreationOptional<string>;
+  declare avatar: CreationOptional<string>;
   // Liên kết
-  declare role?: Role;
-  declare nation?: Nation;
+  declare role?: CreationOptional<Role>;
+  declare nation?: CreationOptional<Nation>;
 }
 
 User.init(
   {
-    id: { type: DataTypes.UUID, primaryKey: true }, // UUID thay cho BIGINT
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+    },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -106,7 +111,7 @@ User.init(
       get() {
         const raw = this.getDataValue('avatar');
         if (!raw) return null;
-        return `${AvatarPath}${raw}`;
+        return `/${AvatarPath}_${this.id}/${raw}`;
       },
     },
   },

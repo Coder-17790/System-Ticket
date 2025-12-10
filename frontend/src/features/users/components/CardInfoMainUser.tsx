@@ -7,19 +7,19 @@ import { icons } from '@/assets/icons';
 import { useTranslation } from 'react-i18next';
 
 type CardInfoMainUserProps = {
-  info?: User;
+  info: User;
   className?: string;
   styleCSS?: React.CSSProperties;
   onClick?: (user: User) => void;
 };
 
-const InfoLine = ({ label, value }: { label?: string; value?: string | null }) => {
+const InfoLine = ({ label, value }: { label: string; value?: string | null }) => {
   return (
     <div style={{ display: 'flex' }}>
       <div style={{ border: `1px solid ${'var(--color-border)'}` }} />{' '}
       <div className={styles.infoLine}>
         <STText variant="label">{label}</STText>
-        <STText>{value ?? 'null'}</STText>
+        <STText>{value ?? '---'}</STText>
       </div>
     </div>
   );
@@ -30,27 +30,29 @@ const CardInfoMainUser = ({ info, className, styleCSS, onClick }: CardInfoMainUs
   return (
     <div style={styleCSS} className={`${styles.body} ${className ? className : ''}`}>
       <div className={styles.divAvatar}>
-        <STImage source={info?.avatar} className={styles.avatar} size={150} alt="Avatar" />
+        <STImage
+          source={info?.avatar ?? undefined}
+          className={styles.avatar}
+          size={150}
+          alt="Avatar"
+        />
       </div>
       <div className={styles.divInfo}>
         <div className={styles.devInfoTop}>
           <div>
             <div>
               <STText className={styles.fullName} variant="title" color="primary">
-                {info?.fullName || 'Name'}
+                {info.fullName || 'Name'}
               </STText>
             </div>
-            {/* <STText
-              variant="highlight"
-              color="secondary"
-            >{`${info?.role} | ${info?.position}`}</STText> */}
+            <STText variant="highlight" color="secondary">{`${info.role?.name}`}</STText>
           </div>
           <STIcon icon={icons.update} onClick={() => onClick?.(info as User)} />
         </div>
         <div className={styles.divInfoLine}>
-          <InfoLine label={t('profile.email')} value={info?.email} />
-          <InfoLine label={t('profile.phone')} value={info?.phone} />
-          <InfoLine label={t('profile.gender')} value={info?.gender} />
+          <InfoLine label={t('profile.email')} value={info.email} />
+          <InfoLine label={t('profile.phone')} value={info.phone} />
+          <InfoLine label={t('profile.gender')} value={info.gender} />
         </div>
       </div>
     </div>

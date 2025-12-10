@@ -1,0 +1,30 @@
+.body {
+  display: flex;
+  flex-direction: column;
+
+  scrollbar-width: thin;
+  scrollbar-color: #999 transparent;
+}
+
+.content {
+  display: flex;
+  flex-wrap: wrap; /* Cho phép xuống hàng */
+  gap: var(--size-gapXl);
+  justify-content: left; /* hoặc space-around / space-evenly */
+}
+
+.buttonWrapper {
+  display: flex;
+  gap: var(--size-gapMd);
+  margin-top: 10px;
+  justify-content: flex-end; /* canh phải */
+}
+
+.title {
+  margin-bottom: var(--size-mrMd);
+}
+
+.divAvatar {
+  display: flex;
+  padding-bottom: var(--size-pdMd);
+}

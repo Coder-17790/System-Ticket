@@ -8,6 +8,7 @@
 
 # --- Backend ---
 /backend/node_modules/
+/backend/public/
 /backend/log/
 /backend/tmp/
 /backend/.env

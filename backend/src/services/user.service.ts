@@ -28,12 +28,12 @@ export class UserService {
   }
 
   // Cập nhật thông tin user theo id
-  update(id: number, data: { email?: string; name?: string | null }) {
+  update(id: string, data: { email?: string; name?: string | null }) {
     return this.repo.update(id, data);
   }
 
   // Xoá user theo id
-  remove(id: number) {
+  remove(id: string) {
     return this.repo.delete(id);
   }
 

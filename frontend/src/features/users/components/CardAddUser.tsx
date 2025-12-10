@@ -1,45 +1,79 @@
 import { InfoComboBoxLine, InfoDateLine, InfoLine } from '@/components/forms/InputLine';
 import STButton from '@/components/ui/STButton';
 import STText from '@/components/ui/STText';
-import { gender, genderOption, languageOption, positionOption, roleOption, User } from '@/types';
-import { useCallback, useEffect, useState } from 'react';
-import 'react-datepicker/dist/react-datepicker.css';
-import { useCreateUserMutation } from '../hooks/useUsers';
-import styles from './CardUpdateUser.module.scss';
 import { useNotify } from '@/providers/NotificationProvider';
+import { gender, genderOption, UserCreate } from '@/types';
+import utilt from '@/utils';
+import { useCallback, useRef, useState } from 'react';
+import 'react-datepicker/dist/react-datepicker.css';
 import { useTranslation } from 'react-i18next';
+import { useGetListNation } from '../hooks/useNation';
+import { useGetListRoles } from '../hooks/useRole';
+import { useCreateUserMutation, useUpdateAvatar } from '../hooks/useUsers';
+import styles from './CardAddUser.module.scss';
+import AvartarInput from '@/components/forms/AvartarInput';
 // import { number } from 'framer-motion';
 
 type CardAddUserProps = {
-  info?: User;
   className?: string;
   click?: () => void;
 };
 
-const CardAddUser = ({ info, className, click }: CardAddUserProps) => {
-  const [data, setData] = useState<User>(info || ({} as User));
+const CardAddUser = ({ className, click }: CardAddUserProps) => {
+  const [data, setData] = useState<UserCreate>({
+    email: '',
+    username: '',
+    password: '',
+    fullName: '',
+  });
   const useCreate = useCreateUserMutation();
+  const useUppdataAvatar = useUpdateAvatar();
+
   const { t } = useTranslation();
   const { notify } = useNotify();
+  const avatar = useRef<File | null>(null);
 
-  // Chạy lần đầu
-  useEffect(() => {
-    if (info) setData(info);
-  }, [info]);
+  const { data: listNation } = useGetListNation();
+  const { data: listRole } = useGetListRoles();
 
   // Cập nhật data từng hàng
-  const updateUserField = useCallback(<K extends keyof User>(field: K, value: User[K]) => {
-    setData((prev) => (prev ? { ...prev, [field]: value } : prev));
-  }, []);
+  const updateUserField = useCallback(
+    <K extends keyof UserCreate>(field: K, value: UserCreate[K]) => {
+      setData((prev) => {
+        if (!prev) return prev;
+
+        return {
+          ...prev,
+          [field]: value,
+        };
+      });
+    },
+    []
+  );
+
+  // Lưu ảnh
+  const storeAvatar = (file: File) => {
+    avatar.current = file;
+  };
 
   // Thêm user
-  const handleAdd = (info: User) => {
+  const handleAdd = (info: UserCreate) => {
     if (!info.email) {
       notify('Thiếu mail', 'error');
       return;
     }
     click?.();
-    useCreate.mutate(info);
+    useCreate.mutate(data, {
+      onSuccess: (createdUser) => {
+        // Là backend trả về
+        if (avatar.current) {
+          useUppdataAvatar.mutate({
+            id: createdUser.data.id,
+            file: avatar.current,
+          });
+        }
+      },
+    });
     useCreate.isSuccess;
   };
 
@@ -48,6 +82,9 @@ const CardAddUser = ({ info, className, click }: CardAddUserProps) => {
       <STText variant="title" className={styles.title}>
         {t('userPage.addUser')}
       </STText>
+      <div className={styles.divAvatar}>
+        <AvartarInput source={data?.avatar || ''} onAddAvatar={(file) => storeAvatar(file)} />
+      </div>
       <div className={styles.content}>
         <InfoLine
           label={t('profile.email')}
@@ -55,26 +92,28 @@ const CardAddUser = ({ info, className, click }: CardAddUserProps) => {
           required
           onChange={(str) => updateUserField('email', str)}
         />
-
         <InfoLine
-          label={t('profile.nickname')}
-          value={data?.title || ''}
-          onChange={(str) => updateUserField('title', str)}
+          required
+          label={t('profile.fullName')}
+          value={data?.fullName || ''}
+          onChange={(str) => updateUserField('fullName', str)}
         />
         <InfoLine
+          required
           label={t('profile.userName')}
           value={data?.username || ''}
           onChange={(str) => updateUserField('username', str)}
         />
         <InfoLine
+          required
           label={t('profile.passWord')}
           value={data?.password || ''}
           onChange={(str) => updateUserField('password', str)}
         />
         <InfoLine
-          label={t('profile.fullName')}
-          value={data?.fullName || ''}
-          onChange={(str) => updateUserField('fullName', str)}
+          label={t('profile.nickname')}
+          value={data?.title || ''}
+          onChange={(str) => updateUserField('title', str)}
         />
         <InfoLine
           label={t('profile.phone')}
@@ -86,73 +125,27 @@ const CardAddUser = ({ info, className, click }: CardAddUserProps) => {
           value={data?.dateOfBirth || null}
           onChange={(str) => {
             const newDate = str ? new Date(str) : undefined;
-            updateUserField('dateOfBirth', newDate as Date);
+            updateUserField('dateOfBirth', new Date(String(newDate)));
           }}
         />
-        {/* <InfoComboBoxLine
-          option={languageOption}
-          label={t('profile.nation')}
-          value={data?.nationId?.toString() || ''}
-          onChange={(str) => updateUserField('nationId', number.parse(String(str ?? '')))}
-        /> */}
-
         <InfoComboBoxLine
           option={genderOption}
           label={t('profile.gender')}
           value={data?.gender || ''}
-          onChange={(str) => updateUserField('gender', str as gender | null)}
+          onChange={(str) => updateUserField('gender', String(str) as gender)}
         />
         <InfoComboBoxLine
-          option={genderOption}
+          option={utilt.format.mapToOptionsCbb(listRole?.data ?? undefined, 'id', 'name')}
+          label={t('profile.role')}
+          value={(data?.roleId && data?.roleId) ?? ''}
+          onChange={(str) => updateUserField('roleId', Number(str))}
+        />
+        <InfoComboBoxLine
+          option={utilt.format.mapToOptionsCbb(listNation?.data ?? undefined, 'id', 'name')}
           label={t('profile.nation')}
-          value={data?.gender || ''}
-          onChange={(str) => updateUserField('gender', str as gender | null)}
+          value={(data?.nationId && data?.nationId) ?? ''}
+          onChange={(str) => updateUserField('nationId', Number(str))}
         />
-        <InfoComboBoxLine
-          option={genderOption}
-          label={t('profile.role')}
-          value={data?.gender || ''}
-          onChange={(str) => updateUserField('gender', str as gender | null)}
-        />
-
-        {/* <InfoLine
-          label={t('profile.address')}
-          value={data?.address || ''}
-          onChange={(str) => updateUserField('address', str)}
-        />
-
-        <InfoComboBoxLine
-          option={positionOption}
-          label={t('profile.position')}
-          value={data?.position || ''}
-          onChange={(str) => updateUserField('position', String(str) ?? '')}
-        /> */}
-        {/* 
-        <InfoComboBoxLine
-          option={roleOption}
-          label={t('profile.role')}
-          value={data?.role || ''}
-          onChange={(str) => updateUserField('role', String(str) ?? '')}
-        /> */}
-
-        {/* <InfoDateLine
-          enable={false}
-          label="Ngày tạo"
-          value={data?.createdAt || null}
-          onChange={(str) => {
-            const newDate = str ? new Date(str) : undefined;
-            updateUserField('createdAt', newDate as Date);
-          }}
-        />
-        <InfoDateLine
-          enable={false}
-          label="Ngày cập nhật"
-          value={data?.updatedAt || null}
-          onChange={(str) => {
-            const newDate = str ? new Date(str) : undefined;
-            updateUserField('updatedAt', newDate as Date);
-          }}
-        /> */}
       </div>
 
       <InfoLine

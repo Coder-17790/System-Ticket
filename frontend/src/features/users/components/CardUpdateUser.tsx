@@ -4,36 +4,32 @@ import STButton from '@/components/ui/STButton';
 import STText from '@/components/ui/STText';
 import { gender, genderOption, User } from '@/types';
 import utilt from '@/utils';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useTranslation } from 'react-i18next';
+import { useGetListNation } from '../hooks/useNation';
 import { useGetListRoles } from '../hooks/useRole';
 import { useUpdateAvatar, useUpdateUserMutation } from '../hooks/useUsers';
 import styles from './CardUpdateUser.module.scss';
-import { useGetListNation } from '../hooks/useNation';
+import { useNotify } from '@/providers/NotificationProvider';
+import { number } from 'framer-motion';
 
 type CardInfoProps = {
   info?: User;
   className?: string;
+  click?: () => void;
 };
 
-const CardInfo = ({ info, className }: CardInfoProps) => {
+const CardUpdateUser = ({ info, className, click }: CardInfoProps) => {
   const [data, setData] = useState<User>(info || ({} as User));
   const useUpdate = useUpdateUserMutation();
   const useUpdateAvt = useUpdateAvatar();
   const { t } = useTranslation();
-  const {
-    data: listRoles,
-    isLoading: listRoles_Loading,
-    isError: listRoles_Error,
-  } = useGetListRoles();
-  const {
-    data: listNation,
-    isLoading: listNation_Loading,
-    isError: listNation_Error,
-  } = useGetListNation();
-  console.log('listNation--', listNation);
-  console.log('listRoles--', listRoles);
+  const { data: listRoles } = useGetListRoles();
+  const { data: listNation } = useGetListNation();
+  const avatar = useRef<File | null>(null);
+  const { notify } = useNotify();
+  const [dataUpdate, setDataupdate] = useState<Partial<User>>({});
 
   // Chạy lần đầu
   useEffect(() => {
@@ -42,37 +38,72 @@ const CardInfo = ({ info, className }: CardInfoProps) => {
 
   // Cập nhật data từng hàng
   const updateUserField = useCallback(
-    <K extends keyof User>(field: K, value: Partial<User[K]> | User[K]) => {
+    <K extends keyof User>(field: K, value: User[K]) => {
+      // 1. Cập nhật data để hiển thị trên UI
       setData((prev) => {
         if (!prev) return prev;
 
-        const prevField = prev[field];
-
-        const isObject = prevField !== null && typeof prevField === 'object';
-
-        const nextField = isObject
-          ? { ...(prevField as any), ...(value as any) } // 👉 merge object
-          : (value as any); // 👉 primitive → gán thẳng
-
         return {
           ...prev,
-          [field]: nextField,
+          [field]: value,
+        };
+      });
+
+      // 2. Cập nhật dataUpdate (chỉ lưu field khác so với info ban đầu)
+      setDataupdate((prevUpdate) => {
+        // nếu chưa có info gốc thì không thể so sánh, cứ trả lại prevUpdate
+        if (!info) return prevUpdate || {};
+
+        const isEqual = JSON.stringify(info[field]) === JSON.stringify(value);
+
+        // 2.1. Nếu value mới giống với info ban đầu → remove khỏi dataUpdate
+        if (isEqual) {
+          if (!prevUpdate) return {};
+          const { [field]: _removed, ...rest } = prevUpdate;
+          return rest;
+        }
+
+        // 2.2. Ngược lại → set/update field trong dataUpdate
+        return {
+          ...(prevUpdate || {}),
+          [field]: value,
         };
       });
     },
-    []
+    [info] // nhớ đóng ngoặc useCallback
   );
 
   // Cập nhật user
-  const handleUpdate = (info: User) => {
-    useUpdate.mutate(info);
-    useUpdate.isSuccess;
+  const handleUpdate = (info: Partial<User>) => {
+    try {
+      useUpdate.mutate(
+        { id: data.id, info: info },
+        {
+          onSuccess: () => {
+            if (avatar.current) {
+              // Giả sử API cần 2 field: id và file (tùy lại type của bạn mà chỉnh cho đúng)
+              useUpdateAvt.mutate({
+                id: data.id,
+                file: avatar.current,
+              });
+              // Sau khi gửi xong có thể reset để tránh upload lại ảnh cũ lần sau
+              avatar.current = null;
+            }
+            useUpdate.isSuccess;
+            click?.();
+            avatar.current = null;
+          },
+          onError: (error) => {
+            notify(`Cập nhật thất bại ${error}`, 'error');
+          },
+        }
+      );
+    } catch {}
   };
 
-  // Cập avatar
-  const handleUpdateAvatar = (id: string, file: File) => {
-    useUpdateAvt.mutate({ id, file });
-    useUpdate.isSuccess;
+  // Lưu ảnh
+  const storeAvatar = (file: File) => {
+    avatar.current = file;
   };
 
   return (
@@ -81,10 +112,7 @@ const CardInfo = ({ info, className }: CardInfoProps) => {
         {t('userPage.updateUser')}
       </STText>
       <div className={styles.divAvatar}>
-        <AvartarInput
-          source={data?.avatar || ''}
-          onAddAvatar={(file) => handleUpdateAvatar(data.id.toString(), file)}
-        />
+        <AvartarInput source={data?.avatar || ''} onAddAvatar={(file) => storeAvatar(file)} />
       </div>
       <div className={styles.content}>
         <InfoLine
@@ -106,7 +134,7 @@ const CardInfo = ({ info, className }: CardInfoProps) => {
         <InfoLine
           label={t('profile.phone')}
           value={data?.phone ?? ''}
-          onChange={(str) => setData((prev) => ({ ...prev, phone: str }))}
+          onChange={(str) => updateUserField('phone', str)}
         />
         <InfoDateLine
           label={t('profile.birthday')}
@@ -125,14 +153,14 @@ const CardInfo = ({ info, className }: CardInfoProps) => {
         <InfoComboBoxLine
           option={utilt.format.mapToOptionsCbb(listRoles?.data ?? undefined, 'id', 'name')}
           label={t('profile.role')}
-          value={data?.role.id || ''}
-          onChange={(str) => updateUserField('role', { id: str?.toString() })}
+          value={data?.roleId || ''}
+          onChange={(str) => updateUserField('roleId', str as number)}
         />
         <InfoComboBoxLine
           option={utilt.format.mapToOptionsCbb(listNation?.data ?? undefined, 'id', 'name')}
           label={t('profile.nation')}
-          value={data?.nation.id || ''}
-          onChange={(str) => updateUserField('nation', { id: str?.toString() })}
+          value={data?.nationId || ''}
+          onChange={(str) => updateUserField('nationId', str as number)}
         />
         <InfoDateLine
           enable={false}
@@ -162,10 +190,10 @@ const CardInfo = ({ info, className }: CardInfoProps) => {
         onChange={(str) => updateUserField('bio', str)}
       />
       <div className={styles.buttonWrapper}>
-        <STButton label={t('button.save')} onClick={() => handleUpdate(data)} />
+        <STButton label={t('button.save')} onClick={() => handleUpdate(dataUpdate)} />
       </div>
     </div>
   );
 };
 
-export default CardInfo;
+export default CardUpdateUser;

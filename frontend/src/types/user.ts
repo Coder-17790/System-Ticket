@@ -3,29 +3,51 @@ import { Role } from './role';
 import { Nation } from './nation';
 
 export type User = {
-  id: string; // UUID thay cho BIGINT
-  orgId: number | null; // BIGINT, có thể null
+  id: string;
   email: string;
-  username: string; // Thêm trường username
-  password: string; // Thêm trường password
+  username: string;
+  password: string;
   fullName: string;
   isActive: boolean;
-  phone: string | null;
-  dateOfBirth: Date | null;
-  lastLogin: Date | null;
-  gender: gender | null; // Giới tính chỉ có thể là 'male' hoặc 'female'
-  roleId: number | null; // BIGINT cho role_id
-  bio: string | null;
+  phone: string;
+  dateOfBirth: Date;
+  lastLogin: Date;
+  gender: gender;
+  roleId: number;
+  bio: string;
   isVerified: boolean;
-  twoFaEnabled: boolean; // Trường 2fa_enabled
-  title: string; // Tiêu đề
-  nationId: number | null; // Thêm trường nation_id
-  avatar: string; // Avatar
+  twoFaEnabled: boolean;
+  title: string;
+  nationId: number;
+  avatar: string;
   updatedAt: Date;
   createdAt: Date;
   role: Role;
   nation: Nation;
 };
+
+export type UserUpdate = Partial<Omit<User, 'id' | 'email' | 'username' | 'password' | 'fullName'>>;
+
+export type UserCreate = {
+  email: string;
+  username: string;
+  password: string;
+  fullName: string;
+} & Partial<
+  Omit<
+    User,
+    | 'id'
+    | 'email'
+    | 'username'
+    | 'password'
+    | 'fullName'
+    | 'lastLogin'
+    | 'updatedAt'
+    | 'createdAt'
+    | 'role'
+    | 'nation'
+  >
+>;
 
 export type FilterUser = {
   search: string; // từ khóa tìm kiếm
