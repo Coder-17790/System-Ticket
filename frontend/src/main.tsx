@@ -1,16 +1,19 @@
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
-import './styles/global.scss';
 import { Provider } from 'react-redux';
-import { store } from './store';
+import App from './App';
 import './i18n';
-import '@fortawesome/fontawesome-free/css/all.min.css';
+import { store, persistor } from './store';
+import './styles/global.scss';
+import { PersistGate } from 'redux-persist/integration/react';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+      </PersistGate>
     </Provider>
   </React.StrictMode>
 );

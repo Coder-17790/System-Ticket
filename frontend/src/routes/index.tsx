@@ -1,26 +1,27 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import Login from '@/features/auth/pages/Login';
+import LoginPage from '@/features/auth/pages/LoginPage';
 import UserPage from '@/features/users/pages/UserPage';
 import SettingPage from '@/features/settings/pages/SettingPage';
 import MainLayout from '@/components/layouts/MainLayout';
 
-import { authLoader } from './loaders';
+import { authLoader, guestOnlyLoader } from './loaders';
 // import { logoutAction } from "./actions";
 import HomePage from '@/features/users/pages/Home';
 import ErrorPage from '@/components/layouts/errorPage';
+import { logoutAction } from './action';
 
 export const router = createBrowserRouter([
   {
     path: '/login',
-    element: <Login />,
-    // errorElement: <ErrorPage />,
+    element: <LoginPage />,
+    loader: guestOnlyLoader,
   },
 
   // PROTECTED LAYOUT
   {
     path: '/',
-    loader: authLoader, // nếu chưa login → redirect
+    loader: authLoader,
     element: <MainLayout />,
     errorElement: <ErrorPage />,
     children: [
@@ -31,10 +32,10 @@ export const router = createBrowserRouter([
   },
 
   // LOGOUT
-  // {
-  //   path: "/logout",
-  //   action: logoutAction,
-  // },
+  {
+    path: "/logout",
+    action: logoutAction,
+  },
 
   // INFO - page độc lập
   // {

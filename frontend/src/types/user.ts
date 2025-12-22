@@ -49,6 +49,18 @@ export type UserCreate = {
   >
 >;
 
+export type UserLogin = {
+  email: string;
+  username: string;
+  fullName: string;
+  phone: string;
+  dateOfBirth: Date;
+  title: string;
+  avatar: string;
+  gender: gender;
+  lastLogin: Date;
+};
+
 export type FilterUser = {
   search: string; // từ khóa tìm kiếm
   pageNumber: number; // số trang hiện tại

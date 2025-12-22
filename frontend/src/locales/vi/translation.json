@@ -33,6 +33,8 @@
     "add": "Thêm",
     "close": "Đóng",
     "on": "Bật",
-    "off": "Tắt"
+    "off": "Tắt",
+    "yes": "Có",
+    "no": "Không"
   }
 }

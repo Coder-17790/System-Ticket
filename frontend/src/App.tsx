@@ -1,13 +1,15 @@
 import { useStyles } from '@/hooks/useStyle'; // hook trả về theme.primary chẳng hạn
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
-import { QueryProvider } from './providers/QueryProvider';
+import AppProvider from './providers';
 import { router } from './routes';
-import { NotificationProvider } from './providers/NotificationProvider';
-import { getRole } from './features/users/api/role';
+import { fetchUser } from './store/slices/userSlice';
+import { useAppDispatch } from './hooks/useDispatch';
 
 function App() {
   const theme = useStyles();
+  const dispatch = useAppDispatch();
 
   // Gán biến màu toàn cục
   useEffect(() => {
@@ -20,14 +22,16 @@ function App() {
     });
   }, [theme]);
 
-  getRole();
+  // useEffect(() => {
+  //   // Vừa vào app là kiểm tra xem user là ai ngay
+  //   dispatch(fetchUser());
+  //   console.log('===========================Chạy lại');
+  // }, [dispatch]);
 
   return (
-    <NotificationProvider>
-      <QueryProvider>
-        <RouterProvider router={router} />
-      </QueryProvider>
-    </NotificationProvider>
+    <AppProvider>
+      <RouterProvider router={router} />
+    </AppProvider>
   );
 }
 

@@ -11,3 +11,16 @@ export type FilterUser = {
   pageNumber: number; // số trang hiện tại
   countNumber: number; // số lượng hiển thị trên mỗi trang
 };
+
+export type UserLogin = {
+  id: string;
+  email: string;
+  username: string;
+  fullName: string;
+  phone?: string | null;
+  dateOfBirth?: Date | null;
+  title?: string | null;
+  avatar?: string | null;
+  gender?: string | null;
+  lastLogin: Date | null;
+};

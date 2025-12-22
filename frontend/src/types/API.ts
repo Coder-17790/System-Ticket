@@ -1,4 +1,4 @@
-export type ResponseAPI<T> = {
+export type ResponseAPI<T = any> = {
   success: boolean; // true = OK, false = error
   status: number; // HTTP status code (200, 400, 500, ...)
   message: string; // mô tả ngắn gọn

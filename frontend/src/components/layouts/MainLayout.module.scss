@@ -42,3 +42,10 @@
 .outlet {
   border: 1px solid var(--color-primary);
 }
+
+.image {
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  height: 50px;
+  width: 50px;
+}

@@ -84,14 +84,14 @@ export const defaultSize: Size = {
   pdSm: '10px',
   pdMd: '15px',
   pdLg: '20px',
-  pdXl: '25px',
+  pdXl: '30px',
 
   // margin
   mrXs: '5px',
   mrSm: '10px',
   mrMd: '15px',
   mrLg: '20px',
-  mrXl: '25px',
+  mrXl: '30px',
 
   // radius
   rdsXs: '2px',

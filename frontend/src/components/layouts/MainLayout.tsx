@@ -6,18 +6,38 @@ import ErrorPage from '@/components/layouts/errorPage';
 import STSwitchButton from '../ui/STSwitchButton';
 import { useDispatch } from 'react-redux';
 import { toggleTheme } from '@/store/slices/themeSlice';
-import STText from '../ui/STText';
 import STComboBox from '../ui/STComboBox';
 import { useTranslation } from 'react-i18next';
+import STImage from '../ui/STImage';
+import { login, logout } from '@/store/slices/userSlice';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
+import STText from '../ui/STText';
+import utilt from '@/utils';
+import { useDialog } from '@/providers/DialogProvider';
 
 export default function MainLayout() {
   const navigate = useNavigate();
   const { error } = useLoaderData() as any;
   const dispatch = useDispatch();
+  const { user } = useSelector((state: RootState) => state.user);
+  const { notify } = useDialog();
 
   // Chuyển mode theme
   const handleToggleTheme = (newStatus: boolean) => {
     dispatch(toggleTheme(newStatus ? 'dark' : 'light'));
+  };
+
+  // Logout
+  const handlelogout = () => {
+    notify({
+      msg: 'Bạn muốn đặng xuất?',
+      onSuccess: () => {
+        dispatch(logout());
+        utilt.storage.remove('accessToken');
+        navigate('/login');
+      },
+    });
   };
 
   // Chuyển ngôn ngữ
@@ -57,6 +77,14 @@ export default function MainLayout() {
           value={i18n.language}
           className={styles.cbbLanguage}
           onChange={(value) => changeLang(value.toString())}
+        />
+        <STText>{user?.fullName}</STText>
+        <STImage size={50} source={user?.avatar} className={styles.image} />
+        <STButton
+          label="Logout"
+          onClick={() => {
+            handlelogout();
+          }}
         />
       </div>
       <motion.div

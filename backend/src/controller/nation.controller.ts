@@ -1,4 +1,4 @@
-import { NationService } from '@/services/nation.sevice';
+import { NationService } from '@/services/nation.service';
 import { HttpStatus, ResponseAPI } from '@/type';
 import { NextFunction, Request, Response } from 'express';
 

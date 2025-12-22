@@ -43,6 +43,6 @@
     "resolveJsonModule": true //Cho phép import file .json
   },
 
-  "include": ["src", "global.d.ts", "vite-env.d.ts"], // chỉ định thư mục chứa code TypeScript
+  "include": ["src", "global.d.ts", "vite-env.d.ts", "vite.config.ts"], // chỉ định thư mục chứa code TypeScript
   "exclude": ["node_modules", "dist"] // bỏ qua những thư mục không cần kiểm tra
 }

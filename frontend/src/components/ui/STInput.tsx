@@ -10,6 +10,7 @@ type STInputProps = {
   color?: 'default' | 'primary' | 'secondary' | 'danger';
   className?: string;
   style?: React.CSSProperties;
+  type?: React.HTMLInputTypeAttribute;
 };
 
 const STInput: React.FC<STInputProps> = ({
@@ -20,21 +21,24 @@ const STInput: React.FC<STInputProps> = ({
   enable = true,
   color = 'default',
   className = '',
+  type = 'text',
   style,
 }) => {
-
   // Sự kiện nhấn
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     onChange?.(e.target.value);
   };
 
   const commonProps = {
-    className: `${textarea ? styles.textarea : styles.input} ${styles[color]} ${className} ${!enable ? styles.disabled : ''}`,
+    className: `${textarea ? styles.textarea : styles.input} ${styles[color]} ${className} ${
+      !enable ? styles.disabled : ''
+    }`,
     placeholder,
     value,
     disabled: !enable,
     onChange: handleChange,
-    style,
+    type: type,
+    style: style,
   };
 
   return (

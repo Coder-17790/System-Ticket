@@ -12,6 +12,11 @@ export class UserService {
     return this.repo.create(user);
   }
 
+  // Lấy user theo userName
+  getUserLogin(userName: string) {
+    return this.repo.getUserLogin(userName);
+  }
+
   //Tìm user theo tên va email
   findUser(filter: FilterUser) {
     return this.repo.findByEmailAName(filter);
@@ -23,7 +28,7 @@ export class UserService {
   }
 
   // Lấy thông tin user theo id
-  get(id: number) {
+  get(id: string) {
     return this.repo.findById(id);
   }
 

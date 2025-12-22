@@ -33,6 +33,8 @@
     "add": "Add",
     "close": "Close",
     "on": "On",
-    "off": "Off"
+    "off": "Off",
+    "yes": "Yes",
+    "no": "No"
   }
 }

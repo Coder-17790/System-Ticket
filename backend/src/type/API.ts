@@ -1,3 +1,7 @@
+import { User } from '@/models';
+import { UserLogin } from '@/models/user/user.types';
+import { Request } from 'express';
+
 export type ResponseAPI<T = any> = {
   success: boolean; // true = OK, false = error
   status: number; // HTTP status code (200, 400, 500, ...)
@@ -119,3 +123,24 @@ export const ErrorMap = [
     hint: 'Thử lại sau hoặc báo cho quản trị viên.',
   },
 ];
+
+// Định nghĩa đúng kiểu request có user (đã được middleware trước đó gắn vào)
+export type AuthenticatedRequest = Request & {
+  user: UserLogin;
+  auth?: string;
+};
+
+export type PayloadJwt = {
+  id: string;
+  role?: number[];
+  exp?: number;
+  iat?: number;
+};
+
+// Danh sách route public
+export const publicPaths = ['/auth/login', '/auth/refetchToken'];
+
+// type kế thừa Request
+export type RequestNew = Request & {
+  tokenData?: PayloadJwt;
+};

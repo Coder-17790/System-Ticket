@@ -5,6 +5,7 @@ import { NextFunction, Request, Response } from 'express';
 import fs from 'fs';
 import path from 'path';
 import { UserService } from '../services/user.service';
+import { UserCreation } from '@/models/user/user.types';
 
 const service = new UserService();
 
@@ -12,7 +13,8 @@ export const UserController = {
   // 🧩 Tạo mới người dùng
   async create(req: Request, res: Response, next: NextFunction) {
     try {
-      const userCreation = req.body;
+      const userCreation: UserCreation = req.body;
+
       const user = await service.register(userCreation);
 
       const response: ResponseAPI<typeof user> = {
@@ -22,7 +24,7 @@ export const UserController = {
         data: user,
       };
 
-      res.status(HttpStatus.CREATED).json(response);
+      // res.status(HttpStatus.CREATED).json(response);
     } catch (e: any) {
       next(e);
     }
@@ -64,7 +66,7 @@ export const UserController = {
   // 🧩 Lấy thông tin chi tiết theo id
   async get(req: Request, res: Response, next: NextFunction) {
     try {
-      const user = await service.get(Number(req.params.id));
+      const user = await service.get(req.params.id);
       if (!user) {
         return res.status(HttpStatus.NOT_FOUND).json({
           success: false,

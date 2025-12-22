@@ -9,6 +9,7 @@ import { sequelize } from '../../database/sequelize';
 import Role from '../role/role.model';
 import { AvatarPath } from '@/type/path';
 import Nation from '../nation/nation.model';
+import bcrypt from 'bcrypt';
 
 export class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare id: CreationOptional<string>; // UUID thay cho BIGINT
@@ -65,7 +66,7 @@ User.init(
       // Thêm trường 2fa_enabled
       type: DataTypes.BOOLEAN,
       defaultValue: false,
-      field: '2fa_enabled',
+      field: 'twofa_enabled',
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -122,6 +123,20 @@ User.init(
     timestamps: true,
     underscored: true,
     paranoid: false, // Chỉ dùng khi có cột delete_at (tự động bắt)
+    hooks: {
+      beforeCreate: async (user: User) => {
+        if (user.password) {
+          const salt = await bcrypt.genSalt(10);
+          user.password = await bcrypt.hash(user.password, salt);
+        }
+      },
+      beforeUpdate: async (user: User) => {
+        if (user.changed('password')) {
+          const salt = await bcrypt.genSalt(10);
+          user.password = await bcrypt.hash(user.password, salt);
+        }
+      },
+    },
   }
 );
 

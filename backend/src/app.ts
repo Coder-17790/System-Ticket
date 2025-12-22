@@ -5,6 +5,8 @@ import { errorHandler } from './middlewares/errorHandler';
 import * as model from './models';
 import './models/user/user.types'; // đảm bảo model được đăng ký
 import routes from './routes';
+import cookieParser from 'cookie-parser';
+import { authenticateAccessToken } from './middlewares/checkToken';
 
 const app = express();
 
@@ -30,6 +32,9 @@ app.get('/health', (_req, res) => res.json({ ok: true }));
 // Cho phép parse object phức tạp
 // Cho phép form request lớn → không lỗi PayloadTooLarge
 app.use(express.urlencoded({ extended: true, limit: '20mb' }));
+
+// đọc cookie từ request của client
+app.use(cookieParser());
 
 // API routes
 app.use('/api', routes);

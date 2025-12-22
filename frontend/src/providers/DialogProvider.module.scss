@@ -1,0 +1,45 @@
+.wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: flex;
+  justify-content: center; // Căn giữa theo chiều ngang
+  align-items: center; // Căn giữa theo chiều dọc
+}
+
+.popup {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+  min-height: 100px;
+  border-radius: var(--size-rdsMd);
+  padding: var(--size-pdMd);
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+}
+
+.divContent {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+.divHeader {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.divButon {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--size-gapSm);
+}
+
+.btNo {
+  background-color: var(--color-border);
+}

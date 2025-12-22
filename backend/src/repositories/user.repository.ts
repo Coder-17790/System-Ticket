@@ -3,7 +3,7 @@ import User from '../models/user/user.model';
 import { Op } from 'sequelize';
 import { log } from 'console';
 import Role from '@/models/role/role.model';
-import { Nation } from '@/models';
+import { Nation, sequelize } from '@/models';
 
 export class UserRepository {
   // Thêm mới 1 user
@@ -12,13 +12,22 @@ export class UserRepository {
   }
 
   // Tìm user theo id
-  async findById(id: number) {
+  async findById(id: string) {
     return User.findByPk(id);
   }
 
   // Lấy tất cả user
   async findAll() {
     return User.findAll();
+  }
+
+  // Lấy thông tin user theo useName vs passWord
+  async getUserLogin(useName: string) {
+    return User.findOne({
+      where: {
+        username: useName,
+      },
+    });
   }
 
   //  Tìm user theo email
@@ -40,6 +49,9 @@ export class UserRepository {
           ],
         }
       : {};
+
+    const dbName = await sequelize.query('SELECT current_database();');
+    console.log('Database hiện tại:', dbName);
 
     const result = await User.findAndCountAll({
       where,
