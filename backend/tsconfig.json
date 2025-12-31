@@ -5,6 +5,7 @@
     "rootDir": "src",
     "outDir": "dist",
     "strict": true,
+    "sourceMap": true, // dùng npx tsc để dịch sang JS
     "esModuleInterop": true,
     "skipLibCheck": true,
     "baseUrl": "./src",

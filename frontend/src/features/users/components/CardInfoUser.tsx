@@ -31,7 +31,7 @@ const CardInfoUser = ({ className, styleCSS, info }: CardInfoUserProps) => {
         <InfoLine label={t('profile.nickname')} value={info.title} />
 
         <InfoLine label={t('profile.userName')} value={info.username} />
-        <InfoLine label={t('profile.passWord')} value={info.password} />
+        {/* <InfoLine label={t('profile.passWord')} value={info.password} /> */}
         <InfoLine label={t('profile.nation')} value={info.nation?.name} />
 
         <InfoLine label={t('profile.phone')} value={info.phone} />

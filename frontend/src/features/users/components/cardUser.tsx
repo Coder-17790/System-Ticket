@@ -37,9 +37,9 @@ const CardUser = ({ info, getInfoUser, className, select }: CardUserProps) => {
   const handleDelete = () => {
     notify({
       msg: 'Bạn có chắc ko',
-      onClose: () => {
-        console.log('Không nhaaaa');
-      },
+      // onClose: () => {
+      //   console.log('Không nhaaaa');
+      // },
       onSuccess: () => {
         if (!info?.id) return;
         deleteUserMutation.mutate(String(info.id));

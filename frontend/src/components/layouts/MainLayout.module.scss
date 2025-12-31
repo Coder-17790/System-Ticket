@@ -16,7 +16,7 @@
   align-items: center;
   justify-content: flex-end;
   padding-right: var(--size-pdMd);
-  // gap: var(--size-gapSm);
+  gap: var(--size-gapSm);
 }
 
 .button {
@@ -48,4 +48,8 @@
   border: 1px solid var(--color-border);
   height: 50px;
   width: 50px;
+}
+
+.nameText {
+  color: var(--color-white);
 }

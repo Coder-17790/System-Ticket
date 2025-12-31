@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
+// Thêm ý này để khai báo default
 export const ENV = {
   PORT: process.env.PORT || '3000',
   DB: {

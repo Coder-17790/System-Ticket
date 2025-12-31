@@ -22,7 +22,7 @@ async function startServer() {
 app.use(express.json({ limit: '20mb' }));
 
 // Cấu hình Express phục vụ tệp tĩnh từ thư mục public
-app.use('/public', express.static(path.join(__dirname, '../public')));
+app.use('/public', express.static('public'));
 
 // 👉 Một API để kiểm tra xem server backend có đang chạy hay bị chết.
 // GET http://localhost:4000/health

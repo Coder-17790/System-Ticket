@@ -24,7 +24,7 @@ export const UserController = {
         data: user,
       };
 
-      // res.status(HttpStatus.CREATED).json(response);
+      res.status(HttpStatus.CREATED).json(response);
     } catch (e: any) {
       next(e);
     }
@@ -144,7 +144,7 @@ export const UserController = {
         data: { nameFile: fileUrl },
       };
 
-      return res.status(200).json(response);
+      return res.status(HttpStatus.OK).json(response);
     } catch (e: any) {
       next(e);
     }
@@ -162,7 +162,7 @@ export const UserController = {
         data: null,
       };
 
-      res.status(204).json(response);
+      res.status(HttpStatus.OK).json(response);
     } catch (e) {
       next(e);
     }

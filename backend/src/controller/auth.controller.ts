@@ -175,7 +175,7 @@ export const AuthController = {
         expiresIn: '15m',
       });
 
-      // 5. Set cookie mới
+      // Set cookie mới
       res.cookie('refreshToken', newRefreshToken.token, {
         httpOnly: true,
         secure: true,
@@ -187,6 +187,7 @@ export const AuthController = {
         success: true,
         status: HttpStatus.OK,
         data: {
+          
           accessToken,
         },
       } as ResponseAPI);

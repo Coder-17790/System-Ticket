@@ -6,6 +6,7 @@ import authRouter from './auth.routes';
 import { authenticateAccessToken } from '@/middlewares/checkToken';
 
 const router = Router();
+
 // Kiểm tra token
 router.use(authenticateAccessToken);
 

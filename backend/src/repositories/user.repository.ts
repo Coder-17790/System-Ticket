@@ -51,7 +51,6 @@ export class UserRepository {
       : {};
 
     const dbName = await sequelize.query('SELECT current_database();');
-    console.log('Database hiện tại:', dbName);
 
     const result = await User.findAndCountAll({
       where,

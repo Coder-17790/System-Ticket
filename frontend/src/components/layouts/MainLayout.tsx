@@ -18,7 +18,7 @@ import { useDialog } from '@/providers/DialogProvider';
 
 export default function MainLayout() {
   const navigate = useNavigate();
-  const { error } = useLoaderData() as any;
+  const { error } = (useLoaderData() as any) || {};
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.user);
   const { notify } = useDialog();
@@ -78,7 +78,7 @@ export default function MainLayout() {
           className={styles.cbbLanguage}
           onChange={(value) => changeLang(value.toString())}
         />
-        <STText>{user?.fullName}</STText>
+        <STText className={styles.nameText}>{user?.fullName}</STText>
         <STImage size={50} source={user?.avatar} className={styles.image} />
         <STButton
           label="Logout"

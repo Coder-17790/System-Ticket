@@ -24,7 +24,7 @@ export const HttpStatus = {
 
   // ⚠️ 4xx – Lỗi phía client
   BAD_REQUEST: 400, // Request sai dữ liệu
-  UNAUTHORIZED: 401, // Chưa đăng nhập / token sai
+  UNAUTHORIZED: 401, // Chưa đăng nhập / token sai / Token hết hạng
   FORBIDDEN: 403, // Không có quyền
   NOT_FOUND: 404, // Không tìm thấy
   CONFLICT: 409, // Trùng dữ liệu

@@ -69,7 +69,7 @@ export const DialogProvider = ({ children }: { children: ReactNode }) => {
         <div className={styles.wrapper}>
           <div className={styles.popup}>
             <div className={styles.divHeader}>
-              <STIcon className="fa-solid fa-x" onClick={clickClose} />
+              <STIcon className="fa-solid fa-x" size={15} onClick={clickClose} />
             </div>
             <div className={styles.divContent}>
               <STText>{text}</STText>

@@ -1,54 +1,48 @@
-import { refetchToken } from '@/api/apiClient';
-import { ResponseAPI } from '@/types';
-import utilt from '@/utils';
 import { redirect } from 'react-router-dom';
+import { refetchToken } from '@/api/util';
+import utilt from '@/utils';
 
-export async function authLoader({ request }: { request: Request }) {
+// Giả sử bạn có một biến global hoặc store để cache kết quả auth
+let isFetched = false;
+
+// Vô Home
+export async function authLoader() {
   const token = utilt.storage.get('accessToken');
 
-  // Chưa đăng nhập
   if (!token) {
-    throw redirect('/login');
+    throw redirect(`/login`);
   }
 
+  // Nếu đã fetch rồi thì thôi, hoặc check hết hạn token ở đây
+  if (isFetched) return;
+
   try {
-    const res: ResponseAPI = await refetchToken(token);
+    const res = await refetchToken();
+    if (!res.success) throw new Error();
 
-    // Token không hợp lệ
-    if (!res.success) {
-      utilt.storage.remove('accessToken');
-
-      const url = new URL(request.url);
-      throw redirect(`/login?from=${encodeURIComponent(url.pathname + url.search)}`);
-    }
-
-    // Token hợp lệ → trả data cho page dùng
-    return { me: res };
-  } catch (error) {
+    isFetched = true; // Đánh dấu đã xác thực thành công
+    return { me: res.data };
+  } catch {
     utilt.storage.remove('accessToken');
     throw redirect('/login');
   }
 }
 
+// Vô login
 export async function guestOnlyLoader() {
   const token = utilt.storage.get('accessToken');
 
-  // Chưa đăng nhập → cho vào login
-  if (!token) {
-    return null;
-  }
+  // Không có token thì chắc chắn là guest
+  if (!token) return null;
 
   try {
-    const res: ResponseAPI = await refetchToken(token);
-
-    // Đã đăng nhập → đá về trang chủ
+    // Nếu có token, check nhẹ xem nó còn dùng được không
+    const res = await refetchToken();
     if (res.success) {
       throw redirect('/');
     }
-
     return null;
-  } catch (error) {
-    // Token lỗi / hết hạn
-    return error;
+  } catch {
+    return null;
   }
 }

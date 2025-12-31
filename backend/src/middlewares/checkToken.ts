@@ -23,13 +23,21 @@ export function authenticateAccessToken(req: RequestNew, res: Response, next: Ne
   const secretKey = process.env.JWT_SECRET || 'SECRET_KEY'; // Luôn dùng process.env.JWT_SECRET
 
   jwt.verify(token, secretKey, (err: any, decoded: PayloadJwt) => {
-    if (err)
-      return res.status(HttpStatus.FORBIDDEN).json({
-        message: 'Invalid or expired token',
-        status: HttpStatus.FORBIDDEN,
+    if (err) {
+      if (err.name == 'TokenExpiredError')
+        return res.status(HttpStatus.UNAUTHORIZED).json({
+          message: 'Expired token',
+          status: HttpStatus.UNAUTHORIZED,
+          success: false,
+        } as ResponseAPI);
+      return res.status(HttpStatus.UNAUTHORIZED).json({
+        message: 'Invalid',
+        status: HttpStatus.UNAUTHORIZED,
         success: false,
       } as ResponseAPI);
+    }
     req.tokenData = decoded;
+
     next();
   });
 }

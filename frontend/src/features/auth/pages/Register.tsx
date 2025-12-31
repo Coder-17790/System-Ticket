@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import styles from './LoginPage.module.scss';
+import styles from './Register.module.scss';
 import STText from '@/components/ui/STText';
 import STInput from '@/components/ui/STInput';
 import { useState } from 'react';
@@ -10,7 +10,7 @@ import { loginAPI } from '../api/login';
 import { useNotify } from '@/providers/NotificationProvider';
 import utilt from '@/utils';
 
-export default function LoginPage() {
+export default function Register() {
   const [passWord, setPassWord] = useState<string>('');
   const [useName, setUseName] = useState<string>('');
   const notify = useNotify();
@@ -42,7 +42,7 @@ export default function LoginPage() {
     <div className={styles.body}>
       <div className={styles.card}>
         <STText variant="title" className={styles.txLabel}>
-          Đăng nhập
+          Đăng ký
         </STText>
         <STText variant="label" className={styles.txLabel}>
           Tài khoản
@@ -53,8 +53,8 @@ export default function LoginPage() {
         </STText>
         <STInput className={styles.input} value={passWord} onChange={(str) => setPassWord(str)} />
         <STButton className={styles.button} label="Đăng nhập" onClick={handleLogin} />
-        <STText className={styles.button} onClick={() => navigate('/register')}>
-          Đăng ký
+        <STText className={styles.button} onClick={() => navigate('/login')}>
+          Đăng nhập
         </STText>
       </div>
     </div>

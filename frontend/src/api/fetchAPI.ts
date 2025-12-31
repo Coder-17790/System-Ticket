@@ -1,41 +1,89 @@
-import { _ReturnNull } from 'i18next';
+import { refetchToken } from './util';
 
-// Thêm AuthToken vào RequestInit/Options tùy chỉnh
 interface CustomRequestOptions extends RequestInit {
-  authToken?: string | null; // Token tùy chọn
+  authToken?: string | null;
+  _retry?: boolean;
 }
 
-export const fetchAPI = async <T = any>(url: string, options: CustomRequestOptions = {}) => {
-  const { authToken: customAuthToken, ...fetchOptions } = options;
-  let headers: HeadersInit = {};
+let isRefreshing = false;
+let refreshQueue: (() => void)[] = [];
+const ulrRefecth = '/auth/refresh';
 
-  // 1. Thêm Auth Token
-  // Nếu có authToken tùy chỉnh, sử dụng nó. Ngược lại, thử lấy từ Redux.
-  const token = customAuthToken;
+export const fetchAPI = async <T = any>(
+  url: string,
+  options: CustomRequestOptions = {}
+): Promise<T> => {
+  const { authToken, _retry, ...fetchOptions } = options;
 
-  if (token) {
-    // Định dạng Authorization header theo chuẩn Bearer Token
-    headers['Authorization'] = `Bearer ${token}`;
-  }
+  const headers: Record<string, string> = {
+    ...(fetchOptions.headers instanceof Headers
+      ? Object.fromEntries(fetchOptions.headers)
+      : Array.isArray(fetchOptions.headers)
+        ? Object.fromEntries(fetchOptions.headers)
+        : fetchOptions.headers || {}),
+  };
 
-  // 2. Set JSON Header (nếu không phải FormData)
-  // Nếu body KHÔNG PHẢI FormData → set JSON header
-  if (!(fetchOptions.body instanceof FormData)) {
+  // const headers: Record<string, string> = {
+  //   ...(fetchOptions.headers || {}),
+  // };
+
+  // ✅ Chỉ set Content-Type khi KHÔNG phải FormData
+  if (fetchOptions.body && !(fetchOptions.body instanceof FormData)) {
     headers['Content-Type'] = 'application/json';
   }
 
-  // 3. Merge header từ options, ưu tiên options (đặc biệt là Authorization/Content-Type)
-  // LƯU Ý: Sẽ ưu tiên header được truyền trực tiếp trong options.headers
-  headers = { ...headers, ...(fetchOptions.headers || {}) };
+  if (authToken) {
+    headers['Authorization'] = `Bearer ${authToken}`;
+  }
 
   const res = await fetch(url, {
     ...fetchOptions,
     headers,
+    credentials: 'include', // ⭐ bắt buộc cho refresh token
   });
 
-  if (!res.ok) {
-    const errorBody = await res.json(); // Đọc body JSON
-    throw errorBody;
+  // 🔥 ACCESS TOKEN HẾT HẠN
+  if (
+    res.status === 401 &&
+    !_retry &&
+    !url.includes(ulrRefecth) // 🚫 tránh loop vô hạn
+  ) {
+    // ⏳ Đang refresh → cho request vào hàng đợi
+    if (isRefreshing) {
+      return new Promise((resolve) => {
+        refreshQueue.push(() => resolve(fetchAPI<T>(url, { ...options, _retry: true })));
+      });
+    }
+
+    isRefreshing = true;
+
+    try {
+      await refetchToken(); // refresh token
+
+      // ✅ Gọi lại tất cả request đang chờ
+      refreshQueue.forEach((cb) => cb());
+      refreshQueue = [];
+
+      return fetchAPI<T>(url, { ...options, _retry: true });
+    } catch (error) {
+      refreshQueue = [];
+      throw error; // logout xử lý ở đây
+    } finally {
+      isRefreshing = false;
+    }
   }
-  return res.json() as T;
+
+  // ❌ LỖI KHÁC
+  if (!res.ok) {
+    let error;
+    try {
+      const text = await res.text();
+      error = text ? JSON.parse(text) : { message: 'Unknown error' };
+    } catch {
+      error = { message: 'Unknown error' };
+    }
+    throw error;
+  }
+
+  return res.json() as Promise<T>;
 };
