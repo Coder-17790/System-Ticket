@@ -21,13 +21,14 @@ export class UserRepository {
     return User.findAll();
   }
 
-  // Lấy thông tin user theo useName vs passWord
-  async getUserLogin(useName: string) {
-    return User.findOne({
+  // Lấy thông tin user theo useName
+  async findUserName(useName: string) {
+    const user = await User.scope('withPassword').findOne({
       where: {
         username: useName,
       },
     });
+    return user;
   }
 
   //  Tìm user theo email

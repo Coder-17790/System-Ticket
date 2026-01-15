@@ -5,6 +5,7 @@ import { ResponseAPI, UserLogin } from '@/types';
 export type AuthenticatedRequest = Request & {
   user: UserLogin;
   auth?: string;
+  isVerifiedAccount: boolean;
 };
 
 export async function authenticateToken() {
@@ -18,6 +19,21 @@ export async function authenticateToken() {
 // Đăng nhập
 export async function loginAPI(username: string, password: string) {
   const res = fetchAPI<ResponseAPI<AuthenticatedRequest>>('api/auth/login', {
+    method: 'POST',
+    body: JSON.stringify({
+      username: username,
+      password: password,
+    }),
+  });
+
+  if (!res) throw new Error('Đăng ký thất bại');
+
+  return res;
+}
+
+// Đăng ký
+export async function register(username: string, password: string) {
+  const res = fetchAPI<ResponseAPI<AuthenticatedRequest>>('api/auth/register', {
     method: 'POST',
     body: JSON.stringify({
       username: username,

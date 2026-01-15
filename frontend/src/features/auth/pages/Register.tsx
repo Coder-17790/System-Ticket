@@ -6,7 +6,7 @@ import { useState } from 'react';
 import STButton from '@/components/ui/STButton';
 import { useDispatch } from 'react-redux';
 import { login } from '@/store/slices/userSlice';
-import { loginAPI } from '../api/login';
+import { loginAPI, register } from '../api/login';
 import { useNotify } from '@/providers/NotificationProvider';
 import utilt from '@/utils';
 
@@ -20,15 +20,14 @@ export default function Register() {
   const handleLogin = async () => {
     try {
       // 1. Gọi API đăng nhập và nhận Token
-      const response = await loginAPI(useName, passWord);
-
-      const newToken = response.data?.auth; // Giả định token nhận được
-      console.log('Đăng nhập thành công, nhận token:', response.data?.auth);
+      const response = await register(useName, passWord);
 
       // 2. LƯU token vào Redux State (state.user.auth)
-      if (response?.data) {
+      if (response.success && response?.data) {
         dispatch(login(response.data));
-        utilt.storage.set('accessToken', newToken || '');
+        if (response.data?.auth) {
+          utilt.storage.set('accessToken', response.data.auth);
+        }
         navigate('/');
       }
 
@@ -52,7 +51,7 @@ export default function Register() {
           Mật khẩu
         </STText>
         <STInput className={styles.input} value={passWord} onChange={(str) => setPassWord(str)} />
-        <STButton className={styles.button} label="Đăng nhập" onClick={handleLogin} />
+        <STButton className={styles.button} label="Đăng ký" onClick={handleLogin} />
         <STText className={styles.button} onClick={() => navigate('/login')}>
           Đăng nhập
         </STText>

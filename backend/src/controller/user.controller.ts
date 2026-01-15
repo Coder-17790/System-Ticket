@@ -13,9 +13,9 @@ export const UserController = {
   // 🧩 Tạo mới người dùng
   async create(req: Request, res: Response, next: NextFunction) {
     try {
-      const userCreation: UserCreation = req.body;
+      const { username, password } = req.body;
 
-      const user = await service.register(userCreation);
+      const user = await service.register(username, password);
 
       const response: ResponseAPI<typeof user> = {
         success: true,

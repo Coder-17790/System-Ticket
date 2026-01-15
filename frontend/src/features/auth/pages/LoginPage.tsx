@@ -22,13 +22,12 @@ export default function LoginPage() {
       // 1. Gọi API đăng nhập và nhận Token
       const response = await loginAPI(useName, passWord);
 
-      const newToken = response.data?.auth; // Giả định token nhận được
-      console.log('Đăng nhập thành công, nhận token:', response.data?.auth);
-
-      // 2. LƯU token vào Redux State (state.user.auth)
-      if (response?.data) {
+      // 2. LƯU token vào Redux State và LocalStorage
+      if (response.success && response?.data) {
         dispatch(login(response.data));
-        utilt.storage.set('accessToken', newToken || '');
+        if (response.data?.auth) {
+          utilt.storage.set('accessToken', response.data.auth);
+        }
         navigate('/');
       }
 

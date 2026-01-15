@@ -5,11 +5,11 @@ import vi from './locales/vi/translation.json';
 
 i18n.use(initReactI18next).init({
   resources: {
-    en: { translation: en },
-    vi: { translation: vi },
+    english: { translation: en },
+    vietnam: { translation: vi },
   },
-  lng: 'vi',
-  fallbackLng: 'en',
+  lng: 'vietnam',
+  fallbackLng: 'english',
   interpolation: { escapeValue: false },
 });
 

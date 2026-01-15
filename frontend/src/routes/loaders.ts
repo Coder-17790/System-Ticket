@@ -8,6 +8,8 @@ let isFetched = false;
 // Vô Home
 export async function authLoader() {
   const token = utilt.storage.get('accessToken');
+  // const token = useSelector((state: RootState) => state.user.token); // Lấy token từ Redux
+  // const token = store.getState().user.token; // Sử dụng store.getState() để lấy token
 
   if (!token) {
     throw redirect(`/login`);
@@ -23,7 +25,6 @@ export async function authLoader() {
     isFetched = true; // Đánh dấu đã xác thực thành công
     return { me: res.data };
   } catch {
-    utilt.storage.remove('accessToken');
     throw redirect('/login');
   }
 }
@@ -31,13 +32,17 @@ export async function authLoader() {
 // Vô login
 export async function guestOnlyLoader() {
   const token = utilt.storage.get('accessToken');
+  // const token = useSelector((state: RootState) => state.user.token); // Lấy token từ Redux
+  // const token = store.getState().user.token; // Sử dụng store.getState() để lấy token
 
   // Không có token thì chắc chắn là guest
   if (!token) return null;
 
   try {
     // Nếu có token, check nhẹ xem nó còn dùng được không
+
     const res = await refetchToken();
+
     if (res.success) {
       throw redirect('/');
     }

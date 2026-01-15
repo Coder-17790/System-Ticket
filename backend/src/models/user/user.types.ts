@@ -1,8 +1,13 @@
-import { InferAttributes, InferCreationAttributes } from 'sequelize';
+import { InferAttributes, InferCreationAttributes, Optional } from 'sequelize';
 import { User } from './user.model';
+import { NullishPropertiesOf } from 'sequelize/types/utils';
 
 export type UserAttributes = InferAttributes<User>;
-export type UserCreation = InferCreationAttributes<User>;
+// export type UserCreation = InferCreationAttributes<User>
+// export type UserCreation = Partial<InferCreationAttributes<User>>;
+export type UserCreation = Optional<InferCreationAttributes<User>, NullishPropertiesOf<InferCreationAttributes<User>>>;
+
+
 export type UserUpdate = Partial<UserCreation>;
 
 // Filter nhận để tìm user
@@ -14,9 +19,9 @@ export type FilterUser = {
 
 export type UserLogin = {
   id: string;
-  email: string;
-  username: string;
-  fullName: string;
+  email?: string | null;
+  username?: string | null;
+  fullName?: string | null;
   phone?: string | null;
   dateOfBirth?: Date | null;
   title?: string | null;

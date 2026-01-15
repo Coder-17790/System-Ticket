@@ -127,7 +127,8 @@ export const ErrorMap = [
 // Định nghĩa đúng kiểu request có user (đã được middleware trước đó gắn vào)
 export type AuthenticatedRequest = Request & {
   user: UserLogin;
-  auth?: string;
+  auth: string;
+  isVerifiedAccount: boolean;
 };
 
 export type PayloadJwt = {
@@ -138,7 +139,7 @@ export type PayloadJwt = {
 };
 
 // Danh sách route public
-export const publicPaths = ['/auth/login', '/auth/refetchToken'];
+export const publicPaths = ['/auth/login', '/auth/refetchToken', '/auth/register'];
 
 // type kế thừa Request
 export type RequestNew = Request & {

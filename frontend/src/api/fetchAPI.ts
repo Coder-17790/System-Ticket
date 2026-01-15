@@ -1,3 +1,4 @@
+import { ResponseAPI } from '@/types';
 import { refetchToken } from './util';
 
 interface CustomRequestOptions extends RequestInit {
@@ -36,11 +37,14 @@ export const fetchAPI = async <T = any>(
     headers['Authorization'] = `Bearer ${authToken}`;
   }
 
-  const res = await fetch(url, {
+  const res = (await fetch(url, {
     ...fetchOptions,
     headers,
     credentials: 'include', // ⭐ bắt buộc cho refresh token
-  });
+  }));
+
+  // Không có refreshToen
+  console.log('Vô', res);
 
   // 🔥 ACCESS TOKEN HẾT HẠN
   if (

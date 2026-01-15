@@ -1,7 +1,7 @@
-import utilt from '@/utils';
 import { fetchAPI } from './fetchAPI';
+import { store } from '@/store';
 
-const token = utilt.storage.get('accessToken');
+const token = store.getState().user.token; // Sử dụng store.getState() để lấy token
 
 // refetch Token
 export const refetchToken = async () => {
@@ -10,6 +10,8 @@ export const refetchToken = async () => {
       method: 'GET',
       authToken: token,
     });
+
+    console.log('refetchToken');
 
     if (!res) {
       throw new Error('Refresh token expired');

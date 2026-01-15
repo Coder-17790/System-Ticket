@@ -6,20 +6,26 @@ export class UserService {
   constructor(private repo = new UserRepository()) {}
 
   // Đăng ký user mới
-  async register(user: UserCreation) {
-    const exists = await this.repo.findByEmail(user.email);
-    if (exists) throw new Error('Email already exists');
-    return this.repo.create(user);
+  async register(userName: string, password: string) {
+    const exists = await this.repo.findUserName(userName);
+    if (exists) throw new Error('Username already exists');
+
+    return this.repo.create({
+      username: userName,
+      password: password,
+    });
   }
 
   // Lấy user theo userName
   getUserLogin(userName: string) {
-    return this.repo.getUserLogin(userName);
+    const t = this.repo.findUserName(userName);
+    return t;
   }
 
   //Tìm user theo tên va email
   findUser(filter: FilterUser) {
-    return this.repo.findByEmailAName(filter);
+    const t = this.repo.findByEmailAName(filter);
+    return t;
   }
 
   // Lấy danh sách tất cả user
@@ -48,7 +54,7 @@ export class UserService {
   }
 
   // Lấy tên role dựa vào roleID
-   async findRoleNameByRoleId(id: number) {
+  async findRoleNameByRoleId(id: number) {
     return this.repo.findRoleNameByRoleId(id);
   }
 }

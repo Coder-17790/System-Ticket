@@ -1,32 +1,41 @@
-import { Outlet, useNavigate, useLoaderData } from 'react-router-dom';
-import styles from './MainLayout.module.scss';
-import STButton from '../ui/STButton';
-import { motion } from 'framer-motion';
 import ErrorPage from '@/components/layouts/errorPage';
-import STSwitchButton from '../ui/STSwitchButton';
-import { useDispatch } from 'react-redux';
-import { toggleTheme } from '@/store/slices/themeSlice';
-import STComboBox from '../ui/STComboBox';
-import { useTranslation } from 'react-i18next';
-import STImage from '../ui/STImage';
-import { login, logout } from '@/store/slices/userSlice';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
-import STText from '../ui/STText';
-import utilt from '@/utils';
 import { useDialog } from '@/providers/DialogProvider';
+import { RootState, store } from '@/store';
+import { changeLanguage, languageType } from '@/store/slices/languageSlice';
+import { toggleTheme } from '@/store/slices/themeSlice';
+import { logout } from '@/store/slices/userSlice';
+import { motion } from 'framer-motion';
+import { useDispatch, useSelector } from 'react-redux';
+import { Outlet, useLoaderData, useNavigate } from 'react-router-dom';
+import STButton from '../ui/STButton';
+import STComboBox from '../ui/STComboBox';
+import STImage from '../ui/STImage';
+import STSwitchButton from '../ui/STSwitchButton';
+import STText from '../ui/STText';
+import styles from './MainLayout.module.scss';
+import { useEffect } from 'react';
 
 export default function MainLayout() {
   const navigate = useNavigate();
   const { error } = (useLoaderData() as any) || {};
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.user);
+  const { language } = useSelector((state: RootState) => state.language);
   const { notify } = useDialog();
+  const userData = store.getState().user.user; // Sử dụng store.getState() để lấy token
 
   // Chuyển mode theme
   const handleToggleTheme = (newStatus: boolean) => {
     dispatch(toggleTheme(newStatus ? 'dark' : 'light'));
   };
+
+  // Chạy khi vào hệ thống
+  useEffect(() => {
+    if (!userData?.fullName)
+      notify({
+        msg: 'Đây là tk mới',
+      });
+  }, []);
 
   // Logout
   const handlelogout = () => {
@@ -34,16 +43,15 @@ export default function MainLayout() {
       msg: 'Bạn muốn đặng xuất?',
       onSuccess: () => {
         dispatch(logout());
-        utilt.storage.remove('accessToken');
         navigate('/login');
       },
     });
   };
 
   // Chuyển ngôn ngữ
-  const { i18n } = useTranslation();
-  const changeLang = (lng: string) => {
-    i18n.changeLanguage(lng);
+  const changeLang = (lng: languageType) => {
+    // i18n.changeLanguage(lng);
+    dispatch(changeLanguage(lng));
   };
 
   // Chuyển về Home
@@ -71,12 +79,12 @@ export default function MainLayout() {
         <STComboBox
           style={{ marginLeft: '10px' }}
           options={[
-            { label: 'VN', value: 'vi' },
-            { label: 'EN', value: 'en' },
+            { label: 'VN', value: 'vietnam' },
+            { label: 'EN', value: 'english' },
           ]}
-          value={i18n.language}
+          value={language}
           className={styles.cbbLanguage}
-          onChange={(value) => changeLang(value.toString())}
+          onChange={(value) => changeLang(value.toString() as languageType)}
         />
         <STText className={styles.nameText}>{user?.fullName}</STText>
         <STImage size={50} source={user?.avatar} className={styles.image} />
